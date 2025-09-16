@@ -1,0 +1,738 @@
+
+{
+  "appName": "Pro Crèche Solutions",
+  "loading": "Lädt...",
+  "buttons": {
+    "save": "Speichern",
+    "saveChanges": "Änderungen speichern",
+    "cancel": "Abbrechen",
+    "submit": "Senden",
+    "add": "Hinzufügen",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "viewDetails": "Details anzeigen",
+    "goBack": "Zurück",
+    "login": "Anmelden",
+    "signUp": "Registrieren",
+    "applyNow": "Jetzt bewerben",
+    "confirmApply": "Bewerbung bestätigen",
+    "sendMessage": "Nachricht senden",
+    "inviteToApply": "Zur Bewerbung einladen",
+    "inviteToInterview": "Zum Gespräch einladen",
+    "addToFavorites": "Zu Favoriten hinzufügen",
+    "favorited": "Favorisiert",
+    "submitEnquiry": "Anfrage senden",
+    "viewMyEnquiries": "Meine Anfragen",
+    "submitTicket": "Ticket senden",
+    "goToLogin": "Zur Anmeldung",
+    "close": "Schließen",
+    "view": "Ansehen",
+    "resetFilters": "Filter zurücksetzen",
+    "applyFilters": "Filter anwenden",
+    "submitRequest": "Anfrage senden",
+    "remove": "Entfernen",
+    "dismiss": "Verwerfen"
+  },
+  "navbar": {
+    "searchPlaceholder": "Plattform durchsuchen...",
+    "notifications": "Benachrichtigungen",
+    "notificationsCount": "Benachrichtigungen ({{count}})",
+    "noNewNotifications": "Keine neuen Benachrichtigungen.",
+    "viewAll": "Alle anzeigen",
+    "newMessages": "Neue Nachrichten",
+    "unreadMessages": "Sie haben {{count}} ungelesene Nachricht(en).",
+    "viewShoppingCart": "Warenkorb ansehen",
+    "userMenu": "Benutzermenü",
+    "settings": "Einstellungen",
+    "signOut": "Abmelden",
+    "goBackPreviousPage": "Zurück zur vorherigen Seite",
+    "toggleNavigation": "Navigation umschalten"
+  },
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "marketplace": "Marktplatz",
+    "products": "Produkte",
+    "services": "Dienstleistungen",
+    "orders": "Bestellungen",
+    "productMarketplace": "Produkt-Marktplatz",
+    "serviceMarketplace": "Dienstleistungs-Marktplatz",
+    "ordersAppointments": "Bestellungen & Termine",
+    "parentLeads": "Eltern-Anfragen",
+    "recruitment": "Rekrutierung",
+    "jobListings": "Stellenangebote",
+    "candidatePool": "Kandidatenpool",
+    "hrProcedures": "HR-Verfahren",
+    "eLearning": "E-Learning",
+    "statePolicies": "Kantonale Richtlinien",
+    "analytics": "Analysen",
+    "messages": "Nachrichten",
+    "organisationProfile": "Organisationsprofil",
+    "support": "Support",
+    "jobBoard": "Stellenbörse",
+    "myProfile": "Mein Profil",
+    "applications": "Bewerbungen",
+    "homeFindCreche": "Start / Kita finden",
+    "myRequests": "Meine Anfragen",
+    "supportFAQ": "Support / FAQ",
+    "users": "Benutzer",
+    "allUsers": "Alle Benutzer",
+    "admins": "Admins",
+    "foundations": "Stiftungen",
+    "productSuppliers": "Produktlieferanten",
+    "serviceProviders": "Dienstleister",
+    "parents": "Eltern",
+    "content": "Inhalt",
+    "partners": "Partner",
+    "settings": "Einstellungen",
+    "managePlan": "Abonnement verwalten",
+    "premiumPlan": "Premium-Abonnement",
+    "premiumPlanDesc": "Zugriff auf alle Funktionen"
+  },
+  "dashboardPage": {
+    "welcome": "Willkommen zurück, {{name}}!",
+    "overviewSubtitle": "Hier ist Ihr Überblick über die {{appName}} Plattform.",
+    "activeUsers": "Aktive Benutzer",
+    "newOrders": "Neue Bestellungen",
+    "openJobs": "Offene Stellen",
+    "pageViews": "Seitenaufrufe",
+    "viewDetailsFor": "Details anzeigen für {{name}}",
+    "recentActivity": "Letzte Aktivitäten",
+    "quickLinks": "Schnellzugriffe",
+    "browseMarketplace": "Marktplatz durchsuchen",
+    "postNewJob": "Neue Stelle ausschreiben",
+    "manageUsers": "Benutzer verwalten",
+    "platformSettings": "Plattform-Einstellungen",
+    "activityLina": "Lina Meier hat eine neue Stelle \"Kinderkrankenschwester\" veröffentlicht",
+    "activityEcoToys": "EcoToys GmbH hat das Produkt \"Holzbausteine\" aktualisiert",
+    "activityJohn": "John Smith hat 3 neue Elternkonten genehmigt",
+    "activityParent": "Elternteil Beispiel hat eine Anfrage für \"Kita Sonnenschein\" eingereicht",
+    "timeAgo": {
+        "minutes": "Vor {{count}} Min.",
+        "hours": "Vor {{count}} Std.",
+        "yesterday": "Gestern"
+    }
+  },
+  "loginPage": {
+    "title": "{{appName}} Anmeldung",
+    "subtitle": "Greifen Sie auf Ihr Dashboard zu",
+    "emailLabel": "E-Mail-Adresse",
+    "emailPlaceholder": "sie@beispiel.com",
+    "passwordLabel": "Passwort",
+    "passwordPlaceholder": "••••••••",
+    "forgotPassword": "Passwort vergessen?",
+    "orContinueWith": "Oder fortfahren mit",
+    "google": "Google",
+    "facebook": "Facebook",
+    "noAccount": "Noch kein Konto?",
+    "parentLookingForCreche": "Sind Sie ein Elternteil auf Kita-Suche?",
+    "findCrecheHere": "Finden Sie hier eine Kita",
+    "errorBothFields": "Bitte geben Sie E-Mail und Passwort ein.",
+    "alreadyAccount": "Haben Sie bereits ein Konto?"
+  },
+  "signupPage": {
+    "selectRoleTitle": "Wählen Sie Ihre Rolle",
+    "detailsTitle": "Anmeldedetails für {{role}}",
+    "progressStep1": "Schritt 1 von 2: Wählen Sie Ihre Rolle",
+    "progressStep2": "Schritt 2 von 2: Kontodetails",
+    "roles": {
+      "foundation": "Stiftung (Kita)",
+      "supplier": "Produktlieferant",
+      "serviceProvider": "Dienstleister",
+      "parent": "Elternteil"
+    },
+    "labels": {
+      "organisationName": "Name der Organisation",
+      "contactPerson": "Name der Kontaktperson",
+      "parentName": "Ihr vollständiger Name",
+      "email": "E-Mail-Adresse",
+      "password": "Passwort",
+      "confirmPassword": "Passwort bestätigen",
+      "phone": "Telefonnummer",
+      "canton": "Kanton",
+      "languagesSpoken": "Gesprochene Sprachen (durch Komma getrennt)",
+      "capacity": "Maximale Kinderkapazität",
+      "category": "Hauptproduktkategorie",
+      "serviceType": "Hauptdienstleistungstyp",
+      "childAge": "Alter des Kindes (Jahre)",
+      "childStartDate": "Gewünschtes Startdatum"
+    },
+    "termsLabel": "Ich stimme den",
+    "termsLink": "Allgemeinen Geschäftsbedingungen zu",
+    "createAccountButton": "Konto erstellen",
+    "placeholders": {
+      "organisationName": "z.B. Kita Sonnenschein",
+      "contactPerson": "z.B. Erika Mustermann",
+      "parentName": "z.B. Max Mustermann",
+      "email": "sie@beispiel.com",
+      "password": "Mind. 6 Zeichen",
+      "confirmPassword": "Passwort erneut eingeben",
+      "phone": "z.B. 079 123 45 67",
+      "languagesSpoken": "z.B. Deutsch, Englisch",
+      "category": "z.B. Lernspielzeug, Möbel",
+      "serviceType": "z.B. Reinigung, Workshops, Rechtliches",
+      "select": "Wählen Sie..."
+    },
+    "errors": {
+      "organisationNameRequired": "Name der Organisation ist erforderlich.",
+      "contactPersonRequired": "Name der Kontaktperson ist erforderlich.",
+      "parentNameRequired": "Ihr Name ist erforderlich.",
+      "emailRequired": "E-Mail ist erforderlich.",
+      "emailInvalid": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+      "passwordRequired": "Passwort ist erforderlich.",
+      "passwordTooShort": "Das Passwort muss mindestens 6 Zeichen lang sein.",
+      "passwordsNoMatch": "Die Passwörter stimmen nicht überein.",
+      "phoneRequired": "Telefonnummer ist erforderlich.",
+      "cantonRequired": "Kanton ist erforderlich.",
+      "capacityRequired": "Kapazität muss eine positive Zahl sein.",
+      "categoryRequired": "Produktkategorie ist erforderlich.",
+      "serviceTypeRequired": "Dienstleistungstyp ist erforderlich.",
+      "childAgeRequired": "Das Alter des Kindes ist erforderlich und muss positiv sein.",
+      "childStartDateRequired": "Das gewünschte Startdatum ist erforderlich.",
+      "termsRequired": "Sie müssen den Allgemeinen Geschäftsbedingungen zustimmen."
+    },
+    "submissionSuccess": "Registrierung für Rolle: {{role}} erfolgreich! Sie werden weitergeleitet..."
+  },
+  "languageSwitcher": {
+    "enShort": "EN",
+    "frShort": "FR",
+    "deShort": "DE",
+    "enLong": "English",
+    "frLong": "Français",
+    "deLong": "Deutsch",
+    "selectLanguage": "Sprache auswählen: {{currentLanguage}}"
+  },
+  "userRoles": {
+    "Super Admin": "Super Administrator",
+    "Admin": "Administrator",
+    "Foundation (Daycare)": "Stiftung (Kita)",
+    "Product Supplier": "Produktlieferant",
+    "Service Provider": "Dienstleister",
+    "Educator / Candidate": "Erzieher / Kandidat",
+    "Parent": "Elternteil"
+  },
+  "usersPage": {
+    "allUsersTitle": "Alle Benutzer",
+    "searchPlaceholder": "Suche nach Name, E-Mail, Region...",
+    "filtersButton": "Filter",
+    "addNewUserButton": "Neuen Benutzer hinzufügen",
+    "table": {
+        "nameOrg": "Name / Org.-Name",
+        "role": "Rolle",
+        "status": "Status",
+        "region": "Region",
+        "lastLogin": "Letzte Anmeldung",
+        "actions": "Ansehen/Aktionen"
+    },
+    "status": {
+      "active": "Aktiv",
+      "pending": "Ausstehend",
+      "inactive": "Inaktiv"
+    },
+    "emptyState": "Keine Benutzer gefunden.",
+    "rolePageTitle": "{{role}}",
+    "userDetailDrawer": {
+        "title": "Benutzerdetails",
+        "roleLabel": "Rolle:",
+        "statusLabel": "Status:",
+        "regionLabel": "Region:",
+        "lastLoginLabel": "Letzte Anmeldung:",
+        "orgLabel": "Organisation:",
+        "adminActionsTitle": "Admin-Aktionen",
+        "changeRoleLabel": "Rolle ändern",
+        "updateRoleButton": "Rolle aktualisieren",
+        "suspendUserButton": "Benutzer sperren",
+        "activateUserButton": "Benutzer aktivieren",
+        "cannotModifyOwnAccount": "Sie können Ihr eigenes Konto nicht ändern."
+    },
+    "cannotDeleteOwnAccount": "Sie können Ihr eigenes Konto nicht löschen.",
+    "confirmDeleteUser": "Sind Sie sicher, dass Sie diesen Benutzer löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
+    "userProfileUpdated": "Das Profil von {{name}} wurde aktualisiert.",
+    "addNewUserTBD": "Funktionalität \"Neuen Benutzer hinzufügen\" in Kürze. Dies öffnet ein Formular/Modal.",
+    "filtersTBD": "Filter in Kürze"
+  },
+  "hrProceduresPage": {
+    "title": "HR-Verfahrensbibliothek",
+    "uploadButton": "Dokument hochladen",
+    "searchPlaceholder": "Suche nach Titel, Kategorie oder Tag...",
+    "categoriesTitle": "Kategorien",
+    "allDocumentsCategory": "Alle Dokumente",
+    "documentsInCategoryTitle": "Dokumente in \"{{category}}\"",
+    "allItemsCount": "({{count}} Elemente)",
+    "backToCategoriesButton": "← Zurück zu allen Kategorien",
+    "noDocumentsInCategory": "Keine Dokumente in \"{{category}}\" gefunden.",
+    "noDocumentsMatchSearch": "Keine Dokumente entsprechen Ihrer Suche.",
+    "noDocumentsAvailable": "Keine HR-Dokumente verfügbar.",
+    "confirmDeleteDocument": "Sind Sie sicher, dass Sie dieses HR-Dokument löschen möchten?",
+    "categoryDisplay": {
+        "documentsCount_one": "{{count}} Dokument",
+        "documentsCount_other": "{{count}} Dokumente",
+        "viewCategoryAria": "Dokumente in Kategorie anzeigen: {{title}}"
+    }
+  },
+  "hrDocumentCard": {
+    "categoryLabel": "Kategorie: {{category}}",
+    "languageLabel": "Sprache: {{language}}",
+    "versionLabel": "({{version}})",
+    "lastUpdatedLabel": "Zuletzt aktualisiert: {{date}}",
+    "downloadButton": "Herunterladen",
+    "previewButtonLabel": "Vorschau",
+    "editButtonLabel": "Bearbeiten",
+    "deleteButtonLabel": "Löschen",
+    "toggleFavoriteLabel": "Favorit umschalten",
+    "downloadingAlert": "{{title}} wird heruntergeladen",
+    "previewingAlert": "Vorschau von {{title}}"
+  },
+  "contentUploadModal": {
+    "title": {
+        "edit": "{{contentType}} bearbeiten",
+        "add": {
+            "e-learning": "E-Learning-Inhalt hinzufügen",
+            "hr": "HR-Dokument hochladen",
+            "policy": "Staatliche Richtlinie hochladen"
+        }
+    },
+    "contentType": {
+        "e-learning": "E-Learning-Inhalt",
+        "hr": "HR-Dokument",
+        "policy": "Staatliche Richtlinie"
+    },
+    "labels": {
+        "title": "Titel",
+        "documentTitle": "Dokumenttitel",
+        "description": "Beschreibung",
+        "descriptionPreview": "Beschreibung / Inhaltsvorschau",
+        "category": "Kategorie",
+        "contentType": "Inhaltstyp",
+        "language": "Sprache",
+        "duration": "Dauer (z.B. 30m, 1h 15m)",
+        "lessons": "Anzahl der Lektionen",
+        "linkUrl": "Link-URL",
+        "accessRoles": "Zugriffsrollen",
+        "status": "Status",
+        "fileType": "Dateityp",
+        "version": "Version (z.B. v1.0)",
+        "country": "Land",
+        "regionCanton": "Region/Kanton",
+        "policyType": "Richtlinientyp",
+        "criticality": "Kritikalität",
+        "markAsCritical": "Als kritisch markieren",
+        "effectiveDate": "Gültigkeitsdatum",
+        "externalLink": "Link zur offiziellen Richtlinie (Optional)",
+        "currentFile": "Aktuelle Datei: {{fileName}}. Ersetzen?",
+        "uploadFileType": "{{fileType}}-Datei hochladen",
+        "uploadFile": "Datei hochladen"
+    },
+    "placeholders": {
+        "duration": "z.B. 1h 30m",
+        "linkUrl": "https://beispiel.com/ressource",
+        "version": "z.B. v1.2",
+        "externalLink": "https://beispiel.regierung/richtlinie-dok"
+    },
+    "eLearningTypes": {
+      "course": "Kurs",
+      "video": "Video",
+      "pdf": "PDF",
+      "link": "Link"
+    },
+    "criticalityOptions": {
+        "critical": "Kritisch",
+        "normal": "Normal"
+    },
+    "statusOptions": {
+        "draft": "Entwurf",
+        "published": "Veröffentlicht",
+        "archived": "Archiviert"
+    },
+    "policyStatusOptions": {
+        "draft": "Entwurf",
+        "inreview": "In Prüfung",
+        "approved": "Genehmigt",
+        "published": "Veröffentlicht",
+        "upcoming": "Bevorstehend",
+        "archived": "Archiviert"
+    },
+    "fileUpload": {
+        "browse": "Klicken zum Durchsuchen",
+        "dragAndDrop": "oder Drag & Drop",
+        "eLearningAllowedTypes": "MP4, PDF, DOCX (Max. 50MB)",
+        "hrPolicyAllowedTypes": "PDF, DOCX (Max. 10MB)",
+        "selected": "Ausgewählt: {{fileName}}"
+    },
+    "buttons": {
+        "uploading": "Lädt hoch...",
+        "upload": "Hochladen"
+    },
+    "error": {
+        "selectFileOrLink": "Bitte wählen Sie eine Datei zum Hochladen oder geben Sie einen Link für den E-Learning-Link-Typ an."
+    }
+  },
+  "settingsPage": {
+    "title": "Einstellungen",
+    "loading": "Einstellungen werden geladen...",
+    "companyProfile": "Unternehmensprofil",
+    "contactBooking": "Kontakt & Buchung",
+    "notificationPreferences": "Benachrichtigungseinstellungen",
+    "defaults": "Standardwerte",
+    "promoCodeManager": "Gutscheincode-Manager",
+    "billingSubscription": "Rechnung & Abonnement",
+    "analyticsPreferences": "Analyseeinstellungen",
+    "teamPermissions": "Team & Berechtigungen",
+    "privacyData": "Datenschutz & Daten",
+    "noSectionsAvailable": "Keine Einstellungsbereiche für Ihre Rolle verfügbar.",
+    "unsavedChangesPrompt": "Sie haben ungespeicherte Änderungen. Möchten Sie wirklich abbrechen?"
+  },
+  "settingsCompanyProfile": {
+    "companyName": "Firmenname",
+    "logo": "Logo",
+    "coverImage": "Titelbild",
+    "aboutText": "Über uns Text",
+    "vatNumber": "MwSt.-Nr. / Handelsreg.-Nr.",
+    "regionsServed": "Bediente Regionen",
+    "languagesSpoken": "Gesprochene Sprachen",
+    "aboutTextLength": "{{length}}/500",
+    "selectCanton": "Wählen Sie einen Kanton zum Hinzufügen...",
+    "selectLanguage": "Wählen Sie eine Sprache zum Hinzufügen...",
+    "cantonsHelpText": "Wählen Sie die Kantone aus, die Ihr Unternehmen bedient.",
+    "languagesHelpText": "Wählen Sie die Sprachen aus, die Ihr Unternehmen unterstützt."
+  },
+  "settingsContactBooking": {
+    "title": "Kontakt & Buchung",
+    "preferredContactMethod": "Bevorzugte Kontaktmethode",
+    "avgResponseTime": "Ø Antwortzeit",
+    "externalBookingLink": "Externer Buchungslink (URL)",
+    "externalBookingLinkPlaceholder": "https://ihrebuchung.seite/link",
+    "directOrderLink": "Direktbestellungslink (URL)",
+    "directOrderLinkPlaceholder": "https://ihrshop.com/bestellen",
+    "directOrderLinkHelpText": "Link zu Ihrer externen E-Commerce- oder Direktbestellungsseite.",
+    "calComLink": "Cal.com / Calendly Link",
+    "calComLinkPlaceholder": "https://cal.com/ihr-service",
+    "deliveryTypeToggleRemote": "Hauptsächlich Fernzustellung",
+    "contactMethods": {
+        "email": "E-Mail",
+        "phone": "Telefon",
+        "platformForm": "Plattform-Formular"
+    },
+    "responseTimes": {
+        "lessThan24h": "< 24 Std.",
+        "twoToThreeDays": "2–3 Tage",
+        "other": "Andere"
+    }
+  },
+  "settingsNotificationPreferences": {
+    "title": "Benachrichtigungseinstellungen",
+    "newRequestEmailToggleSupplier": "E-Mail bei neuer Anfrage",
+    "newRequestEmailToggleProvider": "E-Mail bei neuem Termin",
+    "digestFrequency": "Häufigkeit der Zusammenfassung",
+    "promoRedemptionAlertsToggle": "Benachrichtigungen Code-Einlösung",
+    "digestFrequencies": {
+        "daily": "Täglich",
+        "weekly": "Wöchentlich",
+        "none": "Keine"
+    }
+  },
+  "settingsDefaults": {
+    "title": "Standardwerte",
+    "autoRespondToggle": "Automatische Antwort",
+    "autoRespondHelpText": "Standard: Aus",
+    "defaultMOQ": "Standard MOQ / Packungsgröße",
+    "defaultMOQPlaceholder": "z.B. 10",
+    "autoAcceptOrderQtyLimit": "Bestellungen ≤ X Menge auto. akzeptieren",
+    "autoAcceptOrderQtyLimitPlaceholder": "z.B. 5",
+    "defaultConsultationLength": "Standard Beratungsdauer",
+    "consultationLengths": {
+        "30min": "30 Min.",
+        "60min": "60 Min."
+    }
+  },
+  "settingsPromoCodeManager": {
+    "title": "Gutscheincode-Manager",
+    "addNewCode": "Neuen Code hinzufügen",
+    "noCodesYet": "Noch keine Gutscheincodes erstellt.",
+    "table": {
+      "code": "Code",
+      "discountOffer": "Rabatt / Angebot",
+      "expiry": "Gültigkeit",
+      "status": "Status",
+      "actions": "Aktionen"
+    },
+    "discountTypes": {
+      "percentage": "{{value}}% Rabatt",
+      "fixedAmount": "CHF {{value, number(minimumFractionDigits:2)}} Rabatt",
+      "freeMinutes": "{{value}} kostenlose Minuten"
+    },
+    "confirmDelete": "Sind Sie sicher, dass Sie diesen Gutscheincode löschen möchten?",
+    "addEditModal": {
+      "addTitle": "Gutscheincode hinzufügen",
+      "editTitle": "Gutscheincode bearbeiten",
+      "placeholder": "Das vollständige Modal zum Hinzufügen/Bearbeiten von Gutscheincodes wird hier implementiert.",
+      "save": "Speichern"
+    }
+  },
+  "settingsBillingSubscription": {
+    "title": "Rechnung & Abonnement",
+    "currentPlan": "Aktueller Plan",
+    "nextInvoiceOn": "Nächste Rechnung am: {{date}}",
+    "managePaymentMethod": "Zahlungsmethode verwalten (über Stripe)",
+    "stripePortalLinkNotConfigured": "Stripe-Portal-Link nicht konfiguriert.",
+    "cancelSubscription": "Abonnement kündigen",
+    "confirmCancelTitle": "Kündigung bestätigen",
+    "confirmCancelMessage": "Sind Sie sicher, dass Sie Ihr Abonnement kündigen möchten? Diese Aktion kann nicht rückgängig gemacht werden und kann zum Verlust des Zugriffs auf Premium-Funktionen am Ende Ihres aktuellen Abrechnungszeitraums führen.",
+    "keepSubscription": "Abonnement behalten",
+    "yesCancel": "Ja, kündigen"
+  },
+  "settingsAnalyticsPreferences": {
+    "title": "Analyseeinstellungen",
+    "timeZone": "Zeitzone",
+    "currency": "Währung",
+    "benchmarkData": "Benchmark-Daten",
+    "benchmarkDataHelpText": "Melden Sie sich an, um zu anonymisierten Benchmark-Daten beizutragen und diese einzusehen.",
+    "currencies": {
+        "chf": "CHF (Schweizer Franken)",
+        "eur": "EUR (Euro)"
+    }
+  },
+  "settingsTeamPermissions": {
+    "title": "Team & Berechtigungen",
+    "inviteNewMember": "Neues Mitglied einladen",
+    "emailAddress": "E-Mail-Adresse",
+    "emailPlaceholder": "mitglied@beispiel.com",
+    "role": "Rolle",
+    "sendInvite": "Einladung senden",
+    "currentTeamMembers": "Aktuelle Teammitglieder",
+    "noTeamMembers": "Noch keine Teammitglieder eingeladen.",
+    "table": {
+      "email": "E-Mail",
+      "role": "Rolle",
+      "status": "Status",
+      "actions": "Aktionen"
+    },
+    "roles": {
+        "viewer": "Betrachter",
+        "editor": "Editor"
+    },
+    "confirmRemoveMember": "Sind Sie sicher, dass Sie dieses Teammitglied entfernen möchten?",
+    "resetPasswordTooltip": "Passwort zurücksetzen",
+    "passwordResetSentAlert": "Link zum Zurücksetzen des Passworts an Mitglied {{memberId}} gesendet. (Simulierte Aktion)",
+    "removeMemberTooltip": "Mitglied entfernen"
+  },
+  "settingsPrivacyData": {
+    "title": "Datenschutz & Daten",
+    "hidePricesPublicly": "Preise öffentlich ausblenden",
+    "hideStartingRatePublicly": "Starttarif öffentlich ausblenden",
+    "hidePricesHelpText": "Wenn aktiviert, werden die Preise für Ihre Produkte nicht in öffentlichen Marktplatzeinträgen angezeigt.",
+    "hideRateHelpText": "Wenn aktiviert, wird Ihr Starttarif/typische Preise nicht in öffentlichen Dienstleistungseinträgen angezeigt.",
+    "dataDeletion": "Datenlöschung",
+    "requestGDPRDeletion": "DSGVO-Datenlöschung beantragen",
+    "deletionRequestSubmitted": "Löschanfrage gesendet",
+    "deletionRequestSubmittedHelpText": "Ihre Datenlöschanfrage wird bearbeitet. Unser Team wird Sie kontaktieren.",
+    "requestDeletionHelpText": "Beantragen Sie die dauerhafte Löschung Ihres Kontos und der zugehörigen Daten gemäß DSGVO.",
+    "confirmGDPRDelete": "Sind Sie sicher, dass Sie eine DSGVO-Datenlöschanfrage stellen möchten? Diese Aktion ist irreversibel und löscht Ihr Konto und die zugehörigen Daten nach einer Bearbeitungsfrist dauerhaft."
+  },
+  "showPassword": "Passwort anzeigen",
+  "hidePassword": "Passwort ausblenden",
+  "parentLeadFormPage": {
+    "title": "Kita-Anfrage",
+    "subtitle": "Finden Sie die perfekte Kita für Ihr Kind.",
+    "thankYouTitle": "Vielen Dank!",
+    "unauthenticatedSuccessMessage": "Ihre Anfrage wurde erfolgreich übermittelt. Ein Profil wird für Sie erstellt, und eine E-Mail wird an {{email}} \"gesendet\" mit Anweisungen zum Festlegen Ihres Passworts. Sobald Sie Ihr Passwort festgelegt und sich angemeldet haben, können Sie Aktualisierungen zu Ihren Anfragen einsehen.",
+    "authenticatedSuccessMessage": "Ihre Anfrage wurde erfolgreich übermittelt. Wir werden Sie mit passenden Kitas in Verbindung bringen und Sie über deren Antworten informieren.",
+    "labels": {
+        "yourFullName": "Ihr vollständiger Name *",
+        "yourEmail": "Ihre E-Mail *",
+        "yourPhone": "Ihre Telefonnummer",
+        "canton": "Kanton *",
+        "municipality": "Gemeinde/Gebiet",
+        "childAge": "Alter des Kindes (Jahre) *",
+        "desiredStartDate": "Gewünschtes Startdatum *",
+        "specialNeeds": "Besondere Bedürfnisse oder Anmerkungen (Optional)"
+    },
+    "sectionTitleChildNeeds": "Bedürfnisse Kind & Kita",
+    "helpText": {
+        "specialNeeds": "Z.B. Allergien, Ernährungsbedürfnisse, spezifische pädagogische Präferenzen."
+    },
+    "errorAllFields": "Bitte füllen Sie alle mit * gekennzeichneten Pflichtfelder aus."
+  },
+  "marketplacePage": {
+    "tabs": {
+      "productSuppliers": "Produktlieferanten",
+      "serviceProviders": "Dienstleister"
+    },
+    "subtitles": {
+      "productSuppliers": "Durchsuchen Sie vertrauenswürdige Lieferanten für den täglichen Bedarf Ihrer Kita.",
+      "serviceProviders": "Entdecken Sie professionelle Dienstleistungen für Ihre Einrichtung."
+    },
+    "buttons": {
+      "partnerOnboarding": "Partner-Onboarding",
+      "resetFilters": "Filter zurücksetzen"
+    },
+    "infoAlert": "Dieser Marktplatz basiert auf einem Anfragesystem für Dienstleistungen und einem Direktbestellsystem für Produkte (über Lieferantenprofile). Sehen Sie sich Lieferanten-/Anbieterprofile an, um eine Verbindung herzustellen.",
+    "searchPlaceholder": "{{activeTabLabel, lowercase}} suchen...",
+    "labels": {
+      "category": "Kategorie",
+      "region": "Region",
+      "supplierTags": "Lieferanten-Tags",
+      "sortBy": "Sortieren nach"
+    },
+    "sortOptions": {
+      "nameAsc": "Name (A-Z)",
+      "nameDesc": "Name (Z-A)",
+      "ratingDesc": "Bewertung (Hoch zu Niedrig)"
+    },
+    "ariaLabels": {
+      "gridView": "Rasteransicht",
+      "listView": "Listenansicht"
+    },
+    "emptyStates": {
+      "noProductSuppliers": "Keine Produktlieferanten gefunden, die Ihren Kriterien entsprechen.",
+      "noServices": "Keine Dienstleistungen gefunden, die Ihren Kriterien entsprechen."
+    },
+    "serviceCard": {
+      "categoryLabel": "Kategorie: {{category}}",
+      "bookAppointment": "Termin buchen",
+      "viewProvider": "Anbieter"
+    }
+  },
+  "orderRequestModal": {
+    "title": "Informationen anfordern für {{productTitle}}",
+    "labels": {
+      "product": "Produkt",
+      "supplier": "Lieferant",
+      "quantity": "Menge *",
+      "notes": "Anmerkungen / Fragen (Optional)"
+    },
+    "placeholders": {
+      "notes": "z.B. Spezifische Farbwünsche, Lieferfragen..."
+    }
+  },
+  "supplierCard": {
+    "specializesIn": "Spezialisiert auf: {{mainCategoriesTagline}}",
+    "viewProfileAndProducts": "Profil & Produkte ansehen"
+  },
+  "recruitmentPage": {
+    "title": "Rekrutierung",
+    "tabs": {
+      "jobOffers": "Stellenangebote",
+      "candidatePool": "Kandidatenpool"
+    },
+    "buttons": {
+      "filters": "Filter",
+      "postNewJob": "Stelle ausschreiben",
+      "applyFilters": "Filter anwenden"
+    },
+    "jobOffers": {
+      "searchPlaceholder": "Stellentitel oder Stiftung suchen...",
+      "filterTitle": "Stellenangebote filtern",
+      "activeJobsCount_one": "Sie haben {{count}} aktive Stelle.",
+      "activeJobsCount_other": "Sie haben {{count}} aktive Stellen.",
+      "emptyState": "Keine Stellenangebote gefunden."
+    },
+    "candidatePool": {
+      "searchPlaceholder": "Kandidatenname oder -rolle suchen...",
+      "filterTitle": "Kandidaten filtern",
+      "emptyState": "Keine Kandidaten gefunden."
+    },
+    "labels": {
+      "location": "Ort",
+      "allContractTypes": "Alle Vertragsarten",
+      "allStatuses": "Alle Status",
+      "allRoles": "Alle Rollen",
+      "region": "Region",
+      "availabilityDate": "Verfügbarkeitsdatum"
+    },
+    "candidateCard": {
+      "viewProfile": "Profil ansehen"
+    },
+    "confirmRemoveCandidate": "Sind Sie sicher, dass Sie den Kandidaten {{name}} entfernen möchten?"
+  },
+  "notifications": {
+    "successTitle": "Erfolg",
+    "settingsUpdated": "Einstellungen erfolgreich aktualisiert."
+  },
+  "partnerDetailPage": {
+    "loadingPartnerDetails": "Partnerdetails werden geladen...",
+    "invalidPartnerIdMessage": "Wenn dies weiterhin besteht, ist die Partner-ID möglicherweise ungültig.",
+    "contactInfoTitle": "Kontaktinformationen",
+    "aboutTitle": "Über {{partnerName}}",
+    "ratingsReviewsTitle": "Bewertungen & Rezensionen",
+    "ratingText": "({{rating}} Sterne - Mock)",
+    "reviewsPlaceholder": "Platzhalter für Bewertungsliste.",
+    "noProductsListed": "Keine Produkte von diesem Lieferanten gelistet.",
+    "noServicesListed": "Keine Dienstleistungen von diesem Anbieter gelistet.",
+    "requestServiceButton": "Dienstleistung anfragen",
+    "promoCodeTitle": "Haben Sie einen Gutscheincode?",
+    "promoCodePlaceholder": "Gutscheincode eingeben",
+    "applyPromoButton": "Anwenden",
+    "directOrderButton": "Direktbestellung",
+    "addToOrderButton": "Zur Bestellung hinzufügen",
+    "productOutOfStock": "{{productName}} ist derzeit nicht vorrätig.",
+    "productAddedToOrder": "{{quantity}} x {{productName}} zur Bestellung hinzugefügt.",
+    "onlyFoundationsRequestService": "Nur Stiftungen können Dienstleistungen anfragen.",
+    "requestSubmittedAlert": "Anfrage für {{serviceName}} gesendet!"
+  },
+  "stockStatus": {
+    "instock": "Auf Lager",
+    "lowstock": "Wenig Lagerbestand",
+    "outofstock": "Nicht vorrätig",
+    "ondemand": "Auf Anfrage"
+  },
+  "supplierDashboard": {
+    "title": "Produktlieferanten-Dashboard",
+    "welcomeMessage": "Willkommen, {{name}}! Hier ist Ihr Lieferantenüberblick.",
+    "directOrderLink": {
+        "title": "Direktbestellung für Kitas anbieten",
+        "description": "Stellen Sie einen Link zu Ihrem eigenen E-Commerce oder Ihrer Bestellseite bereit, damit Stiftungen direkt bestellen können. Richten Sie dies in Ihren Einstellungen ein.",
+        "button": "Direktbestelllink festlegen"
+    },
+    "snapshotTitle": "Dashboard-Schnappschuss",
+    "recentOrdersTitle": "Letzte Bestellungen (letzte 5)",
+    "noRecentOrders": "Keine kürzlichen Bestellungen.",
+    "activityFeedTitle": "Aktivitäts-Feed",
+    "noRecentActivity": "Keine kürzlichen Aktivitäten.",
+    "tiles": {
+        "activeProducts": "Aktive Produkte",
+        "viewProductListings": "Produktlisten anzeigen",
+        "newOrderRequests": "Neue Bestellanfragen",
+        "viewOrdersNew": "Bestellungen anzeigen (Neu)",
+        "avgResponseTime": "Ø Antwortzeit",
+        "viewSLATrend": "SLA-Trend anzeigen",
+        "last30Days": "Letzte 30 Tage",
+        "promoRedemptions": "Gutschein-Einlösungen",
+        "viewAnalytics": "Analysen anzeigen"
+    },
+    "recentOrdersTable": {
+        "id": "ID",
+        "creche": "Kita",
+        "product": "Produkt",
+        "qty": "Menge",
+        "date": "Datum",
+        "status": "Status",
+        "actions": "Aktionen"
+    },
+    "recentOrdersActions": {
+        "accept": "Annehmen",
+        "decline": "Ablehnen"
+    },
+    "activity": {
+        "newOrder": "Neue Bestellanfrage {{orderId}} von {{foundationName}} erhalten.",
+        "productApproved": "Produkt \"{{productName}}\" genehmigt und jetzt live.",
+        "promoUsed": "Gutscheincode \"{{promoCode}}\" von {{foundationName}} verwendet.",
+        "listingPaused": "Sie haben das Angebot \"{{productName}}\" pausiert."
+    },
+    "time": {
+        "minutesAgo": "vor {{count}} Min.",
+        "hoursAgo": "vor {{count}} Std.",
+        "yesterday": "Gestern"
+    }
+  },
+  "foundationAnalyticsPage": {
+    "title": "Stiftungs-Analysen",
+    "mockDataVisualization": "Mock-Datenvisualisierung.",
+    "spendingByCategory": "Ausgaben nach Kategorie (Produkte/Dienstleistungen)",
+    "parentLeadConversion": "Elternanfragen-Konversionstrichter",
+    "leadFunnel": "Lead-Trichter (Neu > Besichtigung > Angemeldet)",
+    "staffTrainingCompletion": "Abschluss der Mitarbeiterschulung",
+    "trainingStatus": "Schulungsstatus",
+    "enrollmentTrend": "Anmeldetrend",
+    "monthlyEnrollment": "Monatlicher Anmeldetrend"
+  }
+}

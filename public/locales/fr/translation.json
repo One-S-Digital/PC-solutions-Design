@@ -1,0 +1,738 @@
+
+{
+  "appName": "Pro Crèche Solutions",
+  "loading": "Chargement...",
+  "buttons": {
+    "save": "Enregistrer",
+    "saveChanges": "Enregistrer les modifs.",
+    "cancel": "Annuler",
+    "submit": "Soumettre",
+    "add": "Ajouter",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "viewDetails": "Voir les détails",
+    "goBack": "Retour",
+    "login": "Connexion",
+    "signUp": "S'inscrire",
+    "applyNow": "Postuler maintenant",
+    "confirmApply": "Confirmer la candidature",
+    "sendMessage": "Envoyer un message",
+    "inviteToApply": "Inviter à postuler",
+    "inviteToInterview": "Inviter à un entretien",
+    "addToFavorites": "Ajouter aux favoris",
+    "favorited": "Favori",
+    "submitEnquiry": "Soumettre la demande",
+    "viewMyEnquiries": "Voir mes demandes",
+    "submitTicket": "Envoyer le ticket",
+    "goToLogin": "Aller à la connexion",
+    "close": "Fermer",
+    "view": "Voir",
+    "resetFilters": "Réinitialiser les filtres",
+    "applyFilters": "Appliquer les filtres",
+    "submitRequest": "Envoyer la demande",
+    "remove": "Retirer",
+    "dismiss": "Rejeter"
+  },
+  "navbar": {
+    "searchPlaceholder": "Rechercher sur la plateforme...",
+    "notifications": "Notifications",
+    "notificationsCount": "Notifications ({{count}})",
+    "noNewNotifications": "Aucune nouvelle notification.",
+    "viewAll": "Voir tout",
+    "newMessages": "Nouveaux Messages",
+    "unreadMessages": "Vous avez {{count}} message(s) non lu(s).",
+    "viewShoppingCart": "Voir le panier",
+    "userMenu": "Menu utilisateur",
+    "settings": "Paramètres",
+    "signOut": "Déconnexion",
+    "goBackPreviousPage": "Retourner à la page précédente",
+    "toggleNavigation": "Basculer la navigation"
+  },
+  "sidebar": {
+    "dashboard": "Tableau de bord",
+    "marketplace": "Marché",
+    "products": "Produits",
+    "services": "Services",
+    "orders": "Commandes",
+    "productMarketplace": "Marché des Produits",
+    "serviceMarketplace": "Marché des Services",
+    "ordersAppointments": "Commandes & RDV",
+    "parentLeads": "Demandes Parents",
+    "recruitment": "Recrutement",
+    "jobListings": "Offres d'emploi",
+    "candidatePool": "Vivier de candidats",
+    "hrProcedures": "Procédures RH",
+    "eLearning": "E-Learning",
+    "statePolicies": "Politiques Cantonales",
+    "analytics": "Analyses",
+    "messages": "Messages",
+    "organisationProfile": "Profil de l'organisation",
+    "support": "Support",
+    "jobBoard": "Offres d'emploi",
+    "myProfile": "Mon Profil",
+    "applications": "Candidatures",
+    "homeFindCreche": "Accueil / Trouver une crèche",
+    "myRequests": "Mes Demandes",
+    "supportFAQ": "Support / FAQ",
+    "users": "Utilisateurs",
+    "allUsers": "Tous les utilisateurs",
+    "admins": "Admins",
+    "foundations": "Fondations",
+    "productSuppliers": "Fournisseurs",
+    "serviceProviders": "Prestataires",
+    "parents": "Parents",
+    "content": "Contenu",
+    "partners": "Partenaires",
+    "settings": "Paramètres",
+    "managePlan": "Gérer l'abonnement",
+    "premiumPlan": "Abonnement Premium",
+    "premiumPlanDesc": "Accès à toutes les fonctionnalités"
+  },
+  "dashboardPage": {
+    "welcome": "Content de vous revoir, {{name}} !",
+    "overviewSubtitle": "Voici votre aperçu de la plateforme {{appName}}.",
+    "activeUsers": "Utilisateurs Actifs",
+    "newOrders": "Nouvelles Commandes",
+    "openJobs": "Postes Ouverts",
+    "pageViews": "Vues de Page",
+    "viewDetailsFor": "Voir les détails pour {{name}}",
+    "recentActivity": "Activité Récente",
+    "quickLinks": "Liens Rapides",
+    "browseMarketplace": "Parcourir le Marché",
+    "postNewJob": "Publier une Offre",
+    "manageUsers": "Gérer les Utilisateurs",
+    "platformSettings": "Paramètres Plateforme",
+    "activityLina": "Lina Meier a publié une nouvelle offre \"Infirmière Pédiatrique\"",
+    "activityEcoToys": "EcoToys GmbH a mis à jour le produit \"Blocs en Bois\"",
+    "activityJohn": "John Smith a approuvé 3 nouveaux comptes parents",
+    "activityParent": "Parent Exemple a soumis une demande pour \"Crèche Les Petits Choux\"",
+    "timeAgo": {
+        "minutes": "Il y a {{count}}m",
+        "hours": "Il y a {{count}}h",
+        "yesterday": "Hier"
+    }
+  },
+  "loginPage": {
+    "title": "Connexion {{appName}}",
+    "subtitle": "Accédez à votre tableau de bord",
+    "emailLabel": "Adresse e-mail",
+    "emailPlaceholder": "vous@exemple.com",
+    "passwordLabel": "Mot de passe",
+    "passwordPlaceholder": "••••••••",
+    "forgotPassword": "Mot de passe oublié ?",
+    "orContinueWith": "Ou continuer avec",
+    "google": "Google",
+    "facebook": "Facebook",
+    "noAccount": "Pas encore de compte ?",
+    "parentLookingForCreche": "Vous êtes un parent cherchant une crèche ?",
+    "findCrecheHere": "Trouvez une crèche ici",
+    "errorBothFields": "Veuillez saisir l'e-mail et le mot de passe.",
+    "alreadyAccount": "Vous avez déjà un compte ?"
+  },
+  "signupPage": {
+    "selectRoleTitle": "Sélectionnez Votre Rôle",
+    "detailsTitle": "Détails d'inscription {{role}}",
+    "progressStep1": "Étape 1 sur 2 : Choisissez votre rôle",
+    "progressStep2": "Étape 2 sur 2 : Détails du compte",
+    "roles": {
+      "foundation": "Fondation (Crèche)",
+      "supplier": "Fournisseur de Produits",
+      "serviceProvider": "Prestataire de Services",
+      "parent": "Parent"
+    },
+    "labels": {
+      "organisationName": "Nom de l'organisation",
+      "contactPerson": "Nom du contact",
+      "parentName": "Votre nom complet",
+      "email": "Adresse e-mail",
+      "password": "Mot de passe",
+      "confirmPassword": "Confirmer le mot de passe",
+      "phone": "Numéro de téléphone",
+      "canton": "Canton",
+      "languagesSpoken": "Langues parlées (séparées par des virgules)",
+      "capacity": "Capacité maximale d'enfants",
+      "category": "Catégorie principale de produits",
+      "serviceType": "Type de service principal",
+      "childAge": "Âge de l'enfant (années)",
+      "childStartDate": "Date de début souhaitée"
+    },
+    "termsLabel": "J'accepte les",
+    "termsLink": "Termes et Conditions",
+    "createAccountButton": "Créer un compte",
+    "placeholders": {
+      "organisationName": "ex: Crèche Les Petits Soleils",
+      "contactPerson": "ex: Jeanne Dupont",
+      "parentName": "ex: Jean Dupont",
+      "email": "vous@exemple.com",
+      "password": "Min. 6 caractères",
+      "confirmPassword": "Retapez votre mot de passe",
+      "phone": "ex: 079 123 45 67",
+      "languagesSpoken": "ex: Français, Anglais",
+      "category": "ex: Jouets éducatifs, Mobilier",
+      "serviceType": "ex: Nettoyage, Ateliers, Juridique",
+      "select": "Sélectionnez..."
+    },
+    "errors": {
+      "organisationNameRequired": "Le nom de l'organisation est requis.",
+      "contactPersonRequired": "Le nom du contact est requis.",
+      "parentNameRequired": "Votre nom est requis.",
+      "emailRequired": "L'e-mail est requis.",
+      "emailInvalid": "Veuillez saisir une adresse e-mail valide.",
+      "passwordRequired": "Le mot de passe est requis.",
+      "passwordTooShort": "Le mot de passe doit comporter au moins 6 caractères.",
+      "passwordsNoMatch": "Les mots de passe ne correspondent pas.",
+      "phoneRequired": "Le numéro de téléphone est requis.",
+      "cantonRequired": "Le canton est requis.",
+      "capacityRequired": "La capacité doit être un nombre positif.",
+      "categoryRequired": "La catégorie de produits est requise.",
+      "serviceTypeRequired": "Le type de service est requis.",
+      "childAgeRequired": "L'âge de l'enfant est requis et doit être positif.",
+      "childStartDateRequired": "La date de début souhaitée est requise.",
+      "termsRequired": "Vous devez accepter les termes et conditions."
+    },
+    "submissionSuccess": "Inscription réussie pour le rôle : {{role}} ! Redirection..."
+  },
+  "languageSwitcher": {
+    "enShort": "EN",
+    "frShort": "FR",
+    "deShort": "DE",
+    "enLong": "English",
+    "frLong": "Français",
+    "deLong": "Deutsch",
+    "selectLanguage": "Sélectionner la langue : {{currentLanguage}}"
+  },
+  "userRoles": {
+    "Super Admin": "Super Administrateur",
+    "Admin": "Administrateur",
+    "Foundation (Daycare)": "Fondation (Crèche)",
+    "Product Supplier": "Fournisseur de produits",
+    "Service Provider": "Prestataire de services",
+    "Educator / Candidate": "Éducateur / Candidat",
+    "Parent": "Parent"
+  },
+  "usersPage": {
+    "allUsersTitle": "Tous les utilisateurs",
+    "searchPlaceholder": "Rechercher par nom, e-mail, région...",
+    "filtersButton": "Filtres",
+    "addNewUserButton": "Ajouter un utilisateur",
+    "table": {
+        "nameOrg": "Nom / Nom Org.",
+        "role": "Rôle",
+        "status": "Statut",
+        "region": "Région",
+        "lastLogin": "Dernière connexion",
+        "actions": "Voir/Actions"
+    },
+    "status": {
+      "active": "Actif",
+      "pending": "En attente",
+      "inactive": "Inactif"
+    },
+    "emptyState": "Aucun utilisateur trouvé.",
+    "rolePageTitle": "{{role}}s",
+    "userDetailDrawer": {
+        "title": "Détails de l'utilisateur",
+        "roleLabel": "Rôle :",
+        "statusLabel": "Statut :",
+        "regionLabel": "Région :",
+        "lastLoginLabel": "Dernière connexion :",
+        "orgLabel": "Organisation :",
+        "adminActionsTitle": "Actions d'administration",
+        "changeRoleLabel": "Changer le rôle",
+        "updateRoleButton": "Mettre à jour le rôle",
+        "suspendUserButton": "Suspendre l'utilisateur",
+        "activateUserButton": "Activer l'utilisateur",
+        "cannotModifyOwnAccount": "Vous ne pouvez pas modifier votre propre compte."
+    },
+    "cannotDeleteOwnAccount": "Vous ne pouvez pas supprimer votre propre compte.",
+    "confirmDeleteUser": "Êtes-vous sûr de vouloir supprimer cet utilisateur ? Cette action est irréversible.",
+    "userProfileUpdated": "Le profil de {{name}} a été mis à jour.",
+    "addNewUserTBD": "Fonctionnalité \"Ajouter un nouvel utilisateur\" à venir. Cela ouvrira un formulaire/modal.",
+    "filtersTBD": "Filtres à venir"
+  },
+  "hrProceduresPage": {
+    "title": "Bibliothèque des Procédures RH",
+    "uploadButton": "Télécharger un document",
+    "searchPlaceholder": "Rechercher par titre, catégorie ou tag...",
+    "categoriesTitle": "Catégories",
+    "allDocumentsCategory": "Tous les documents",
+    "documentsInCategoryTitle": "Documents dans \"{{category}}\"",
+    "allItemsCount": "({{count}} éléments)",
+    "backToCategoriesButton": "← Retour à toutes les catégories",
+    "noDocumentsInCategory": "Aucun document trouvé dans \"{{category}}\".",
+    "noDocumentsMatchSearch": "Aucun document ne correspond à votre recherche.",
+    "noDocumentsAvailable": "Aucun document RH disponible.",
+    "confirmDeleteDocument": "Êtes-vous sûr de vouloir supprimer ce document RH ?",
+    "categoryDisplay": {
+        "documentsCount_one": "{{count}} document",
+        "documentsCount_other": "{{count}} documents",
+        "viewCategoryAria": "Voir les documents dans la catégorie : {{title}}"
+    }
+  },
+  "hrDocumentCard": {
+    "categoryLabel": "Catégorie : {{category}}",
+    "languageLabel": "Langue : {{language}}",
+    "versionLabel": "({{version}})",
+    "lastUpdatedLabel": "Mis à jour le : {{date}}",
+    "downloadButton": "Télécharger",
+    "previewButtonLabel": "Aperçu",
+    "editButtonLabel": "Modifier",
+    "deleteButtonLabel": "Supprimer",
+    "toggleFavoriteLabel": "Basculer favori",
+    "downloadingAlert": "Téléchargement de {{title}}",
+    "previewingAlert": "Aperçu de {{title}}"
+  },
+  "contentUploadModal": {
+    "title": {
+        "edit": "Modifier {{contentType}}",
+        "add": {
+            "e-learning": "Ajouter du contenu E-Learning",
+            "hr": "Télécharger un document RH",
+            "policy": "Télécharger une politique d'état"
+        }
+    },
+    "contentType": {
+        "e-learning": "Contenu E-Learning",
+        "hr": "Document RH",
+        "policy": "Politique d'état"
+    },
+    "labels": {
+        "title": "Titre",
+        "documentTitle": "Titre du document",
+        "description": "Description",
+        "descriptionPreview": "Description / Aperçu du contenu",
+        "category": "Catégorie",
+        "contentType": "Type de contenu",
+        "language": "Langue",
+        "duration": "Durée (ex: 30m, 1h 15m)",
+        "lessons": "Nombre de leçons",
+        "linkUrl": "URL du lien",
+        "accessRoles": "Rôles d'accès",
+        "status": "Statut",
+        "fileType": "Type de fichier",
+        "version": "Version (ex: v1.0)",
+        "country": "Pays",
+        "regionCanton": "Région/Canton",
+        "policyType": "Type de politique",
+        "criticality": "Criticité",
+        "markAsCritical": "Marquer comme critique",
+        "effectiveDate": "Date d'entrée en vigueur",
+        "externalLink": "Lien vers la politique officielle (Optionnel)",
+        "currentFile": "Fichier actuel : {{fileName}}. Remplacer ?",
+        "uploadFileType": "Télécharger le fichier {{fileType}}",
+        "uploadFile": "Télécharger le fichier"
+    },
+    "placeholders": {
+        "duration": "ex: 1h 30m",
+        "linkUrl": "https://exemple.com/ressource",
+        "version": "ex: v1.2",
+        "externalLink": "https://exemple.gouv/politique-doc"
+    },
+    "eLearningTypes": {
+      "course": "Cours",
+      "video": "Vidéo",
+      "pdf": "PDF",
+      "link": "Lien"
+    },
+    "criticalityOptions": {
+        "critical": "Critique",
+        "normal": "Normal"
+    },
+    "statusOptions": {
+        "draft": "Brouillon",
+        "published": "Publié",
+        "archived": "Archivé"
+    },
+    "policyStatusOptions": {
+        "draft": "Brouillon",
+        "inreview": "En révision",
+        "approved": "Approuvé",
+        "published": "Publié",
+        "upcoming": "À venir",
+        "archived": "Archivé"
+    },
+    "fileUpload": {
+        "browse": "Cliquez pour parcourir",
+        "dragAndDrop": "ou glissez-déposez",
+        "eLearningAllowedTypes": "MP4, PDF, DOCX (Max 50Mo)",
+        "hrPolicyAllowedTypes": "PDF, DOCX (Max 10Mo)",
+        "selected": "Sélectionné : {{fileName}}"
+    },
+    "buttons": {
+        "uploading": "Téléchargement...",
+        "upload": "Télécharger"
+    },
+    "error": {
+        "selectFileOrLink": "Veuillez sélectionner un fichier à télécharger ou fournir un lien pour le type Lien E-Learning."
+    }
+  },
+  "settingsPage": {
+    "title": "Paramètres",
+    "loading": "Chargement des paramètres...",
+    "companyProfile": "Profil de l'entreprise",
+    "contactBooking": "Contact & Réservation",
+    "notificationPreferences": "Préférences de notification",
+    "defaults": "Valeurs par défaut",
+    "promoCodeManager": "Gestionnaire de codes promo",
+    "billingSubscription": "Facturation & Abonnement",
+    "analyticsPreferences": "Préférences d'analyse",
+    "teamPermissions": "Équipe & Permissions",
+    "privacyData": "Confidentialité & Données",
+    "noSectionsAvailable": "Aucune section de paramètres disponible pour votre rôle.",
+    "unsavedChangesPrompt": "Vous avez des modifications non enregistrées. Voulez-vous vraiment annuler ?"
+  },
+  "settingsCompanyProfile": {
+    "companyName": "Nom de l'entreprise",
+    "logo": "Logo",
+    "coverImage": "Image de couverture",
+    "aboutText": "Texte de présentation",
+    "vatNumber": "Numéro de TVA / SIRET",
+    "regionsServed": "Régions desservies",
+    "languagesSpoken": "Langues parlées",
+    "aboutTextLength": "{{length}}/500",
+    "selectCanton": "Sélectionnez un canton à ajouter...",
+    "selectLanguage": "Sélectionnez une langue à ajouter...",
+    "cantonsHelpText": "Sélectionnez les cantons que votre entreprise dessert.",
+    "languagesHelpText": "Sélectionnez les langues prises en charge par votre entreprise."
+  },
+  "settingsContactBooking": {
+    "title": "Contact & Réservation",
+    "preferredContactMethod": "Méthode de contact préférée",
+    "avgResponseTime": "Temps de réponse moyen",
+    "externalBookingLink": "Lien de réservation externe (URL)",
+    "externalBookingLinkPlaceholder": "https://votresite.reservation/lien",
+    "directOrderLink": "Lien Commande Directe (URL)",
+    "directOrderLinkPlaceholder": "https://votre boutique.com/commande",
+    "directOrderLinkHelpText": "Lien vers votre e-commerce externe ou page de commande directe.",
+    "calComLink": "Lien Cal.com / Calendly",
+    "calComLinkPlaceholder": "https://cal.com/votre-service",
+    "deliveryTypeToggleRemote": "Prestation principalement à distance",
+    "contactMethods": {
+        "email": "E-mail",
+        "phone": "Téléphone",
+        "platformForm": "Formulaire Plateforme"
+    },
+    "responseTimes": {
+        "lessThan24h": "< 24 h",
+        "twoToThreeDays": "2–3 j",
+        "other": "Autre"
+    }
+  },
+  "settingsNotificationPreferences": {
+    "title": "Préférences de notification",
+    "newRequestEmailToggleSupplier": "E-mail pour nouvelle demande",
+    "newRequestEmailToggleProvider": "E-mail pour nouveau RDV",
+    "digestFrequency": "Fréquence du résumé",
+    "promoRedemptionAlertsToggle": "Alertes d'utilisation de code promo",
+    "digestFrequencies": {
+        "daily": "Quotidien",
+        "weekly": "Hebdomadaire",
+        "none": "Aucun"
+    }
+  },
+  "settingsDefaults": {
+    "title": "Valeurs par défaut",
+    "autoRespondToggle": "Réponse automatique",
+    "autoRespondHelpText": "Par défaut : Désactivé",
+    "defaultMOQ": "Qté Min. Commande / Taille Paquet",
+    "defaultMOQPlaceholder": "ex : 10",
+    "autoAcceptOrderQtyLimit": "Accepter auto. commandes ≤ X Qté",
+    "autoAcceptOrderQtyLimitPlaceholder": "ex : 5",
+    "defaultConsultationLength": "Durée de consultation par défaut",
+    "consultationLengths": {
+        "30min": "30 min",
+        "60min": "60 min"
+    }
+  },
+  "settingsPromoCodeManager": {
+    "title": "Gestionnaire de codes promo",
+    "addNewCode": "Ajouter un nouveau code",
+    "noCodesYet": "Aucun code promo créé pour l'instant.",
+    "table": {
+      "code": "Code",
+      "discountOffer": "Réduction / Offre",
+      "expiry": "Expiration",
+      "status": "Statut",
+      "actions": "Actions"
+    },
+    "discountTypes": {
+      "percentage": "{{value}}% de réduction",
+      "fixedAmount": "CHF {{value, number(minimumFractionDigits:2)}} de réduction",
+      "freeMinutes": "{{value}} minutes gratuites"
+    },
+    "confirmDelete": "Êtes-vous sûr de vouloir supprimer ce code promo ?",
+    "addEditModal": {
+      "addTitle": "Ajouter un code promo",
+      "editTitle": "Modifier le code promo",
+      "placeholder": "Le modal complet pour ajouter/modifier les codes promo sera implémenté ici.",
+      "save": "Enregistrer"
+    }
+  },
+  "settingsBillingSubscription": {
+    "title": "Facturation & Abonnement",
+    "currentPlan": "Abonnement actuel",
+    "nextInvoiceOn": "Prochaine facture le : {{date}}",
+    "managePaymentMethod": "Gérer le moyen de paiement (via Stripe)",
+    "stripePortalLinkNotConfigured": "Lien portail Stripe non configuré.",
+    "cancelSubscription": "Annuler l'abonnement",
+    "confirmCancelTitle": "Confirmer l'annulation",
+    "confirmCancelMessage": "Êtes-vous sûr de vouloir annuler votre abonnement ? Cette action est irréversible et pourrait entraîner la perte d'accès aux fonctionnalités premium à la fin de votre cycle de facturation actuel.",
+    "keepSubscription": "Garder l'abonnement",
+    "yesCancel": "Oui, annuler"
+  },
+  "settingsAnalyticsPreferences": {
+    "title": "Préférences d'analyse",
+    "timeZone": "Fuseau horaire",
+    "currency": "Devise",
+    "benchmarkData": "Données de référence",
+    "benchmarkDataHelpText": "Participez pour contribuer et consulter des données de référence anonymisées.",
+    "currencies": {
+        "chf": "CHF (Franc Suisse)",
+        "eur": "EUR (Euro)"
+    }
+  },
+  "settingsTeamPermissions": {
+    "title": "Équipe & Permissions",
+    "inviteNewMember": "Inviter un nouveau membre",
+    "emailAddress": "Adresse e-mail",
+    "emailPlaceholder": "membre@exemple.com",
+    "role": "Rôle",
+    "sendInvite": "Envoyer l'invitation",
+    "currentTeamMembers": "Membres actuels de l'équipe",
+    "noTeamMembers": "Aucun membre d'équipe invité pour l'instant.",
+    "table": {
+      "email": "E-mail",
+      "role": "Rôle",
+      "status": "Statut",
+      "actions": "Actions"
+    },
+    "roles": {
+        "viewer": "Lecteur",
+        "editor": "Éditeur"
+    },
+    "confirmRemoveMember": "Êtes-vous sûr de vouloir supprimer ce membre de l'équipe ?",
+    "resetPasswordTooltip": "Réinitialiser le mot de passe",
+    "passwordResetSentAlert": "Lien de réinitialisation de mot de passe envoyé au membre {{memberId}}. (Action simulée)",
+    "removeMemberTooltip": "Supprimer le membre"
+  },
+  "settingsPrivacyData": {
+    "title": "Confidentialité & Données",
+    "hidePricesPublicly": "Masquer les prix publiquement",
+    "hideStartingRatePublicly": "Masquer le tarif de base publiquement",
+    "hidePricesHelpText": "Si activé, les prix de vos produits ne seront pas affichés sur les listes publiques du marché.",
+    "hideRateHelpText": "Si activé, votre tarif de base/prix typique ne sera pas affiché sur les listes publiques de services.",
+    "dataDeletion": "Suppression des données",
+    "requestGDPRDeletion": "Demander la suppression des données RGPD",
+    "deletionRequestSubmitted": "Demande de suppression soumise",
+    "deletionRequestSubmittedHelpText": "Votre demande de suppression de données est en cours de traitement. Notre équipe vous contactera.",
+    "requestDeletionHelpText": "Demandez la suppression permanente de votre compte et des données associées conformément au RGPD.",
+    "confirmGDPRDelete": "Êtes-vous sûr de vouloir soumettre une demande de suppression de données RGPD ? Cette action est irréversible et supprimera définitivement votre compte et les données associées après une période de traitement."
+  },
+  "showPassword": "Afficher le mot de passe",
+  "hidePassword": "Masquer le mot de passe",
+  "parentLeadFormPage": {
+    "title": "Demande de place en crèche",
+    "subtitle": "Trouvez la crèche idéale pour votre enfant.",
+    "thankYouTitle": "Merci !",
+    "unauthenticatedSuccessMessage": "Votre demande a été soumise avec succès. Un profil sera créé pour vous, et un e-mail sera \"envoyé\" à {{email}} avec des instructions pour définir votre mot de passe. Une fois votre mot de passe défini et que vous êtes connecté, vous pourrez voir les mises à jour de vos demandes.",
+    "authenticatedSuccessMessage": "Votre demande a été soumise avec succès. Nous vous mettrons en relation avec des crèches adaptées et vous serez informé de leurs réponses.",
+    "labels": {
+        "yourFullName": "Votre nom complet *",
+        "yourEmail": "Votre e-mail *",
+        "yourPhone": "Votre téléphone",
+        "canton": "Canton *",
+        "municipality": "Commune/Zone",
+        "childAge": "Âge de l'enfant (années) *",
+        "desiredStartDate": "Date de début souhaitée *",
+        "specialNeeds": "Besoins spécifiques ou notes (Optionnel)"
+    },
+    "sectionTitleChildNeeds": "Besoins de l'enfant et de la crèche",
+    "helpText": {
+        "specialNeeds": "Ex: allergies, restrictions alimentaires, préférences pédagogiques spécifiques."
+    },
+    "errorAllFields": "Veuillez remplir tous les champs obligatoires marqués d'un *."
+  },
+  "marketplacePage": {
+    "tabs": {
+      "productSuppliers": "Fournisseurs de Produits",
+      "serviceProviders": "Prestataires de Services"
+    },
+    "subtitles": {
+      "productSuppliers": "Parcourez les fournisseurs de confiance pour les besoins quotidiens de votre crèche.",
+      "serviceProviders": "Découvrez des services professionnels pour votre établissement."
+    },
+    "buttons": {
+      "partnerOnboarding": "Intégration Partenaire",
+      "resetFilters": "Réinitialiser les filtres"
+    },
+    "infoAlert": "Ce marché fonctionne sur un système de demande de renseignements pour les services et un système de commande directe pour les produits (via les profils fournisseurs). Consultez les profils des fournisseurs/prestataires pour vous connecter.",
+    "searchPlaceholder": "Rechercher des {{activeTabLabel, lowercase}}...",
+    "labels": {
+      "category": "Catégorie",
+      "region": "Région",
+      "supplierTags": "Tags Fournisseur",
+      "sortBy": "Trier par"
+    },
+    "sortOptions": {
+      "nameAsc": "Nom (A-Z)",
+      "nameDesc": "Nom (Z-A)",
+      "ratingDesc": "Note (Élevée à Basse)"
+    },
+    "ariaLabels": {
+      "gridView": "Vue grille",
+      "listView": "Vue liste"
+    },
+    "emptyStates": {
+      "noProductSuppliers": "Aucun fournisseur de produits ne correspond à vos critères.",
+      "noServices": "Aucun service ne correspond à vos critères."
+    },
+    "serviceCard": {
+      "categoryLabel": "Catégorie : {{category}}",
+      "bookAppointment": "Prendre RDV",
+      "viewProvider": "Prestataire"
+    }
+  },
+  "orderRequestModal": {
+    "title": "Demande d'informations pour {{productTitle}}",
+    "labels": {
+      "product": "Produit",
+      "supplier": "Fournisseur",
+      "quantity": "Quantité *",
+      "notes": "Notes / Questions (Optionnel)"
+    },
+    "placeholders": {
+      "notes": "ex: Demandes de couleur spécifiques, questions sur la livraison..."
+    }
+  },
+  "supplierCard": {
+    "specializesIn": "Spécialisé en : {{mainCategoriesTagline}}",
+    "viewProfileAndProducts": "Voir Profil & Produits"
+  },
+  "recruitmentPage": {
+    "title": "Recrutement",
+    "tabs": {
+      "jobOffers": "Offres d'emploi",
+      "candidatePool": "Vivier de candidats"
+    },
+    "buttons": {
+      "filters": "Filtres",
+      "postNewJob": "Publier une offre",
+      "applyFilters": "Appliquer les filtres"
+    },
+    "jobOffers": {
+      "searchPlaceholder": "Rechercher par titre de poste ou fondation...",
+      "filterTitle": "Filtrer les offres d'emploi",
+      "activeJobsCount_one": "Vous avez {{count}} poste actif.",
+      "activeJobsCount_other": "Vous avez {{count}} postes actifs.",
+      "emptyState": "Aucune offre d'emploi trouvée."
+    },
+    "candidatePool": {
+      "searchPlaceholder": "Rechercher par nom ou rôle du candidat...",
+      "filterTitle": "Filtrer les candidats",
+      "emptyState": "Aucun candidat trouvé."
+    },
+    "labels": {
+      "location": "Lieu",
+      "allContractTypes": "Tous types de contrat",
+      "allStatuses": "Tous statuts",
+      "allRoles": "Tous rôles",
+      "region": "Région",
+      "availabilityDate": "Date de disponibilité"
+    },
+    "candidateCard": {
+      "viewProfile": "Voir le profil"
+    },
+    "confirmRemoveCandidate": "Êtes-vous sûr de vouloir supprimer le candidat {{name}} ?"
+  },
+  "notifications": {
+    "successTitle": "Succès",
+    "settingsUpdated": "Paramètres mis à jour avec succès."
+  },
+   "partnerDetailPage": {
+    "loadingPartnerDetails": "Chargement des détails du partenaire...",
+    "invalidPartnerIdMessage": "Si cela persiste, l'ID du partenaire est peut-être invalide.",
+    "contactInfoTitle": "Informations de contact",
+    "aboutTitle": "À propos de {{partnerName}}",
+    "ratingsReviewsTitle": "Notes & Avis",
+    "ratingText": "({{rating}} étoiles - Maquette)",
+    "reviewsPlaceholder": "Espace réservé pour la liste des avis.",
+    "noProductsListed": "Aucun produit listé par ce fournisseur.",
+    "noServicesListed": "Aucun service listé par ce prestataire.",
+    "requestServiceButton": "Demander un service",
+    "promoCodeTitle": "Avez-vous un code promo ?",
+    "promoCodePlaceholder": "Entrez le code promo",
+    "applyPromoButton": "Appliquer",
+    "directOrderButton": "Commande Directe",
+    "addToOrderButton": "Ajouter à la commande",
+    "productOutOfStock": "{{productName}} est actuellement en rupture de stock.",
+    "productAddedToOrder": "{{quantity}} x {{productName}} ajouté(s) à la commande.",
+    "onlyFoundationsRequestService": "Seules les Fondations peuvent demander des services.",
+    "requestSubmittedAlert": "Demande pour {{serviceName}} soumise !"
+  },
+  "stockStatus": {
+    "instock": "En stock",
+    "lowstock": "Stock faible",
+    "outofstock": "Rupture de stock",
+    "ondemand": "Sur demande"
+  },
+  "supplierDashboard": {
+    "title": "Tableau de bord Fournisseur",
+    "welcomeMessage": "Bienvenue, {{name}} ! Voici l'aperçu de votre activité.",
+    "directOrderLink": {
+        "title": "Proposer la commande directe aux crèches",
+        "description": "Fournissez un lien vers votre propre e-commerce ou page de commande pour que les fondations commandent directement. Configurez cela dans vos paramètres.",
+        "button": "Définir le lien de commande directe"
+    },
+    "snapshotTitle": "Aperçu du tableau de bord",
+    "recentOrdersTitle": "Commandes récentes (5 dernières)",
+    "noRecentOrders": "Aucune commande récente.",
+    "activityFeedTitle": "Fil d'activité",
+    "noRecentActivity": "Aucune activité récente.",
+    "tiles": {
+        "activeProducts": "Produits actifs",
+        "viewProductListings": "Voir les fiches produits",
+        "newOrderRequests": "Nouvelles demandes de commande",
+        "viewOrdersNew": "Voir les commandes (Nouvelles)",
+        "avgResponseTime": "Temps de réponse moyen",
+        "viewSLATrend": "Voir la tendance SLA",
+        "last30Days": "30 derniers jours",
+        "promoRedemptions": "Utilisations de codes promo",
+        "viewAnalytics": "Voir les analyses"
+    },
+    "recentOrdersTable": {
+        "id": "ID",
+        "creche": "Crèche",
+        "product": "Produit",
+        "qty": "Qté",
+        "date": "Date",
+        "status": "Statut",
+        "actions": "Actions"
+    },
+    "recentOrdersActions": {
+        "accept": "Accepter",
+        "decline": "Refuser"
+    },
+    "activity": {
+        "newOrder": "Nouvelle demande de commande {{orderId}} reçue de {{foundationName}}.",
+        "productApproved": "Produit \"{{productName}}\" approuvé et maintenant en ligne.",
+        "promoUsed": "Code promo \"{{promoCode}}\" utilisé par {{foundationName}}.",
+        "listingPaused": "Vous avez mis en pause la fiche \"{{productName}}\"."
+    },
+    "time": {
+        "minutesAgo": "il y a {{count}} min",
+        "hoursAgo": "il y a {{count}} h",
+        "yesterday": "Hier"
+    }
+  },
+  "foundationAnalyticsPage": {
+    "title": "Analyses de la Fondation",
+    "mockDataVisualization": "Visualisation de données fictives.",
+    "spendingByCategory": "Dépenses par catégorie (Produits/Services)",
+    "parentLeadConversion": "Entonnoir de conversion des demandes de parents",
+    "leadFunnel": "Entonnoir de prospects (Nouveau > Visite > Inscrit)",
+    "staffTrainingCompletion": "Achèvement de la formation du personnel",
+    "trainingStatus": "Statut de la formation",
+    "enrollmentTrend": "Tendance des inscriptions",
+    "monthlyEnrollment": "Tendance mensuelle des inscriptions"
+  }
+}
