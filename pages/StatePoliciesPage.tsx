@@ -1,19 +1,14 @@
 
-
 import React, { useState, useMemo } from 'react';
-// FIX: Update import paths for monorepo structure
-import { PolicyDocument, UserRole, PolicyAlert, PolicyAlertType, PolicyDocument as PolicyDocType } from 'packages/core/src/types';
-// FIX: Update import paths for monorepo structure
-import { MOCK_POLICY_DOCS, MOCK_POLICY_ALERTS, STANDARD_INPUT_FIELD, ICON_INPUT_FIELD } from 'packages/core/src/constants'; 
+import { PolicyDocument, UserRole, PolicyAlert, PolicyAlertType, PolicyDocument as PolicyDocType } from '../types';
+import { MOCK_POLICY_DOCS, MOCK_POLICY_ALERTS, STANDARD_INPUT_FIELD, ICON_INPUT_FIELD } from '../constants'; 
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
 import Tabs from '../components/ui/Tabs';
 import { NewspaperIcon, MagnifyingGlassIcon, CalendarDaysIcon, ArrowDownTrayIcon, EyeIcon, CheckCircleIcon, ClockIcon, ExclamationTriangleIcon, DocumentTextIcon, InformationCircleIcon, PlusCircleIcon, PencilSquareIcon, TrashIcon, ShieldExclamationIcon } from '@heroicons/react/24/outline';
-// FIX: Update import paths for monorepo structure
-import { useAppContext } from 'packages/contexts/src/AppContext';
+import { useAppContext } from '../contexts/AppContext';
 import ContentUploadModal from '../components/admin/ContentUploadModal';
-// FIX: Module has no default export, changed to named import.
-import { PolicyAlertModal } from '../components/admin/PolicyAlertModal'; 
+import PolicyAlertModal from '../components/admin/PolicyAlertModal'; 
 
 interface PolicyDocumentCardProps {
   doc: PolicyDocument;

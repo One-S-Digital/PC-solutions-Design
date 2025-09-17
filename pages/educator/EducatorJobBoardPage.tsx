@@ -1,12 +1,8 @@
 
 
 import React, { useState, useMemo } from 'react';
-// FIX: Update import paths for monorepo structure
-import { JobListing } from 'packages/core/src/types';
-// FIX: Update import paths for monorepo structure
-import { MOCK_JOB_LISTINGS, STANDARD_INPUT_FIELD, ICON_INPUT_FIELD } from 'packages/core/src/constants';
-// FIX: Import SWISS_CANTONS from types.ts
-import { SWISS_CANTONS } from 'packages/core/src/types';
+import { JobListing } from '../../types';
+import { MOCK_JOB_LISTINGS, STANDARD_INPUT_FIELD, ICON_INPUT_FIELD, SWISS_CANTONS } from '../../constants';
 import Card from '../../components/ui/Card';
 import Button from '../../components/ui/Button';
 import { BriefcaseIcon, MapPinIcon, CalendarDaysIcon, MagnifyingGlassIcon, ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline';

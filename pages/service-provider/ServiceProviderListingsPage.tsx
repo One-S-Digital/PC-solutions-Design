@@ -2,10 +2,8 @@ import React, { useState, useMemo } from 'react';
 import Card from '../../components/ui/Card';
 import Button from '../../components/ui/Button';
 import { PlusCircleIcon, PencilSquareIcon, TrashIcon, EyeIcon, WrenchScrewdriverIcon, TagIcon } from '@heroicons/react/24/outline';
-// FIX: Update import paths for monorepo structure
-import { MOCK_SERVICES, STANDARD_INPUT_FIELD, ICON_INPUT_FIELD } from 'packages/core/src/constants';
-// FIX: Update import paths for monorepo structure
-import { Service, ServiceCategory, SERVICE_CATEGORIES } from 'packages/core/src/types';
+import { MOCK_SERVICES, STANDARD_INPUT_FIELD, ICON_INPUT_FIELD } from '../../constants';
+import { Service, ServiceCategory, SERVICE_CATEGORIES } from '../../types';
 import ServiceUploadModal from '../../components/service-provider/ServiceUploadModal';
 import { useAppContext } from '../../contexts/AppContext';
 import { useTranslation } from 'react-i18next';

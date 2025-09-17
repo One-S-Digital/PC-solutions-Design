@@ -1,10 +1,8 @@
 
 
 import React, { createContext, useState, useContext, ReactNode, useEffect, useCallback } from 'react';
-// FIX: Update import paths for monorepo structure
-import { Message, Conversation, UserRole, User } from 'packages/core/src/types';
-// FIX: Update import paths for monorepo structure
-import { MOCK_CONVERSATIONS, MOCK_MESSAGES, ALL_USERS_MOCK } from 'packages/core/src/constants';
+import { Message, Conversation, UserRole, User } from '../types';
+import { MOCK_CONVERSATIONS, MOCK_MESSAGES, ALL_USERS_MOCK } from '../constants';
 import { useAppContext } from './AppContext';
 
 interface MessagingContextType {
@@ -153,101 +151,93 @@ export const MessagingProvider: React.FC<{ children: ReactNode }> = ({ children 
             }));
             
             // Also update conversation list with new last message
-            const updatedConvosWithReply = MOCK_CONVERSATIONS.map(conv =>
-                conv.id === conversationId
-                    ? { ...conv, lastMessageSnippet: replyContent, lastMessageTimestamp: replyMessage.timestamp, lastMessageSenderId: replier.id }
-                    : conv
+            const updatedConvsWithReply = MOCK_CONVERSATIONS.map(conv =>
+              conv.id === conversationId
+                ? { ...conv, lastMessageSnippet: replyContent, lastMessageTimestamp: replyMessage.timestamp, lastMessageSenderId: replier.id }
+                : conv
             );
-            setConversations(updatedConvosWithReply);
-            const mockConvIndexReply = MOCK_CONVERSATIONS.findIndex(c => c.id === conversationId);
-            if (mockConvIndexReply !== -1) {
-                MOCK_CONVERSATIONS[mockConvIndexReply] = {
-                    ...MOCK_CONVERSATIONS[mockConvIndexReply],
-                    lastMessageSnippet: replyContent,
-                    lastMessageTimestamp: replyMessage.timestamp,
-                    lastMessageSenderId: replier.id,
-                };
-            }
+            setConversations(updatedConvsWithReply);
+             if (mockConvIndex !== -1) {
+                 MOCK_CONVERSATIONS[mockConvIndex] = updatedConvsWithReply.find(c => c.id === conversationId)!;
+             }
         }
       }
-    }, 1500); // Wait 1.5 seconds
+    }, 2000 + Math.random() * 1500); // Wait 2-3.5 seconds
   };
-  
+
   const startOrGetConversation = (recipientId: string, recipientName: string, recipientRole: UserRole): string => {
-    if (!currentUser) throw new Error("No current user to start a conversation");
-
-    // Find existing 1-on-1 conversation
-    const existingConv = MOCK_CONVERSATIONS.find(conv => 
-      conv.participantIds.length === 2 &&
-      conv.participantIds.includes(currentUser.id) &&
-      conv.participantIds.includes(recipientId)
-    );
-
-    if (existingConv) {
-      return existingConv.id;
-    }
-
-    // Create a new conversation
-    const newConversation: Conversation = {
-      id: `conv_${currentUser.id}_${recipientId}_${Date.now()}`,
-      participantIds: [currentUser.id, recipientId],
-      participantNames: {
-        [currentUser.id]: currentUser.name,
-        [recipientId]: recipientName,
-      },
-      participantRoles: {
-        [currentUser.id]: currentUser.role,
-        [recipientId]: recipientRole,
-      },
-      lastMessageSnippet: 'Conversation started.',
-      lastMessageTimestamp: new Date().toISOString(),
-      lastMessageSenderId: currentUser.id,
-    };
-
-    MOCK_CONVERSATIONS.push(newConversation);
-    setConversations(prev => [...prev, newConversation]);
-    return newConversation.id;
+    if (!currentUser) throw new Error("User not logged in");
+    const participants = [
+        { id: currentUser.id, name: currentUser.name, role: currentUser.role },
+        { id: recipientId, name: recipientName, role: recipientRole }
+    ];
+    return startConversation(participants);
   };
   
   const startConversation = (participants: {id: string, name: string, role: UserRole}[], groupName?: string): string => {
-    if (!currentUser) throw new Error("No current user to start a conversation");
+    if (!currentUser) throw new Error("User not logged in");
+
+    // Ensure current user is part of the participants
+    if (!participants.some(p => p.id === currentUser.id)) {
+        participants.push({ id: currentUser.id, name: currentUser.name, role: currentUser.role });
+    }
+
+    const participantIds = participants.map(p => p.id).sort();
+    let conversation: Conversation | undefined;
+
+    if (participantIds.length > 2) { // It's a group chat, create new one
+      // Group chat creation logic
+    } else { // It's a 1-on-1 chat, check if it exists
+        conversation = MOCK_CONVERSATIONS.find(
+          conv => conv.participantIds.length === 2 && 
+                  conv.participantIds.every(pid => participantIds.includes(pid))
+        );
+    }
     
-    const allParticipants = [...participants, {id: currentUser.id, name: currentUser.name, role: currentUser.role}];
-    
-    const newConversation: Conversation = {
-        id: `conv_group_${Date.now()}`,
-        name: groupName || allParticipants.map(p => p.name).join(', '),
-        participantIds: allParticipants.map(p => p.id),
-        participantNames: allParticipants.reduce((acc, p) => ({...acc, [p.id]: p.name}), {}),
-        participantRoles: allParticipants.reduce((acc, p) => ({...acc, [p.id]: p.role}), {}),
+
+    if (!conversation) {
+      const newConversationId = `conv${Date.now()}`;
+      const participantNames = participants.reduce((acc, p) => ({ ...acc, [p.id]: p.name }), {});
+      const participantRoles = participants.reduce((acc, p) => ({ ...acc, [p.id]: p.role }), {});
+      
+      conversation = {
+        id: newConversationId,
+        name: groupName,
+        participantIds,
+        participantNames,
+        participantRoles,
+        lastMessageSnippet: 'Conversation started.',
         lastMessageTimestamp: new Date().toISOString(),
-    };
+        lastMessageSenderId: currentUser.id,
+      };
+      MOCK_CONVERSATIONS.push(conversation);
+      setConversations(prev => [...prev, conversation!]);
+      setMessagesByConversation(prev => ({ ...prev, [newConversationId]: [] }));
+    }
     
-    MOCK_CONVERSATIONS.push(newConversation);
-    setConversations(prev => [...prev, newConversation]);
-    return newConversation.id;
+    setActiveConversationId(conversation.id);
+    return conversation.id;
   };
 
-  // FIX: Added missing return statement for the provider
+
   return (
-    <MessagingContext.Provider value={{
-      conversations,
-      messagesByConversation,
-      activeConversationId,
-      setActiveConversationId,
-      loadUserConversations,
-      loadMessagesForConversation,
-      sendMessage,
-      startOrGetConversation,
-      startConversation,
-      getUnreadCountForConversation,
+    <MessagingContext.Provider value={{ 
+        conversations, 
+        messagesByConversation, 
+        activeConversationId, 
+        setActiveConversationId: loadMessagesForConversation, // This sets active ID and loads messages
+        loadUserConversations, 
+        loadMessagesForConversation, 
+        sendMessage,
+        startOrGetConversation,
+        startConversation,
+        getUnreadCountForConversation
     }}>
       {children}
     </MessagingContext.Provider>
   );
 };
 
-// FIX: Added export for useMessaging hook
 export const useMessaging = (): MessagingContextType => {
   const context = useContext(MessagingContext);
   if (context === undefined) {

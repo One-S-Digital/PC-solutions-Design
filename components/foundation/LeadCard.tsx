@@ -1,16 +1,11 @@
-
 import React, { useState } from 'react';
-// FIX: Update import paths for monorepo structure
-import { ParentLead, FoundationLeadResponseStatus, LeadMainStatus, FoundationResponse, UserRole } from 'packages/core/src/types';
+import { ParentLead, FoundationLeadResponseStatus, LeadMainStatus, FoundationResponse, UserRole } from '../../types';
 import Card from '../ui/Card';
 import Button from '../ui/Button';
-// FIX: Update import paths for monorepo structure
-import { MOCK_FOUNDATION_ORG_KINDERWELT } from 'packages/core/src/constants'; // For foundation name
+import { MOCK_FOUNDATION_ORG_KINDERWELT } from '../../constants'; // For foundation name
 import { CheckCircleIcon, XCircleIcon, QuestionMarkCircleIcon, ChatBubbleLeftEllipsisIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline';
-// FIX: Update import paths for monorepo structure
-import { useAppContext } from 'packages/contexts/src/AppContext';
-// FIX: Update import paths for monorepo structure
-import { useMessaging } from 'packages/contexts/src/MessagingContext';
+import { useAppContext } from '../../contexts/AppContext';
+import { useMessaging } from '../../contexts/MessagingContext';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 

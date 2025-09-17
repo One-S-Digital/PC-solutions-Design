@@ -1,14 +1,13 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAppContext } from '../contexts/AppContext';
-// FIX: Update import path for constants
-import { STANDARD_INPUT_FIELD, APP_NAME, ALL_USERS_MOCK, MOCK_SUPER_ADMIN_USER } from '../constants';
+import { STANDARD_INPUT_FIELD, APP_NAME } from '../constants';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
 import { SquaresPlusIcon, EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import LanguageSwitcher from '../components/ui/LanguageSwitcher';
 import { useTranslation } from 'react-i18next';
+import { ALL_USERS_MOCK, MOCK_SUPER_ADMIN_USER } from '../constants';
 
 // Mock social icons
 const GoogleIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
@@ -20,7 +19,7 @@ const FacebookIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
 
 const LoginPage: React.FC = () => {
   const { t } = useTranslation();
-  const { login, currentUser, logout } = useAppContext();
+  const { login, currentUser } = useAppContext();
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -34,14 +33,33 @@ const LoginPage: React.FC = () => {
   // Redirect if user is already logged in
   useEffect(() => {
     if (currentUser) {
-      if (currentUser.role === 'Super Admin' || currentUser.role === 'Admin') {
-        // Admins should not be on the frontend app. Log them out if they land here.
-        logout();
+      // If the goal is to view the admin dash, redirect there, otherwise general dashboard
+      if (currentUser.role === 'Super Admin') {
+        navigate('/admin/content-dashboard', { replace: true });
       } else {
         navigate('/dashboard', { replace: true });
       }
     }
-  }, [currentUser, navigate, logout]);
+  }, [currentUser, navigate]);
+
+  // Auto-login as Admin to show the completed dashboard
+  useEffect(() => {
+    const autoLoginAdmin = async () => {
+      // This will run only once when the component mounts and there is no current user
+      if (!currentUser) {
+        setIsLoading(true);
+        const result = await login(MOCK_SUPER_ADMIN_USER.email, 'password123');
+        if (result.success) {
+          // The effect above will handle the redirect once currentUser is set.
+        } else {
+          setError("Failed to auto-login as admin.");
+        }
+        setIsLoading(false);
+      }
+    };
+    autoLoginAdmin();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Empty dependency array ensures this runs only once on initial mount
 
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -87,7 +105,7 @@ const LoginPage: React.FC = () => {
           <p className="text-sm text-gray-500">{t('loginPage.subtitle')}</p>
         </div>
 
-        {isLoading && <p className="text-center text-gray-500">Logging in...</p>}
+        {isLoading && <p className="text-center text-gray-500">Loading Admin Dashboard...</p>}
 
         {error && (
           <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md text-sm">
@@ -133,8 +151,7 @@ const LoginPage: React.FC = () => {
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute inset-y-0 right-0 px-3 flex items-center text-gray-500 hover:text-swiss-teal"
-                    // FIX: Cast t() result to string for aria-label
-                    aria-label={showPassword ? t('hidePassword') as string : t('showPassword') as string}
+                    aria-label={showPassword ? t('hidePassword') : t('showPassword')}
                 >
                     {showPassword ? <EyeSlashIcon className="h-5 w-5"/> : <EyeIcon className="h-5 w-5"/>}
                 </button>
@@ -158,7 +175,7 @@ const LoginPage: React.FC = () => {
                       size="xs"
                       className="font-normal"
                     >
-                      {t(`userRoles.${user.role}`, user.role) as React.ReactNode}
+                      {t(`userRoles.${user.role}`, user.role)}
                     </Button>
                 ))}
             </div>

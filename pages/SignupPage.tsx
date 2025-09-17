@@ -1,5 +1,4 @@
 
-
 import React, { useState, FormEvent, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -139,7 +138,6 @@ const SignupPage: React.FC = () => {
         <div className="relative">
           <input type={ (name === 'password' && !showPassword) || (name === 'confirmPassword' && !showConfirmPassword) ? 'password' : type}
             id={name} name={name} 
-            // FIX: Ensure value is always a string for the input
             value={String(formData[name as keyof SignupFormData] ?? '')}
             onChange={handleChange}
             className={`${STANDARD_INPUT_FIELD} ${errors[name as keyof SignupFormData] ? 'border-swiss-coral' : ''}`}
@@ -147,7 +145,7 @@ const SignupPage: React.FC = () => {
             {(name === 'password' || name === 'confirmPassword') && (
                  <button type="button" onClick={() => name === 'password' ? setShowPassword(!showPassword) : setShowConfirmPassword(!showConfirmPassword)}
                     className="absolute inset-y-0 right-0 px-3 flex items-center text-gray-500 hover:text-swiss-teal"
-                    aria-label={ (name === 'password' && showPassword) || (name === 'confirmPassword' && showConfirmPassword) ? t('hidePassword') as string : t('showPassword') as string}
+                    aria-label={ (name === 'password' && showPassword) || (name === 'confirmPassword' && showConfirmPassword) ? t('hidePassword') : t('showPassword')}
                  >
                     { (name === 'password' && showPassword) || (name === 'confirmPassword' && showConfirmPassword) ? <EyeSlashIcon className="h-5 w-5"/> : <EyeIcon className="h-5 w-5"/>}
                 </button>

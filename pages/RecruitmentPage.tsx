@@ -1,17 +1,12 @@
-
-
 import React, { useState, useMemo, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-// FIX: Update import paths for monorepo structure
-import { JobListing, CandidateProfile, UserRole } from 'packages/core/src/types';
-// FIX: Update import paths for monorepo structure
-import { MOCK_JOB_LISTINGS, MOCK_CANDIDATE_PROFILES, STANDARD_INPUT_FIELD, ICON_INPUT_FIELD } from 'packages/core/src/constants';
+import { JobListing, CandidateProfile, UserRole } from '../types';
+import { MOCK_JOB_LISTINGS, MOCK_CANDIDATE_PROFILES, STANDARD_INPUT_FIELD, ICON_INPUT_FIELD } from '../constants';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
 import Tabs from '../components/ui/Tabs';
 import { BriefcaseIcon, UserGroupIcon, MapPinIcon, CalendarDaysIcon, EyeIcon, PencilIcon, TrashIcon, PlusCircleIcon, MagnifyingGlassIcon, FunnelIcon, StarIcon } from '@heroicons/react/24/outline';
-// FIX: Update import paths for monorepo structure
-import { useAppContext } from 'packages/contexts/src/AppContext';
+import { useAppContext } from '../contexts/AppContext';
 import { useTranslation } from 'react-i18next';
 import JobPostModal from '../components/recruitment/JobPostModal';
 import ViewApplicantsModal from '../components/recruitment/ViewApplicantsModal';

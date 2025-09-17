@@ -1,11 +1,7 @@
-
 import React, { useState, useEffect } from 'react';
-// FIX: Update import paths for monorepo structure
-import { useAppContext } from 'packages/contexts/src/AppContext';
-// FIX: Update import paths for monorepo structure
-import { MOCK_ORGANIZATIONS, MOCK_FOUNDATION_ORG_KINDERWELT, STANDARD_INPUT_FIELD } from 'packages/core/src/constants'; // Use MOCK_ORGANIZATIONS for lookup, Import STANDARD_INPUT_FIELD
-// FIX: Update import paths for monorepo structure
-import { Organization } from 'packages/core/src/types';
+import { useAppContext } from '../../contexts/AppContext';
+import { MOCK_ORGANIZATIONS, MOCK_FOUNDATION_ORG_KINDERWELT, STANDARD_INPUT_FIELD } from '../../constants'; // Use MOCK_ORGANIZATIONS for lookup, Import STANDARD_INPUT_FIELD
+import { Organization } from '../../types';
 import Button from '../ui/Button';
 import Card from '../ui/Card';
 import { useTranslation } from 'react-i18next';

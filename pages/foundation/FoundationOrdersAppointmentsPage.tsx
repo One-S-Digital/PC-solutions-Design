@@ -1,16 +1,12 @@
 
-
 import React, { useState, useMemo } from 'react';
 import Card from '../../components/ui/Card';
 import Tabs from '../../components/ui/Tabs';
 import Button from '../../components/ui/Button';
 import { ShoppingCartIcon, CalendarDaysIcon, InboxIcon } from '@heroicons/react/24/outline';
-// FIX: Update import paths for monorepo structure
-import { useAppContext } from 'packages/contexts/src/AppContext';
-// FIX: Update import paths for monorepo structure
-import { Order, ServiceRequest, OrderRequestStatus, ServiceRequestStatus, UserRole } from 'packages/core/src/types';
-// FIX: Update import paths for monorepo structure
-import { MOCK_ORDERS, MOCK_SERVICE_REQUESTS, MOCK_ORGANIZATIONS, MOCK_PRODUCTS, MOCK_SERVICES } from 'packages/core/src/constants';
+import { useAppContext } from '../../contexts/AppContext';
+import { Order, ServiceRequest, OrderRequestStatus, ServiceRequestStatus, UserRole } from '../../types';
+import { MOCK_ORDERS, MOCK_SERVICE_REQUESTS, MOCK_ORGANIZATIONS, MOCK_PRODUCTS, MOCK_SERVICES } from '../../constants';
 import { useTranslation } from 'react-i18next';
 
 const FoundationOrdersAppointmentsPage: React.FC = () => {
@@ -103,8 +99,7 @@ const FoundationOrdersAppointmentsPage: React.FC = () => {
                     <td className="px-4 py-2 whitespace-nowrap">{new Date(order.requestDate).toLocaleDateString()}</td>
                     <td className="px-4 py-2 whitespace-nowrap">
                       <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getOrderStatusClass(order.status)}`}>
-                        {/* FIX: Cast result of t() to string to satisfy return type */}
-                        {t(`orderStatus.${order.status.toLowerCase()}` as const, order.status) as string}
+                        {t(`orderStatus.${order.status.toLowerCase()}` as const, order.status)}
                       </span>
                     </td>
                     <td className="px-4 py-2 whitespace-nowrap">
@@ -165,8 +160,7 @@ const FoundationOrdersAppointmentsPage: React.FC = () => {
                     </td>
                     <td className="px-4 py-2 whitespace-nowrap">
                       <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getServiceStatusClass(req.status)}`}>
-                        {/* FIX: Cast result of t() to string to satisfy return type */}
-                        {t(`serviceStatus.${req.status.toLowerCase().replace(/\s+/g, '')}` as const, req.status) as string}
+                        {t(`serviceStatus.${req.status.toLowerCase().replace(/\s+/g, '')}` as const, req.status)}
                       </span>
                     </td>
                     <td className="px-4 py-2 whitespace-nowrap">

@@ -1,17 +1,14 @@
 
-
 import React, { useState } from 'react';
 import Card from '../../components/ui/Card';
 import Button from '../../components/ui/Button';
-// FIX: Update import paths for monorepo structure
-import { STANDARD_INPUT_FIELD, MOCK_CANDIDATE_PROFILES } from 'packages/core/src/constants';
+import { STANDARD_INPUT_FIELD, MOCK_CANDIDATE_PROFILES } from '../../constants';
 import { 
     UserCircleIcon, IdentificationIcon, ArrowUpTrayIcon, CalendarDaysIcon, 
     BriefcaseIcon, AcademicCapIcon, PaperClipIcon, StarIcon, PencilSquareIcon, XMarkIcon 
 } from '@heroicons/react/24/outline';
 import { useTranslation } from 'react-i18next';
-// FIX: Update import paths for monorepo structure
-import { CandidateProfile, WorkExperienceItem, EducationItem, DocumentItem, CertificationItem } from 'packages/core/src/types';
+import { CandidateProfile, WorkExperienceItem, EducationItem, DocumentItem, CertificationItem } from '../../types';
 
 // Use the first mock candidate as the data for this page
 const mockCandidateData = MOCK_CANDIDATE_PROFILES[0];

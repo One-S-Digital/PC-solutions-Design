@@ -1,9 +1,5 @@
-
-
 import React from 'react';
-// FIX: Update import paths for monorepo structure
 import { Partner } from '../types';
-// FIX: Update import paths for monorepo structure
 import { MOCK_PARTNERS } from '../constants';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';

@@ -1,18 +1,14 @@
 
-
 import React, { useState, useMemo, useEffect } from 'react';
-// FIX: Update import paths for monorepo structure
-import { Organization, Service, OrderRequest, UserRole, Product } from 'packages/core/src/types';
-// FIX: Update import paths for monorepo structure
-import { MOCK_PRODUCTS, MOCK_SERVICES, MOCK_ORGANIZATIONS, STANDARD_INPUT_FIELD, ICON_INPUT_FIELD } from 'packages/core/src/constants'; 
+import { Organization, Service, OrderRequest, UserRole, Product } from '../types';
+import { MOCK_PRODUCTS, MOCK_SERVICES, MOCK_ORGANIZATIONS, STANDARD_INPUT_FIELD, ICON_INPUT_FIELD } from '../constants'; 
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
 import Tabs from '../components/ui/Tabs';
 import { BuildingStorefrontIcon, WrenchScrewdriverIcon, TagIcon, FunnelIcon, MagnifyingGlassIcon, ListBulletIcon, Squares2X2Icon, InformationCircleIcon, ChevronDownIcon, EyeIcon, StarIcon, ArrowsUpDownIcon } from '@heroicons/react/24/outline';
 // OrderRequestModal removed for direct cart integration
 import SupplierCard from '../components/marketplace/SupplierCard'; 
-// FIX: Update import paths for monorepo structure
-import { useAppContext } from 'packages/contexts/src/AppContext'; 
+import { useAppContext } from '../contexts/AppContext'; 
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
@@ -78,7 +74,7 @@ const MarketplacePage: React.FC = () => {
       setTagFilter('All');
       setSortOption('name_asc');
     }
-  }, [location.pathname, activeTabIndex]); // FIX: Added activeTabIndex to dependencies
+  }, [location.pathname]); // FIX: Only depend on location.pathname
 
   const activeTabLabel = useMemo(() => {
     return activeTabIndex === 0 
@@ -224,8 +220,7 @@ const MarketplacePage: React.FC = () => {
                 onChange={(e) => {setCategoryFilter(e.target.value);}}
                 className={STANDARD_INPUT_FIELD}
             >
-                {/* FIX: Add explicit type for mapped variable */}
-                {currentCategories.map((cat: string) => <option key={cat} value={cat}>{cat}</option>)}
+                {currentCategories.map(cat => <option key={cat} value={cat}>{cat}</option>)}
             </select>
           </div>
           <div>
@@ -236,8 +231,7 @@ const MarketplacePage: React.FC = () => {
                 onChange={(e) => setRegionFilter(e.target.value)}
                 className={STANDARD_INPUT_FIELD}
             >
-                {/* FIX: Add explicit type for mapped variable */}
-                {allRegions.map((reg: string) => <option key={reg} value={reg}>{reg}</option>)}
+                {allRegions.map(reg => <option key={reg} value={reg}>{reg}</option>)}
             </select>
           </div>
           {activeTabIndex === 0 && (

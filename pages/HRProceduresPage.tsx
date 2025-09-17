@@ -1,15 +1,11 @@
 
-
 import React, { useState, useMemo } from 'react';
-// FIX: Update import paths for monorepo structure
-import { HRDocument, UserRole, UploadableContentType, HRDocument as HRDocType } from 'packages/core/src/types';
-// FIX: Update import paths for monorepo structure
-import { MOCK_HR_DOCS, STANDARD_INPUT_FIELD, ICON_INPUT_FIELD } from 'packages/core/src/constants';
+import { HRDocument, UserRole, UploadableContentType, HRDocument as HRDocType } from '../types';
+import { MOCK_HR_DOCS, STANDARD_INPUT_FIELD, ICON_INPUT_FIELD } from '../constants';
 import Card from '../components/ui/Card'; 
 import Button from '../components/ui/Button';
 import { DocumentTextIcon, MagnifyingGlassIcon, CalendarDaysIcon, ArrowDownTrayIcon, EyeIcon, StarIcon, PlusCircleIcon, DocumentDuplicateIcon, UserPlusIcon, UsersIcon, BuildingLibraryIcon, AcademicCapIcon, HeartIcon, FolderIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
-// FIX: Update import paths for monorepo structure
-import { useAppContext } from 'packages/contexts/src/AppContext';
+import { useAppContext } from '../contexts/AppContext';
 import ContentUploadModal from '../components/admin/ContentUploadModal';
 import { useTranslation } from 'react-i18next'; // Import useTranslation
 
@@ -41,7 +37,7 @@ const HRDocumentCard: React.FC<HRDocumentCardProps> = ({ doc, onToggleFavorite, 
               {doc.language && <p className="text-xs text-gray-500">{t('hrDocumentCard.languageLabel', { language: doc.language })} {doc.version && t('hrDocumentCard.versionLabel', { version: doc.version })}</p>}
             </div>
           </div>
-          <button onClick={() => onToggleFavorite(doc.id)} className="text-gray-300 hover:text-yellow-400 focus:outline-none" aria-label={t('hrDocumentCard.toggleFavoriteLabel') as string}>
+          <button onClick={() => onToggleFavorite(doc.id)} className="text-gray-300 hover:text-yellow-400 focus:outline-none" aria-label={t('hrDocumentCard.toggleFavoriteLabel')}>
             <StarIcon className={`w-6 h-6 transition-colors ${doc.isFavorite ? 'fill-yellow-400 text-yellow-400' : 'text-gray-400 hover:text-yellow-300'}`} />
           </button>
         </div>
@@ -61,11 +57,11 @@ const HRDocumentCard: React.FC<HRDocumentCardProps> = ({ doc, onToggleFavorite, 
       </div>
       <div className="bg-gray-50 px-5 py-3 mt-auto border-t flex justify-end items-center space-x-2">
         <Button variant="primary" size="sm" leftIcon={ArrowDownTrayIcon} onClick={() => alert(t('hrDocumentCard.downloadingAlert', { title: doc.title }))}>{t('hrDocumentCard.downloadButton')}</Button>
-        <Button variant="ghost" size="sm" leftIcon={EyeIcon} onClick={() => alert(t('hrDocumentCard.previewingAlert', { title: doc.title }))} className="p-2" aria-label={t('hrDocumentCard.previewButtonLabel') as string} title={t('hrDocumentCard.previewButtonLabel') as string}></Button>
+        <Button variant="ghost" size="sm" leftIcon={EyeIcon} onClick={() => alert(t('hrDocumentCard.previewingAlert', { title: doc.title }))} className="p-2" aria-label={t('hrDocumentCard.previewButtonLabel')} title={t('hrDocumentCard.previewButtonLabel')}></Button>
         {isAdmin && (
           <>
-            <Button variant="ghost" size="sm" leftIcon={PencilIcon} onClick={() => onEdit(doc)} className="text-blue-600 hover:text-blue-700 p-2" aria-label={t('hrDocumentCard.editButtonLabel') as string} title={t('hrDocumentCard.editButtonLabel') as string}></Button>
-            <Button variant="ghost" size="sm" leftIcon={TrashIcon} onClick={() => onDelete(doc.id)} className="text-red-600 hover:text-red-700 p-2" aria-label={t('hrDocumentCard.deleteButtonLabel') as string} title={t('hrDocumentCard.deleteButtonLabel') as string}></Button>
+            <Button variant="ghost" size="sm" leftIcon={PencilIcon} onClick={() => onEdit(doc)} className="text-blue-600 hover:text-blue-700 p-2" aria-label={t('hrDocumentCard.editButtonLabel')} title={t('hrDocumentCard.editButtonLabel')}></Button>
+            <Button variant="ghost" size="sm" leftIcon={TrashIcon} onClick={() => onDelete(doc.id)} className="text-red-600 hover:text-red-700 p-2" aria-label={t('hrDocumentCard.deleteButtonLabel')} title={t('hrDocumentCard.deleteButtonLabel')}></Button>
           </>
         )}
       </div>

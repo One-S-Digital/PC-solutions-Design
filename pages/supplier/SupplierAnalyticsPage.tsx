@@ -3,8 +3,7 @@ import React from 'react';
 import Card from '../../components/ui/Card';
 import Button from '../../components/ui/Button';
 import { ArrowDownTrayIcon, CalendarDaysIcon, ChartBarIcon, ChartPieIcon, PresentationChartLineIcon, TableCellsIcon } from '@heroicons/react/24/outline';
-// FIX: Update import paths for monorepo structure
-import { STANDARD_INPUT_FIELD } from 'packages/core/src/constants';
+import { STANDARD_INPUT_FIELD } from '../../constants';
 import { useTranslation } from 'react-i18next';
 
 const SupplierAnalyticsPage: React.FC = () => {

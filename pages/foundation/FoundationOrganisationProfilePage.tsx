@@ -2,8 +2,7 @@ import React from 'react';
 import Card from '../../components/ui/Card';
 import OrganizationProfileForm from '../../components/settings/OrganizationProfileForm'; // Main form
 import Button from '../../components/ui/Button';
-// FIX: Update import paths for monorepo structure
-import { STANDARD_INPUT_FIELD } from 'packages/core/src/constants';
+import { STANDARD_INPUT_FIELD } from '../../constants';
 import { BuildingOfficeIcon, PhotoIcon, GlobeAltIcon, CalendarDaysIcon, UserPlusIcon, LinkIcon } from '@heroicons/react/24/outline';
 import { useTranslation } from 'react-i18next';
 

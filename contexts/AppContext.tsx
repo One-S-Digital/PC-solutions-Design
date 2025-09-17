@@ -1,8 +1,5 @@
-
 import React, { createContext, useState, useContext, ReactNode, Dispatch, SetStateAction, useEffect, useCallback } from 'react';
-// FIX: Update import paths for monorepo structure
-import { User, UserRole, ParentLead, LeadMainStatus, SupportedLanguage, SignupFormData, SignupRole, JobListing, Application, ApplicationStatus, DocumentItem, PlatformSettings } from 'packages/core/src/types'; 
-// FIX: Update import paths for monorepo structure
+import { User, UserRole, ParentLead, LeadMainStatus, SupportedLanguage, SignupFormData, SignupRole, JobListing, Application, ApplicationStatus, DocumentItem, PlatformSettings } from '../types'; 
 import { 
   ALL_USERS_MOCK,
   MOCK_PARENT_LEADS,
@@ -10,7 +7,8 @@ import {
   MOCK_JOB_LISTINGS,
   MOCK_CANDIDATE_PROFILES,
   MOCK_PLATFORM_SETTINGS
-} from 'packages/core/src/constants';
+} from '../constants';
+import i18n from '../i18n'; // Import i18n instance
 
 interface AppContextType {
   currentUser: User | null;
@@ -48,12 +46,24 @@ export const AppContextProvider: React.FC<{ children: ReactNode }> = ({ children
   const [applications, setApplications] = useState<Application[]>(MOCK_APPLICATIONS);
   const [userFiles, setUserFiles] = useState<DocumentItem[]>([]);
   const [platformSettings, setPlatformSettings] = useState<PlatformSettings>(MOCK_PLATFORM_SETTINGS);
-  // FIX: Simplified language state, removing direct dependency on i18n instance from shared context
-  const [language, setLanguage] = useState<SupportedLanguage>('EN');
+  const [language, setLanguage] = useState<SupportedLanguage>(() => {
+    const detectedLng = i18n.language?.toUpperCase().split('-')[0];
+    if (detectedLng === 'FR' || detectedLng === 'DE') {
+      return detectedLng as SupportedLanguage;
+    }
+    return 'EN';
+  });
   const [favoriteCandidateIds, setFavoriteCandidateIds] = useState<string[]>(() => {
     const storedFavorites = localStorage.getItem('favoriteCandidateIds');
     return storedFavorites ? JSON.parse(storedFavorites) : [];
   });
+
+  useEffect(() => {
+    const newLangCode = language.toLowerCase();
+    if (i18n.language !== newLangCode) {
+      i18n.changeLanguage(newLangCode);
+    }
+  }, [language]);
 
   useEffect(() => {
     if(currentUser?.role === UserRole.EDUCATOR) {
@@ -67,6 +77,37 @@ export const AppContextProvider: React.FC<{ children: ReactNode }> = ({ children
     }
   }, [currentUser]);
 
+
+  useEffect(() => {
+    const handleLanguageChanged = (lng: string) => {
+      const newSupportedLang = lng.toUpperCase().split('-')[0] as SupportedLanguage;
+      if (['EN', 'FR', 'DE'].includes(newSupportedLang) && newSupportedLang !== language) {
+        setLanguage(newSupportedLang);
+      }
+      document.documentElement.lang = lng.split('-')[0];
+      document.title = i18n.t('appName');
+    };
+
+    i18n.on('languageChanged', handleLanguageChanged);
+    
+    if (i18n.isInitialized) {
+        document.title = i18n.t('appName');
+        document.documentElement.lang = i18n.language.split('-')[0];
+    } else {
+        i18n.on('initialized', (_options) => { 
+             document.title = i18n.t('appName');
+             document.documentElement.lang = i18n.language.split('-')[0];
+             const detectedLngOnInit = i18n.language?.toUpperCase().split('-')[0] as SupportedLanguage;
+             if (['EN', 'FR', 'DE'].includes(detectedLngOnInit) && detectedLngOnInit !== language) {
+                setLanguage(detectedLngOnInit);
+             }
+        });
+    }
+    
+    return () => {
+      i18n.off('languageChanged', handleLanguageChanged);
+    };
+  }, [language]);
 
   const login = async (email: string): Promise<{ success: boolean; message?: string }> => {
     return new Promise(resolve => {

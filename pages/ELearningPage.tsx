@@ -1,15 +1,11 @@
 
-
 import React, { useState, useMemo } from 'react';
-// FIX: Update import paths for monorepo structure
-import { Course, UserRole, UploadableContentType, Course as CourseType, ELearningContentType } from 'packages/core/src/types';
-// FIX: Update import paths for monorepo structure
-import { MOCK_COURSES, STANDARD_INPUT_FIELD, ICON_INPUT_FIELD } from 'packages/core/src/constants';
+import { Course, UserRole, UploadableContentType, Course as CourseType, ELearningContentType } from '../types';
+import { MOCK_COURSES, STANDARD_INPUT_FIELD, ICON_INPUT_FIELD } from '../constants';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
 import { AcademicCapIcon, VideoCameraIcon, DocumentTextIcon, EyeIcon, PlayIcon, ArrowDownTrayIcon, PlusCircleIcon, LinkIcon, MagnifyingGlassIcon, ArrowTopRightOnSquareIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
-// FIX: Update import paths for monorepo structure
-import { useAppContext } from 'packages/contexts/src/AppContext';
+import { useAppContext } from '../contexts/AppContext';
 import ContentUploadModal from '../components/admin/ContentUploadModal';
 import { useTranslation } from 'react-i18next';
 
@@ -29,8 +25,7 @@ const CourseMaterialCard: React.FC<CourseMaterialCardProps> = ({ item, onEdit, o
     [ELearningContentType.LINK]: { icon: LinkIcon, actionText: t('eLearningPage.actions.openLink'), actionIcon: ArrowTopRightOnSquareIcon, color: 'text-purple-600' },
   };
   
-  // FIX: Cast enum value to string before using string method
-  const currentItemTypeKey = Object.values(ELearningContentType).find(v => (v as string).toLowerCase() === item.type.toLowerCase()) || ELearningContentType.COURSE;
+  const currentItemTypeKey = Object.values(ELearningContentType).find(v => v.toLowerCase() === item.type.toLowerCase()) || ELearningContentType.COURSE;
   const currentType = typeSpecifics[currentItemTypeKey];
 
   const IconElement = currentType.icon; 

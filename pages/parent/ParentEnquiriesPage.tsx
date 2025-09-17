@@ -1,8 +1,5 @@
-
-
 import React from 'react';
 import { useAppContext } from '../../contexts/AppContext';
-// FIX: Update import paths for monorepo structure
 import { ParentLead, LeadMainStatus, FoundationLeadResponseStatus } from '../../types';
 import Card from '../../components/ui/Card';
 import { ClipboardDocumentListIcon, ClockIcon, CheckCircleIcon, InformationCircleIcon, InboxIcon } from '@heroicons/react/24/outline';
@@ -36,12 +33,11 @@ const ParentEnquiriesPage: React.FC = () => {
   
   const getFoundationResponseStatusInfo = (status: FoundationLeadResponseStatus) => {
     switch(status) {
-        // FIX: Cast result of t() to string
-        case FoundationLeadResponseStatus.INTERESTED: return { text: t('leadCard.status.interested') as string, color: "text-green-600"};
-        case FoundationLeadResponseStatus.NOT_INTERESTED: return { text: t('leadCard.status.notInterested') as string, color: "text-red-600"};
-        case FoundationLeadResponseStatus.NEEDS_MORE_INFO: return { text: t('leadCard.status.needsMoreInfo') as string, color: "text-orange-600"};
-        case FoundationLeadResponseStatus.ENROLLED: return { text: t('leadCard.status.enrolled') as string, color: "text-purple-600"};
-        default: return { text: t('leadCard.status.notResponded') as string, color: "text-gray-500"};
+        case FoundationLeadResponseStatus.INTERESTED: return { text: t('leadCard.status.interested'), color: "text-green-600"};
+        case FoundationLeadResponseStatus.NOT_INTERESTED: return { text: t('leadCard.status.notInterested'), color: "text-red-600"};
+        case FoundationLeadResponseStatus.NEEDS_MORE_INFO: return { text: t('leadCard.status.needsMoreInfo'), color: "text-orange-600"};
+        case FoundationLeadResponseStatus.ENROLLED: return { text: t('leadCard.status.enrolled'), color: "text-purple-600"};
+        default: return { text: t('leadCard.status.notResponded'), color: "text-gray-500"};
     }
   }
 

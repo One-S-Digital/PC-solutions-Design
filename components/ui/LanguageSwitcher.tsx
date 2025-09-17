@@ -1,5 +1,4 @@
 
-
 import React, { useState, useEffect, useRef } from 'react';
 import { useAppContext } from '../../contexts/AppContext';
 import { SupportedLanguage } from '../../types';
@@ -58,8 +57,7 @@ const LanguageSwitcher: React.FC = () => {
           onClick={() => setIsOpen(!isOpen)}
           aria-haspopup="true"
           aria-expanded={isOpen}
-          // FIX: Cast result of t() to string
-          aria-label={t('languageSwitcher.selectLanguage', { currentLanguage: getName(currentLanguageDetails) }) as string}
+          aria-label={t('languageSwitcher.selectLanguage', { currentLanguage: getName(currentLanguageDetails) })}
         >
           <CurrentFlagIcon className="w-5 h-auto mr-2" />
           {getLabel(currentLanguageDetails)}
@@ -88,7 +86,6 @@ const LanguageSwitcher: React.FC = () => {
                   aria-current={isCurrent ? "page" : undefined}
                 >
                   <FlagIcon className="w-5 h-auto mr-3" />
-                  {/* FIX: Cast result of t() to string */}
                   {getName(lang)} ({getLabel(lang)})
                 </button>
               );

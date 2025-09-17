@@ -2,14 +2,10 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-// FIX: Update import paths for monorepo structure
-import { Organization, Product, Service, UserRole, StockStatus, ServiceRequest, OrderRequestStatus, ServiceRequestStatus } from 'packages/core/src/types';
-// FIX: Update import paths for monorepo structure
-import { MOCK_ORGANIZATIONS, MOCK_PRODUCTS, MOCK_SERVICES, STANDARD_INPUT_FIELD, MOCK_ORDERS } from 'packages/core/src/constants';
-// FIX: Update import paths for monorepo structure
-import { useAppContext } from 'packages/contexts/src/AppContext';
-// FIX: Update import paths for monorepo structure
-import { useCart } from 'packages/contexts/src/CartContext'; // Import useCart
+import { Organization, Product, Service, UserRole, StockStatus, ServiceRequest, OrderRequestStatus, ServiceRequestStatus } from '../../types';
+import { MOCK_ORGANIZATIONS, MOCK_PRODUCTS, MOCK_SERVICES, STANDARD_INPUT_FIELD, MOCK_ORDERS } from '../../constants';
+import { useAppContext } from '../../contexts/AppContext';
+import { useCart } from '../../contexts/CartContext'; // Import useCart
 import Card from '../../components/ui/Card';
 import Button from '../../components/ui/Button';
 // OrderRequestModal is removed for product suppliers to use the new cart flow
@@ -57,8 +53,7 @@ const ProductItemCard: React.FC<ProductItemProps> = ({ product, partner, isFound
         <p className="text-sm text-gray-600 mt-1 line-clamp-2">{product.description}</p>
         <div className="flex items-center space-x-3 mt-1.5">
           {product.price && <p className="text-md font-semibold text-swiss-teal">CHF {product.price.toFixed(2)}</p>}
-          {/* FIX: Cast result of t() to string to satisfy return type */}
-          {product.stockStatus && <p className={`text-xs font-medium ${getStockStatusColor(product.stockStatus)}`}>{t(`stockStatus.${product.stockStatus.replace(/\s+/g, '').toLowerCase()}`, product.stockStatus) as string}</p>}
+          {product.stockStatus && <p className={`text-xs font-medium ${getStockStatusColor(product.stockStatus)}`}>{t(`stockStatus.${product.stockStatus.replace(/\s+/g, '').toLowerCase()}`, product.stockStatus)}</p>}
         </div>
       </div>
       {isFoundationUser && (
@@ -247,4 +242,46 @@ const PartnerDetailPage: React.FC = () => {
               services.length > 0 ? (
                 <div className="space-y-4">
                   {services.map(service => (
-                     <Card key={service.id} className="p-4 flex flex-col sm:flex-row items-start sm:
+                     <Card key={service.id} className="p-4 flex flex-col sm:flex-row items-start sm:items-center gap-4 group hover:shadow-md transition-shadow">
+                      <img src={service.imageUrl || `https://picsum.photos/seed/${service.id}/100/100`} alt={service.title} className="w-full sm:w-24 h-24 object-cover rounded-md flex-shrink-0" />
+                      <div className="flex-grow">
+                        <h3 className="text-md font-semibold text-swiss-charcoal group-hover:text-swiss-teal">{service.title}</h3>
+                        <p className="text-xs text-gray-500">{service.category} - {service.deliveryType}</p>
+                        <p className="text-sm text-gray-600 mt-1 line-clamp-2">{service.description}</p>
+                         {service.priceInfo && <p className="text-md font-semibold text-swiss-mint mt-1.5">{service.priceInfo}</p>}
+                      </div>
+                      {isFoundationUser && (
+                        <Button variant="secondary" size="sm" leftIcon={PlusCircleIcon} onClick={() => handleOpenServiceRequestModal(service)} className="mt-2 sm:mt-0 sm:ml-auto flex-shrink-0">
+                          {t('partnerDetailPage.requestServiceButton')}
+                        </Button>
+                      )}
+                    </Card>
+                  ))}
+                </div>
+              ) : <p className="text-gray-500">{t('partnerDetailPage.noServicesListed')}</p>
+            )}
+            
+            {isFoundationUser && (partner.type === 'supplier') && (products.length > 0) && (
+                 <Card className="mt-6 p-4 bg-gray-50">
+                    <h3 className="text-md font-semibold text-swiss-charcoal mb-2">{t('partnerDetailPage.promoCodeTitle')}</h3>
+                    <div className="flex gap-2">
+                        <input type="text" placeholder={t('partnerDetailPage.promoCodePlaceholder')} className={`${STANDARD_INPUT_FIELD} flex-grow`} />
+                        <Button variant="outline" size="md">{t('partnerDetailPage.applyPromoButton')}</Button>
+                    </div>
+                </Card>
+            )}
+          </Card>
+        </div>
+      </div>
+      
+      <ServiceRequestModal
+        isOpen={isServiceRequestModalOpen}
+        onClose={() => setIsServiceRequestModalOpen(false)}
+        service={selectedServiceForRequest}
+        onSubmitRequest={handleSubmitServiceRequest}
+      />
+    </div>
+  );
+};
+
+export default PartnerDetailPage;

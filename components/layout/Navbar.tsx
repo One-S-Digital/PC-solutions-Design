@@ -1,21 +1,14 @@
-
 import React, { useState, useEffect, useMemo } from 'react';
 import { MagnifyingGlassIcon, BellIcon, ChevronDownIcon, ArrowLeftIcon, ShoppingCartIcon, UserCircleIcon, CogIcon, Bars3Icon } from '@heroicons/react/24/outline'; // Added Bars3Icon
-// FIX: Update import paths for monorepo structure
-import { useAppContext } from 'packages/contexts/src/AppContext';
-// FIX: Update import paths for monorepo structure
-import { useCart } from 'packages/contexts/src/CartContext';
-// FIX: Update import paths for monorepo structure
-import { useMessaging } from 'packages/contexts/src/MessagingContext';
-// FIX: Update import paths for monorepo structure
-import { ICON_INPUT_FIELD } from 'packages/core/src/constants';
+import { useAppContext } from '../../contexts/AppContext';
+import { useCart } from '../../contexts/CartContext';
+import { useMessaging } from '../../contexts/MessagingContext';
+import { ICON_INPUT_FIELD } from '../../constants';
 import { useNavigate, Link } from 'react-router-dom';
 import OrderSummaryDrawer from '../cart/OrderSummaryDrawer';
-// FIX: Update import paths for monorepo structure
-import { UserRole, AppNotification } from 'packages/core/src/types';
-// FIX: Update import paths for monorepo structure
-import { useNotifications } from 'packages/contexts/src/NotificationContext';
-import LanguageSwitcher from '../ui/LanguageSwitcher';
+import { UserRole, AppNotification } from '../../types';
+import { useNotifications } from '../../contexts/NotificationContext';
+import LanguageSwitcher from '../../components/ui/LanguageSwitcher';
 import { useTranslation } from 'react-i18next'; // Import useTranslation
 
 interface NavbarProps {
@@ -58,7 +51,7 @@ const Navbar: React.FC<NavbarProps> = ({ onMobileMenuToggle }) => {
             type="button"
             className="md:hidden p-2 -ml-2 mr-2 rounded-md text-gray-500 hover:text-swiss-teal hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-swiss-mint"
             onClick={onMobileMenuToggle}
-            aria-label={t('navbar.toggleNavigation') as string}
+            aria-label={t('navbar.toggleNavigation')}
           >
             <Bars3Icon className="h-6 w-6" />
           </button>
@@ -66,7 +59,7 @@ const Navbar: React.FC<NavbarProps> = ({ onMobileMenuToggle }) => {
           <button
             onClick={() => navigate(-1)}
             className="p-2 rounded-full text-gray-500 hover:text-swiss-teal hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-swiss-mint/50 transition-colors mr-0 sm:mr-4"
-            aria-label={t('navbar.goBackPreviousPage') as string}
+            aria-label={t('navbar.goBackPreviousPage')}
           >
             <ArrowLeftIcon className="h-6 w-6" />
           </button>
@@ -76,9 +69,9 @@ const Navbar: React.FC<NavbarProps> = ({ onMobileMenuToggle }) => {
             </div>
             <input
               type="text"
-              placeholder={t('navbar.searchPlaceholder') as string}
+              placeholder={t('navbar.searchPlaceholder')}
               className={`${ICON_INPUT_FIELD} w-48 sm:w-64 md:w-80 leading-5 sm:text-sm transition-colors`}
-              aria-label={t('navbar.searchPlaceholder') as string}
+              aria-label={t('navbar.searchPlaceholder')}
             />
           </div>
         </div>
@@ -89,7 +82,7 @@ const Navbar: React.FC<NavbarProps> = ({ onMobileMenuToggle }) => {
             <button
               onClick={() => setIsCartOpen(true)}
               className="relative p-2 rounded-full text-gray-500 hover:text-swiss-teal hover:bg-gray-100 focus:outline-none transition-colors"
-              aria-label={t('navbar.viewShoppingCart') as string}
+              aria-label={t('navbar.viewShoppingCart')}
             >
               <ShoppingCartIcon className="h-6 w-6" />
               {cartItemCount > 0 && (
@@ -104,7 +97,7 @@ const Navbar: React.FC<NavbarProps> = ({ onMobileMenuToggle }) => {
               <button 
                   onClick={() => setNotificationsOpen(!notificationsOpen)}
                   className="relative p-2 rounded-full text-gray-500 hover:text-swiss-teal hover:bg-gray-100 focus:outline-none transition-colors"
-                  aria-label={t('navbar.notifications') as string}
+                  aria-label={t('navbar.notifications')}
               >
                 <BellIcon className="h-6 w-6" />
                 {totalNotificationsCount > 0 && (
@@ -157,7 +150,7 @@ const Navbar: React.FC<NavbarProps> = ({ onMobileMenuToggle }) => {
                 className="flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-swiss-mint/50 p-0.5"
                 aria-expanded={dropdownOpen}
                 aria-haspopup="true"
-                aria-label={t('navbar.userMenu') as string}
+                aria-label={t('navbar.userMenu')}
               >
                 <img 
                   className="h-10 w-10 rounded-full border-2 border-transparent hover:border-swiss-mint/30" 

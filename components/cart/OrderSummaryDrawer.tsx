@@ -1,15 +1,12 @@
 
-
 import React, { useState } from 'react';
 import { useCart } from '../../contexts/CartContext';
 import { useAppContext } from '../../contexts/AppContext';
 import Button from '../ui/Button';
 import { XMarkIcon, ShoppingCartIcon, TrashIcon } from '@heroicons/react/24/outline';
-// FIX: Update import paths for monorepo structure
-import { OrderRequestStatus, LineItem, Order } from 'packages/core/src/types';
+import { OrderRequestStatus, LineItem, Order } from '../../types';
 import QuantityInput from '../ui/QuantityInput'; // Assuming QuantityInput is in ui folder
-// FIX: Update import paths for monorepo structure
-import { MOCK_ORDERS } from 'packages/core/src/constants'; // To store submitted orders
+import { MOCK_ORDERS } from '../../constants'; // To store submitted orders
 
 interface OrderSummaryDrawerProps {
   isOpen: boolean;

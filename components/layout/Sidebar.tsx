@@ -1,11 +1,12 @@
 
+
+
+
 import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { HomeIcon, ShoppingBagIcon, BriefcaseIcon, DocumentTextIcon, AcademicCapIcon, UsersIcon, CogIcon, BookOpenIcon, BuildingStorefrontIcon, UserGroupIcon, NewspaperIcon, PresentationChartLineIcon, BuildingOfficeIcon, TruckIcon, UserCircleIcon, ChevronDownIcon, ChevronUpIcon, PuzzlePieceIcon, InboxArrowDownIcon, ClipboardDocumentListIcon, SquaresPlusIcon, QuestionMarkCircleIcon, TagIcon, ListBulletIcon, ChatBubbleLeftEllipsisIcon, ChartBarIcon, WrenchScrewdriverIcon, IdentificationIcon, CalendarDaysIcon, XMarkIcon, PaperClipIcon, ServerStackIcon, AdjustmentsHorizontalIcon } from '@heroicons/react/24/outline';
-// FIX: Update import paths for monorepo structure
-import { useAppContext } from 'packages/contexts/src/AppContext';
-// FIX: Update import paths for monorepo structure
-import { UserRole } from 'packages/core/src/types';
+import { useAppContext } from '../../contexts/AppContext';
+import { UserRole } from '../../types';
 import { useTranslation } from 'react-i18next'; // Import useTranslation
 import { TFunction } from 'i18next'; // Import TFunction for typing
 
@@ -27,8 +28,7 @@ interface SidebarProps {
 // Helper function to translate user roles
 const translateUserRole = (role: UserRole, t: TFunction): string => {
   const roleKey = `userRoles.${role}`; // Matches keys like userRoles["Super Admin"]
-  // FIX: Cast result of t() to string to satisfy return type
-  return t(roleKey, role) as string; // Fallback to the enum value if key not found
+  return t(roleKey, role); // Fallback to the enum value if key not found
 };
 
 const Sidebar: React.FC<SidebarProps> = ({ onLinkClick, isMobileView }) => {

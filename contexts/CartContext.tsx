@@ -1,8 +1,6 @@
 
-
 import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
-// FIX: Update import paths for monorepo structure
-import { CartItem, Product, Organization, StockStatus } from 'packages/core/src/types';
+import { CartItem, Product, Organization, StockStatus } from '../types';
 
 interface CartContextType {
   cartItems: CartItem[];

@@ -4,8 +4,7 @@ import Button from '../../components/ui/Button';
 import { ClipboardDocumentListIcon, EyeIcon } from '@heroicons/react/24/outline';
 import { useTranslation } from 'react-i18next';
 import { useAppContext } from '../../contexts/AppContext';
-// FIX: Update import paths for monorepo structure
-import { Application, ApplicationStatus } from 'packages/core/src/types';
+import { Application, ApplicationStatus } from '../../types';
 
 const EducatorApplicationsPage: React.FC = () => {
   const { t } = useTranslation();
