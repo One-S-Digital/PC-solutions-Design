@@ -1,10 +1,10 @@
-
 import React from 'react';
-import { Conversation }
+import { Conversation, UserRole }
 from '../../types';
 import { useMessaging } from '../../contexts/MessagingContext';
 import { useAppContext } from '../../contexts/AppContext';
 import { useTranslation } from 'react-i18next';
+import { UserGroupIcon } from '@heroicons/react/24/solid';
 
 interface ConversationListItemProps {
   conversation: Conversation;
@@ -19,13 +19,22 @@ const ConversationListItem: React.FC<ConversationListItemProps> = ({ conversatio
 
   if (!currentUser) return null;
 
-  const otherParticipantId = conversation.participantIds.find(id => id !== currentUser.id);
-  const otherParticipantName = otherParticipantId ? conversation.participantNames[otherParticipantId] : t('messagesPage.unknownUser');
+  const isGroupChat = conversation.participantIds.length > 2;
   const unreadCount = getUnreadCountForConversation(conversation.id);
 
-  // Determine avatar: if group chat, use a generic group icon, else use other participant's avatar initials
-  const avatarText = conversation.participantIds.length > 2 ? t('messagesPage.groupInitials') : otherParticipantName?.substring(0, 2).toUpperCase() || '??';
-  const avatarColor = otherParticipantId ? `bg-swiss-teal` : 'bg-gray-400'; // Example color
+  let displayName: string;
+  let avatarContent: React.ReactNode;
+
+  if (isGroupChat) {
+    displayName = conversation.name || 'Group Chat';
+    avatarContent = <UserGroupIcon className="w-6 h-6" />;
+  } else {
+    const otherParticipantId = conversation.participantIds.find(id => id !== currentUser.id);
+    displayName = otherParticipantId ? conversation.participantNames[otherParticipantId] : t('messagesPage.unknownUser');
+    avatarContent = displayName?.substring(0, 2).toUpperCase() || '??';
+  }
+
+  const avatarColor = `bg-swiss-teal`;
 
 
   return (
@@ -36,12 +45,12 @@ const ConversationListItem: React.FC<ConversationListItemProps> = ({ conversatio
     >
       <div className="flex items-center">
         <div className={`w-10 h-10 rounded-full ${avatarColor} text-white flex items-center justify-center text-sm font-semibold mr-3 flex-shrink-0`}>
-          {avatarText}
+          {avatarContent}
         </div>
         <div className="flex-grow overflow-hidden">
           <div className="flex justify-between items-center">
             <h3 className={`text-sm font-semibold truncate ${isActive ? 'text-swiss-mint' : 'text-swiss-charcoal'}`}>
-              {otherParticipantName}
+              {displayName}
             </h3>
             {conversation.lastMessageTimestamp && (
               <p className="text-xs text-gray-400 whitespace-nowrap">

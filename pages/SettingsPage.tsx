@@ -1,15 +1,18 @@
 
+
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppContext } from '../contexts/AppContext';
 import { useNotifications } from '../contexts/NotificationContext';
-import { UserRole, SettingsFormData, SupplierSettings, ProviderSettings, SupportedLanguage, SwissCanton } from '../types';
-import { MOCK_SUPPLIER_SETTINGS, MOCK_PROVIDER_SETTINGS, SWISS_CANTONS } from '../constants';
+// FIX: Update import paths for monorepo structure
+import { UserRole, SettingsFormData, SupplierSettings, ProviderSettings } from 'packages/core/src/types';
+// FIX: Update import paths for monorepo structure
+import { MOCK_SUPPLIER_SETTINGS, MOCK_PROVIDER_SETTINGS } from 'packages/core/src/constants';
 import Button from '../components/ui/Button';
 import Card from '../components/ui/Card';
 import {
-  CogIcon, UsersIcon, ShieldCheckIcon, EnvelopeIcon, BellIcon, LanguageIcon as GlobeIcon, DocumentTextIcon, CreditCardIcon, BuildingOfficeIcon,
-  UserCircleIcon, PhoneIcon, BriefcaseIcon, PresentationChartLineIcon, LockClosedIcon, TagIcon, PaintBrushIcon, AdjustmentsHorizontalIcon, BellAlertIcon, WalletIcon, ChartPieIcon, EyeIcon, ShareIcon
+  UsersIcon, LockClosedIcon, BellAlertIcon, WalletIcon, BuildingOfficeIcon,
+  PhoneIcon, TagIcon, AdjustmentsHorizontalIcon, ChartPieIcon, UserCircleIcon
 } from '@heroicons/react/24/outline';
 import { useTranslation } from 'react-i18next';
 
@@ -23,6 +26,7 @@ import BillingSubscriptionSettings from '../components/settings/sections/Billing
 import AnalyticsPreferencesSettings from '../components/settings/sections/AnalyticsPreferencesSettings';
 import TeamPermissionsSettings from '../components/settings/sections/TeamPermissionsSettings';
 import PrivacyDataSettings from '../components/settings/sections/PrivacyDataSettings';
+import AccountSecuritySettings from '../components/settings/sections/AccountSecuritySettings';
 
 
 export interface SettingsSectionConfig {
@@ -48,14 +52,11 @@ const SettingsPage: React.FC = () => {
 
   useEffect(() => {
     if (currentUser) {
-      let initialSettings: SettingsFormData;
+      let initialSettings: SettingsFormData = {}; // Default empty object for other roles
       if (currentUser.role === UserRole.PRODUCT_SUPPLIER) {
         initialSettings = MOCK_SUPPLIER_SETTINGS;
       } else if (currentUser.role === UserRole.SERVICE_PROVIDER) {
         initialSettings = MOCK_PROVIDER_SETTINGS;
-      } else {
-        navigate('/dashboard'); 
-        return;
       }
       setFormData(JSON.parse(JSON.stringify(initialSettings))); 
       setInitialFormData(JSON.parse(JSON.stringify(initialSettings)));
@@ -71,15 +72,16 @@ const SettingsPage: React.FC = () => {
   }, [formData, initialFormData]);
 
   const sections: SettingsSectionConfig[] = [
+    { id: 'accountSecurity', nameKey: 'settingsPage.accountSecurity', icon: UserCircleIcon, component: AccountSecuritySettings, roles: [UserRole.PRODUCT_SUPPLIER, UserRole.SERVICE_PROVIDER, UserRole.FOUNDATION, UserRole.EDUCATOR, UserRole.PARENT, UserRole.ADMIN, UserRole.SUPER_ADMIN] },
     { id: 'companyProfile', nameKey: 'settingsPage.companyProfile', icon: BuildingOfficeIcon, component: CompanyProfileSettings, roles: [UserRole.PRODUCT_SUPPLIER, UserRole.SERVICE_PROVIDER] },
     { id: 'contactBooking', nameKey: 'settingsPage.contactBooking', icon: PhoneIcon, component: ContactBookingSettings, roles: [UserRole.PRODUCT_SUPPLIER, UserRole.SERVICE_PROVIDER] },
     { id: 'notifications', nameKey: 'settingsPage.notificationPreferences', icon: BellAlertIcon, component: NotificationPreferencesSettings, roles: [UserRole.PRODUCT_SUPPLIER, UserRole.SERVICE_PROVIDER] },
     { id: 'defaults', nameKey: 'settingsPage.defaults', icon: AdjustmentsHorizontalIcon, component: DefaultsSettings, roles: [UserRole.PRODUCT_SUPPLIER, UserRole.SERVICE_PROVIDER] },
     { id: 'promoCodes', nameKey: 'settingsPage.promoCodeManager', icon: TagIcon, component: PromoCodeManagerSettings, roles: [UserRole.PRODUCT_SUPPLIER, UserRole.SERVICE_PROVIDER] },
-    { id: 'billingSubscription', nameKey: 'settingsPage.billingSubscription', icon: WalletIcon, component: BillingSubscriptionSettings, roles: [UserRole.PRODUCT_SUPPLIER, UserRole.SERVICE_PROVIDER] },
+    { id: 'billingSubscription', nameKey: 'settingsPage.billingSubscription', icon: WalletIcon, component: BillingSubscriptionSettings, roles: [UserRole.PRODUCT_SUPPLIER, UserRole.SERVICE_PROVIDER, UserRole.FOUNDATION] },
     { id: 'analyticsPreferences', nameKey: 'settingsPage.analyticsPreferences', icon: ChartPieIcon, component: AnalyticsPreferencesSettings, roles: [UserRole.PRODUCT_SUPPLIER, UserRole.SERVICE_PROVIDER] },
     { id: 'teamPermissions', nameKey: 'settingsPage.teamPermissions', icon: UsersIcon, component: TeamPermissionsSettings, roles: [UserRole.PRODUCT_SUPPLIER, UserRole.SERVICE_PROVIDER] },
-    { id: 'privacyData', nameKey: 'settingsPage.privacyData', icon: LockClosedIcon, component: PrivacyDataSettings, roles: [UserRole.PRODUCT_SUPPLIER, UserRole.SERVICE_PROVIDER] },
+    { id: 'privacyData', nameKey: 'settingsPage.privacyData', icon: LockClosedIcon, component: PrivacyDataSettings, roles: [UserRole.PRODUCT_SUPPLIER, UserRole.SERVICE_PROVIDER, UserRole.FOUNDATION, UserRole.EDUCATOR, UserRole.PARENT] },
   ];
   
   const availableSections = sections.filter(s => currentUser && s.roles.includes(currentUser.role));

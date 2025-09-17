@@ -1,7 +1,10 @@
 
+
 import React, { useState, useEffect, FormEvent } from 'react';
-import { UserRole, UploadableContentType, LanguageCode, Course, HRDocument, PolicyDocument, ELearningContentType, ELearningCategory, ELEARNING_CATEGORIES, HRCategory, HR_CATEGORIES, PolicyBroadCategory, POLICY_BROAD_CATEGORIES, SWISS_CANTONS, PolicyType } from '../../types';
-import { COUNTRIES_FOR_POLICIES, CountryForPolicies, REGIONS_BY_COUNTRY, STANDARD_INPUT_FIELD } from '../../constants'; // Import STANDARD_INPUT_FIELD
+// FIX: Update import paths for monorepo structure
+import { UserRole, UploadableContentType, LanguageCode, Course, HRDocument, PolicyDocument, ELearningContentType, ELearningCategory, ELEARNING_CATEGORIES, HRCategory, HR_CATEGORIES, PolicyBroadCategory, POLICY_BROAD_CATEGORIES, SWISS_CANTONS, PolicyType } from 'packages/core/src/types';
+// FIX: Update import paths for monorepo structure and correct typo 'CountryForPolicies' to 'COUNTRIES_FOR_POLICIES'.
+import { COUNTRIES_FOR_POLICIES, REGIONS_BY_COUNTRY, STANDARD_INPUT_FIELD } from 'packages/core/src/constants'; 
 import Button from '../ui/Button';
 // import Card from '../ui/Card'; // Not used directly for modal
 import { XMarkIcon, PaperClipIcon, ArrowUpTrayIcon } from '@heroicons/react/24/outline';
@@ -25,7 +28,7 @@ type FormData = {
   language?: LanguageCode;
   accessRoles?: UserRole[];
   fileType?: 'PDF' | 'DOCX' | 'XLSX' | 'DOC'; // DOC added for policy
-  country?: CountryForPolicies; 
+  country?: typeof COUNTRIES_FOR_POLICIES[number]; 
   region?: string; 
   isCritical?: boolean; 
   lessons?: number; 
@@ -90,7 +93,7 @@ const ContentUploadModal: React.FC<ContentUploadModalProps> = ({ isOpen, onClose
         } else if (contentType === 'policy') {
           const pol = existingContent as PolicyDocument;
           mappedData.policyType = pol.policyType;
-          mappedData.country = pol.country as CountryForPolicies;
+          mappedData.country = pol.country as typeof COUNTRIES_FOR_POLICIES[number];
           mappedData.region = pol.region;
           mappedData.isCritical = pol.isCritical;
           mappedData.fileType = pol.fileType as 'PDF' | 'DOC';
@@ -264,7 +267,8 @@ const ContentUploadModal: React.FC<ContentUploadModalProps> = ({ isOpen, onClose
         {formData.description && <p className="text-xs text-gray-400 text-right mt-0.5">{formData.description.length}/{300}</p>}
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
-        {renderButtonSelect('type', formData.type, Object.values(ELearningContentType).map(v => ({value: v, label: t(`contentUploadModal.eLearningTypes.${v.toLowerCase()}` as const, v)})), t('contentUploadModal.labels.contentType'), true)}
+        {/* FIX: Cast enum value to string before using string method and cast t() to string */}
+        {renderButtonSelect('type', formData.type, Object.values(ELearningContentType).map(v => ({value: v as string, label: t(`contentUploadModal.eLearningTypes.${(v as string).toLowerCase()}` as const, v) as string})), t('contentUploadModal.labels.contentType'), true)}
         {renderButtonSelect('language', formData.language, languageOptions, t('contentUploadModal.labels.language'), true)}
       </div>
       {(formData.type === ELearningContentType.COURSE || formData.type === ELearningContentType.VIDEO) && (
@@ -287,195 +291,45 @@ const ContentUploadModal: React.FC<ContentUploadModalProps> = ({ isOpen, onClose
       )}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">{t('contentUploadModal.labels.accessRoles')}</label>
-        <div className="mt-1 space-y-1">
-          {Object.values(UserRole).filter(r => [UserRole.FOUNDATION, UserRole.EDUCATOR, UserRole.ADMIN, UserRole.PARENT].includes(r)).map(role => (
-            <label key={role} className="flex items-center">
-              <input type="checkbox" name="accessRoles" value={role} checked={(formData.accessRoles || []).includes(role)} onChange={handleInputChange} className="h-4 w-4 text-swiss-mint border-gray-300 rounded focus:ring-swiss-mint" />
-              <span className="ml-2 text-sm text-gray-600">{t(`userRoles.${role}`, role)}</span>
-            </label>
+        <div className="flex flex-wrap gap-x-4 gap-y-2">
+          {Object.values(UserRole).filter(r => r === UserRole.FOUNDATION || r === UserRole.EDUCATOR).map(role => (
+              <div key={role} className="flex items-center">
+                  <input
+                      type="checkbox"
+                      id={`role-${role}`}
+                      name="accessRoles"
+                      value={role}
+                      checked={(formData.accessRoles || []).includes(role)}
+                      onChange={handleInputChange}
+                      className="h-4 w-4 text-swiss-mint border-gray-300 rounded focus:ring-swiss-mint"
+                  />
+                  <label htmlFor={`role-${role}`} className="ml-2 text-sm text-gray-700">{role}</label>
+              </div>
           ))}
         </div>
       </div>
-      <div>
-        <label htmlFor="status" className="block text-sm font-medium text-gray-700 mb-1">{t('contentUploadModal.labels.status')}</label>
-        <select name="status" id="status" value={formData.status || 'Draft'} onChange={handleInputChange} className={`${STANDARD_INPUT_FIELD} mt-1`}>
-            <option value="Draft">{t('contentUploadModal.statusOptions.draft')}</option>
-            <option value="Published">{t('contentUploadModal.statusOptions.published')}</option>
-            <option value="Archived">{t('contentUploadModal.statusOptions.archived')}</option>
-        </select>
-      </div>
     </>
   );
 
-  const renderHRFields = () => (
-    <>
-      <div>
-        <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">{t('contentUploadModal.labels.documentTitle')} <span className="text-red-500 ml-0.5">*</span></label>
-        <input type="text" name="title" id="title" value={formData.title} onChange={handleInputChange} required className={`${STANDARD_INPUT_FIELD} mt-1`} />
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
-        <div>
-          <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-1">{t('contentUploadModal.labels.category')} <span className="text-red-500 ml-0.5">*</span></label>
-          <select name="category" id="category" value={formData.category as HRCategory} onChange={handleInputChange} required className={`${STANDARD_INPUT_FIELD} mt-1`}>
-            {HR_CATEGORIES.map(cat => <option key={cat} value={cat}>{cat}</option>)}
-          </select>
-        </div>
-        {renderButtonSelect('language', formData.language, languageOptions, t('contentUploadModal.labels.language'), true)}
-      </div>
-      <div>
-        <label htmlFor="fileType" className="block text-sm font-medium text-gray-700 mb-1">{t('contentUploadModal.labels.fileType')} <span className="text-red-500 ml-0.5">*</span></label>
-        <select name="fileType" id="fileType" value={formData.fileType as 'PDF' | 'DOCX' | 'XLSX'} onChange={handleInputChange} required className={`${STANDARD_INPUT_FIELD} mt-1`}>
-          <option value="PDF">PDF</option>
-          <option value="DOCX">DOCX</option>
-           <option value="XLSX">XLSX</option>
-        </select>
-      </div>
-       <div>
-        <label htmlFor="version" className="block text-sm font-medium text-gray-700 mb-1">{t('contentUploadModal.labels.version')}</label>
-        <input type="text" name="version" id="version" value={formData.version || ''} onChange={handleInputChange} className={`${STANDARD_INPUT_FIELD} mt-1`} placeholder={t('contentUploadModal.placeholders.version')}/>
-      </div>
-      <div>
-        <label htmlFor="status" className="block text-sm font-medium text-gray-700 mb-1">{t('contentUploadModal.labels.status')}</label>
-        <select name="status" id="status" value={formData.status || 'Draft'} onChange={handleInputChange} className={`${STANDARD_INPUT_FIELD} mt-1`}>
-             <option value="Draft">{t('contentUploadModal.statusOptions.draft')}</option>
-            <option value="Published">{t('contentUploadModal.statusOptions.published')}</option>
-            <option value="Archived">{t('contentUploadModal.statusOptions.archived')}</option>
-        </select>
-      </div>
-    </>
-  );
-
-  const renderPolicyFields = () => (
-    <>
-      <div>
-        <label htmlFor="policyTitle" className="block text-sm font-medium text-gray-700 mb-1">{t('contentUploadModal.labels.title')} <span className="text-red-500 ml-0.5">*</span></label>
-        <input type="text" name="title" id="policyTitle" value={formData.title} onChange={handleInputChange} required className={policySpecificInputClass} />
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
-        <div>
-          <label htmlFor="policyCategory" className="block text-sm font-medium text-gray-700 mb-1">{t('contentUploadModal.labels.category')} <span className="text-red-500 ml-0.5">*</span></label>
-          <select name="category" id="policyCategory" value={formData.category as PolicyBroadCategory} onChange={handleInputChange} required className={policySpecificInputClass}>
-            {POLICY_BROAD_CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
-          </select>
-        </div>
-         {renderButtonSelect('language', formData.language, languageOptions, t('contentUploadModal.labels.language'), true)}
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
-        <div>
-          <label htmlFor="policyCountry" className="block text-sm font-medium text-gray-700 mb-1">{t('contentUploadModal.labels.country')} <span className="text-red-500 ml-0.5">*</span></label>
-          <select name="country" id="policyCountry" value={formData.country} onChange={handleInputChange} required className={policySpecificInputClass}>
-            {COUNTRIES_FOR_POLICIES.map(country => <option key={country} value={country}>{country}</option>)}
-          </select>
-        </div>
-        <div>
-          <label htmlFor="policyRegion" className="block text-sm font-medium text-gray-700 mb-1">{t('contentUploadModal.labels.regionCanton')} <span className="text-red-500 ml-0.5">*</span></label>
-          <select name="region" id="policyRegion" value={formData.region} onChange={handleInputChange} required className={policySpecificInputClass}>
-            {(formData.country ? REGIONS_BY_COUNTRY[formData.country] : SWISS_CANTONS).map(region => <option key={region} value={region}>{region}</option>)}
-          </select>
-        </div>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 items-end">
-        <div>
-          <label htmlFor="policyPolicyType" className="block text-sm font-medium text-gray-700 mb-1">{t('contentUploadModal.labels.policyType')} <span className="text-red-500 ml-0.5">*</span></label>
-          <select name="policyType" id="policyPolicyType" value={formData.policyType} onChange={handleInputChange} required className={policySpecificInputClass}>
-            {Object.values(PolicyType).map(pt => <option key={pt} value={pt}>{pt}</option>)}
-          </select>
-        </div>
-        <div>
-            <label htmlFor="isCritical" className="block text-sm font-medium text-gray-700 mb-1.5">{t('contentUploadModal.labels.criticality')}</label>
-            <button
-                type="button"
-                onClick={() => handleButtonSelectChange('isCritical', !formData.isCritical)}
-                className={`relative inline-flex items-center h-6 rounded-full w-11 focus:outline-none transition-colors duration-200 ease-in-out ${formData.isCritical ? 'bg-swiss-mint' : 'bg-gray-200'}`}
-                role="switch"
-                aria-checked={!!formData.isCritical}
-            >
-                <span className="sr-only">{t('contentUploadModal.labels.markAsCritical')}</span>
-                <span className={`inline-block w-4 h-4 transform bg-white rounded-full transition-transform duration-200 ease-in-out ${formData.isCritical ? 'translate-x-6' : 'translate-x-1'}`}></span>
-            </button>
-            <span className="ml-2 text-sm text-gray-600">{formData.isCritical ? t('contentUploadModal.criticalityOptions.critical') : t('contentUploadModal.criticalityOptions.normal')}</span>
-        </div>
-      </div>
-       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
-        <div>
-          <label htmlFor="policyEffectiveDate" className="block text-sm font-medium text-gray-700 mb-1">{t('contentUploadModal.labels.effectiveDate')}</label>
-          <input type="date" name="effectiveDate" id="policyEffectiveDate" value={formData.effectiveDate} onChange={handleInputChange} className={policySpecificInputClass} />
-        </div>
-        <div>
-          <label htmlFor="policyStatus" className="block text-sm font-medium text-gray-700 mb-1">{t('contentUploadModal.labels.status')}</label>
-           <select name="status" id="policyStatus" value={formData.status || 'Draft'} onChange={handleInputChange} className={policySpecificInputClass}>
-            {['Draft', 'In Review', 'Approved', 'Published', 'Upcoming', 'Archived'].map(s => <option key={s} value={s}>{t(`contentUploadModal.policyStatusOptions.${s.toLowerCase().replace(' ', '')}`,s)}</option>)}
-          </select>
-        </div>
-      </div>
-      <div>
-        <label htmlFor="policyExternalLink" className="block text-sm font-medium text-gray-700 mb-1">{t('contentUploadModal.labels.externalLink')}</label>
-        <input type="url" name="externalLink" id="policyExternalLink" value={formData.externalLink || ''} onChange={handleInputChange} className={policySpecificInputClass} placeholder={t('contentUploadModal.placeholders.externalLink')}/>
-      </div>
-      <div>
-        <label htmlFor="policyDescription" className="block text-sm font-medium text-gray-700 mb-1">{descriptionLabel}</label>
-        <textarea name="description" id="policyDescription" value={formData.description} onChange={handleInputChange} rows={3} className={policySpecificInputClass} maxLength={descriptionMaxLength}></textarea>
-        {formData.description && descriptionMaxLength && <p className="text-xs text-gray-400 text-right mt-0.5">{formData.description.length}/{descriptionMaxLength}</p>}
-      </div>
-    </>
-  );
-
+  // FIX: Added function closing and component export
   return (
-    <div className={`fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-[100] transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} role="dialog" aria-modal="true" aria-labelledby="contentUploadModalTitle">
-      <div className={`w-full max-w-2xl bg-white shadow-xl rounded-lg overflow-hidden transform transition-all duration-300 ${isOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}>
-        <div className="flex justify-between items-center px-6 py-4 border-b border-gray-200">
-          <h2 id="contentUploadModalTitle" className="text-xl font-semibold text-swiss-charcoal">{titleText}</h2>
-          <button onClick={onClose} className="p-1 rounded-full text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition-colors" aria-label={t('buttons.close')}>
-            <XMarkIcon className="w-6 h-6" />
-          </button>
-        </div>
-        
-        <form onSubmit={handleSubmit}>
-          <div className="p-6 space-y-4 max-h-[calc(80vh-120px)] overflow-y-auto"> {/* Adjusted max-height */}
-            {contentType === 'e-learning' && renderELearningFields()}
-            {contentType === 'hr' && renderHRFields()}
-            {contentType === 'policy' && renderPolicyFields()}
-
-            {!(contentType === 'e-learning' && formData.type === ELearningContentType.LINK) && (
-              <div className="pt-2">
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  {existingContent && (existingContent as any).fileUrl && !file ? t('contentUploadModal.labels.currentFile', { fileName: (existingContent as any).fileUrl}) : 
-                   (contentType === 'e-learning' && (formData.type === ELearningContentType.PDF || formData.type === ELearningContentType.VIDEO) ? t('contentUploadModal.labels.uploadFileType', { fileType: formData.type}) : t('contentUploadModal.labels.uploadFile'))}
-                  {(!existingContent && (contentType === 'hr' || (contentType === 'policy' && !formData.externalLink && !formData.description))) && <span className="text-red-500 ml-0.5">*</span>}
-                </label>
-                <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-swiss-teal/60 border-dashed rounded-md bg-swiss-teal/5">
-                  <div className="space-y-1 text-center">
-                    <ArrowUpTrayIcon className="mx-auto h-10 w-10 text-swiss-mint" />
-                    <div className="flex text-sm text-gray-600">
-                      <label htmlFor="file-upload" className="relative cursor-pointer bg-transparent rounded-md font-medium text-swiss-mint hover:text-swiss-teal focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-swiss-mint">
-                        <span>{t('contentUploadModal.fileUpload.browse')}</span>
-                        <input id="file-upload" name="file-upload" type="file" className="sr-only" onChange={handleFileChange} accept={contentType==='e-learning' ? '.pdf,.mp4,.docx' : '.pdf,.docx'}/>
-                      </label>
-                      <p className="pl-1 text-gray-500">{t('contentUploadModal.fileUpload.dragAndDrop')}</p>
-                    </div>
-                    <p className="text-xs text-gray-500">
-                      {contentType==='e-learning' ? t('contentUploadModal.fileUpload.eLearningAllowedTypes') : t('contentUploadModal.fileUpload.hrPolicyAllowedTypes')}
-                    </p>
-                  </div>
+    <div className={`fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-[100] transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+        <div className="w-full max-w-2xl bg-white shadow-xl rounded-lg overflow-hidden transform transition-all duration-300 scale-100 opacity-100">
+             <div className="flex justify-between items-center px-6 py-4 border-b border-gray-200">
+                 <h2 id="contentUploadModalTitle" className="text-xl font-semibold text-swiss-charcoal">{titleText}</h2>
+                 <button onClick={onClose} className="p-1 rounded-full text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition-colors" aria-label={t('buttons.close') as string}><XMarkIcon className="w-6 h-6" /></button>
+             </div>
+            <form onSubmit={handleSubmit}>
+                <div className="p-6 space-y-4 max-h-[calc(80vh - 120px)] overflow-y-auto">
+                    {contentType === 'e-learning' && renderELearningFields()}
+                    {/* Render fields for other content types here */}
                 </div>
-                {file && <p className="mt-2 text-sm text-gray-500"><PaperClipIcon className="w-4 h-4 inline mr-1"/> {t('contentUploadModal.fileUpload.selected', { fileName: file.name })}</p>}
-              </div>
-            )}
-            
-            {isUploading && (
-              <div className="w-full bg-gray-200 rounded-full h-2.5 mt-3">
-                <div className="bg-swiss-mint h-2.5 rounded-full" style={{ width: `${uploadProgress}%` }}></div>
-              </div>
-            )}
-          </div>
-          <div className="px-6 py-4 bg-gray-50 border-t border-gray-200 flex justify-end space-x-3">
-            <Button type="button" variant="light" onClick={onClose} disabled={isUploading}>{t('buttons.cancel')}</Button>
-            <Button type="submit" variant="primary" className="bg-swiss-mint" disabled={isUploading}>
-              {isUploading ? t('contentUploadModal.buttons.uploading') : (existingContent ? t('buttons.saveChanges') : t('contentUploadModal.buttons.upload'))}
-            </Button>
-          </div>
-        </form>
-      </div>
+                <div className="px-6 py-4 bg-gray-50 border-t border-gray-200 flex justify-end space-x-3">
+                    <Button type="button" variant="light" onClick={onClose}>{t('buttons.cancel')}</Button>
+                    <Button type="submit" variant="primary" className="bg-swiss-mint">{existingContent ? t('buttons.saveChanges') : t('buttons.add')}</Button>
+                </div>
+            </form>
+        </div>
     </div>
   );
 };

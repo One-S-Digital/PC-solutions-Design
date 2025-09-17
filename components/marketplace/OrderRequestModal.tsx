@@ -1,11 +1,15 @@
 
+
 import React, { useState } from 'react';
-import { Product, OrderRequest } from '../../types';
+// FIX: Update import paths for monorepo structure
+import { Product, OrderRequest } from 'packages/core/src/types';
 import Button from '../ui/Button';
 import Card from '../ui/Card'; // Re-using Card for modal structure
 import { XMarkIcon } from '@heroicons/react/24/outline';
-import { useAppContext } from '../../contexts/AppContext';
-import { STANDARD_INPUT_FIELD } from '../../constants'; // Import constant
+// FIX: Update import paths for monorepo structure
+import { useAppContext } from 'packages/contexts/src/AppContext';
+// FIX: Update import paths for monorepo structure
+import { STANDARD_INPUT_FIELD } from 'packages/core/src/constants'; // Import constant
 import { useTranslation } from 'react-i18next';
 
 interface OrderRequestModalProps {
@@ -46,7 +50,7 @@ const OrderRequestModal: React.FC<OrderRequestModalProps> = ({ product, isOpen, 
       <Card className="w-full max-w-lg bg-white p-0 shadow-xl rounded-lg overflow-hidden">
         <div className="flex justify-between items-center px-6 py-4 border-b border-gray-200">
           <h2 id="orderRequestModalTitle" className="text-xl font-semibold text-swiss-charcoal">{t('orderRequestModal.title', { productTitle: product.title })}</h2>
-          <button onClick={onClose} className="p-1 rounded-full text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition-colors" aria-label={t('buttons.close')}>
+          <button onClick={onClose} className="p-1 rounded-full text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition-colors" aria-label={t('buttons.close') as string}>
             <XMarkIcon className="w-6 h-6" />
           </button>
         </div>

@@ -1,4 +1,5 @@
 
+
 // Implement AnalyticsPreferencesSettings.tsx
 // Placeholder - This will be implemented in subsequent steps.
 import React from 'react';
@@ -31,7 +32,7 @@ const AnalyticsPreferencesSettings: React.FC<AnalyticsPreferencesSettingsProps> 
           <select
             id="timeZone"
             name="timeZone"
-            value={settings.timeZone}
+            value={settings.timeZone || 'Europe/Zurich'}
             onChange={(e) => onChange('timeZone', e.target.value)}
             className={STANDARD_INPUT_FIELD}
             required
@@ -46,7 +47,7 @@ const AnalyticsPreferencesSettings: React.FC<AnalyticsPreferencesSettingsProps> 
           <select
             id="currency"
             name="currency"
-            value={settings.currency}
+            value={settings.currency || 'CHF'}
             onChange={(e) => onChange('currency', e.target.value as 'CHF' | 'EUR')}
             className={STANDARD_INPUT_FIELD}
             required
@@ -64,7 +65,7 @@ const AnalyticsPreferencesSettings: React.FC<AnalyticsPreferencesSettingsProps> 
                 onClick={() => onChange('anonymisedBenchmarkDataOptIn', !settings.anonymisedBenchmarkDataOptIn)}
                 className={`relative inline-flex items-center h-6 rounded-full w-11 focus:outline-none transition-colors duration-200 ease-in-out ${settings.anonymisedBenchmarkDataOptIn ? 'bg-swiss-mint' : 'bg-gray-200'}`}
                 role="switch"
-                aria-checked={settings.anonymisedBenchmarkDataOptIn}
+                aria-checked={!!settings.anonymisedBenchmarkDataOptIn}
                 aria-label={t('settingsAnalyticsPreferences.benchmarkData')}
             >
                 <span className="sr-only">{t('settingsAnalyticsPreferences.benchmarkData')}</span>

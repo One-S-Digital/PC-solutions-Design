@@ -1,9 +1,11 @@
 
 import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { HomeIcon, ShoppingBagIcon, BriefcaseIcon, DocumentTextIcon, AcademicCapIcon, UsersIcon, CogIcon, BookOpenIcon, BuildingStorefrontIcon, UserGroupIcon, NewspaperIcon, PresentationChartLineIcon, BuildingOfficeIcon, TruckIcon, UserCircleIcon, ChevronDownIcon, ChevronUpIcon, PuzzlePieceIcon, InboxArrowDownIcon, ClipboardDocumentListIcon, SquaresPlusIcon, QuestionMarkCircleIcon, TagIcon, ListBulletIcon, ChatBubbleLeftEllipsisIcon, ChartBarIcon, WrenchScrewdriverIcon, IdentificationIcon, CalendarDaysIcon, XMarkIcon } from '@heroicons/react/24/outline'; // Added XMarkIcon
-import { useAppContext } from '../../contexts/AppContext';
-import { UserRole } from '../../types';
+import { HomeIcon, ShoppingBagIcon, BriefcaseIcon, DocumentTextIcon, AcademicCapIcon, UsersIcon, CogIcon, BookOpenIcon, BuildingStorefrontIcon, UserGroupIcon, NewspaperIcon, PresentationChartLineIcon, BuildingOfficeIcon, TruckIcon, UserCircleIcon, ChevronDownIcon, ChevronUpIcon, PuzzlePieceIcon, InboxArrowDownIcon, ClipboardDocumentListIcon, SquaresPlusIcon, QuestionMarkCircleIcon, TagIcon, ListBulletIcon, ChatBubbleLeftEllipsisIcon, ChartBarIcon, WrenchScrewdriverIcon, IdentificationIcon, CalendarDaysIcon, XMarkIcon, PaperClipIcon, ServerStackIcon, AdjustmentsHorizontalIcon } from '@heroicons/react/24/outline';
+// FIX: Update import paths for monorepo structure
+import { useAppContext } from 'packages/contexts/src/AppContext';
+// FIX: Update import paths for monorepo structure
+import { UserRole } from 'packages/core/src/types';
 import { useTranslation } from 'react-i18next'; // Import useTranslation
 import { TFunction } from 'i18next'; // Import TFunction for typing
 
@@ -25,7 +27,8 @@ interface SidebarProps {
 // Helper function to translate user roles
 const translateUserRole = (role: UserRole, t: TFunction): string => {
   const roleKey = `userRoles.${role}`; // Matches keys like userRoles["Super Admin"]
-  return t(roleKey, role); // Fallback to the enum value if key not found
+  // FIX: Cast result of t() to string to satisfy return type
+  return t(roleKey, role) as string; // Fallback to the enum value if key not found
 };
 
 const Sidebar: React.FC<SidebarProps> = ({ onLinkClick, isMobileView }) => {
@@ -75,7 +78,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onLinkClick, isMobileView }) => {
       ]
     },
     { path: '/hr-procedures', nameKey: 'sidebar.hrProcedures', icon: DocumentTextIcon, roles: [UserRole.FOUNDATION] },
-    { path: '/e-learning', nameKey: 'sidebar.eLearning', icon: AcademicCapIcon, roles: [UserRole.FOUNDATION, UserRole.EDUCATOR] },
+    { path: '/e-learning', nameKey: 'sidebar.eLearning', icon: AcademicCapIcon, roles: [UserRole.FOUNDATION, UserRole.ADMIN, UserRole.SUPER_ADMIN] },
     { path: '/state-policies', nameKey: 'sidebar.statePolicies', icon: NewspaperIcon, roles: [UserRole.FOUNDATION, UserRole.PRODUCT_SUPPLIER, UserRole.EDUCATOR, UserRole.PARENT] },
     { path: '/foundation/analytics', nameKey: 'sidebar.analytics', icon: PresentationChartLineIcon, roles: [UserRole.FOUNDATION] },
     { path: '/messages', nameKey: 'sidebar.messages', icon: ChatBubbleLeftEllipsisIcon, roles: [UserRole.FOUNDATION, UserRole.ADMIN, UserRole.SUPER_ADMIN]},
@@ -85,6 +88,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onLinkClick, isMobileView }) => {
     { path: '/educator/job-board', nameKey: 'sidebar.jobBoard', icon: BriefcaseIcon, roles: [UserRole.EDUCATOR] },
     { path: '/educator/profile', nameKey: 'sidebar.myProfile', icon: IdentificationIcon, roles: [UserRole.EDUCATOR] },
     { path: '/educator/applications', nameKey: 'sidebar.applications', icon: ClipboardDocumentListIcon, roles: [UserRole.EDUCATOR] },
+    { path: '/file-gallery', nameKey: 'sidebar.fileGallery', icon: PaperClipIcon, roles: [UserRole.EDUCATOR] },
     { path: '/messages', nameKey: 'sidebar.messages', icon: ChatBubbleLeftEllipsisIcon, roles: [UserRole.EDUCATOR]},
     { path: '/educator/support', nameKey: 'sidebar.support', icon: QuestionMarkCircleIcon, roles: [UserRole.EDUCATOR] },
     { path: '/parent-lead-form', nameKey: 'sidebar.homeFindCreche', icon: HomeIcon, roles: [UserRole.PARENT] },
@@ -111,7 +115,9 @@ const Sidebar: React.FC<SidebarProps> = ({ onLinkClick, isMobileView }) => {
         { path: '/state-policies', nameKey: 'sidebar.statePolicies', icon: NewspaperIcon, roles: [UserRole.ADMIN, UserRole.SUPER_ADMIN] },
       ]
     },
+    { path: '/admin/system-monitoring', nameKey: 'sidebar.systemMonitoring', icon: ServerStackIcon, roles: [UserRole.ADMIN, UserRole.SUPER_ADMIN] },
     { path: '/partners', nameKey: 'sidebar.partners', icon: BuildingStorefrontIcon, roles: [UserRole.ADMIN, UserRole.SUPER_ADMIN] },
+    { path: '/admin/platform-settings', nameKey: 'sidebar.platformSettings', icon: AdjustmentsHorizontalIcon, roles: [UserRole.ADMIN, UserRole.SUPER_ADMIN] },
     { path: '/settings', nameKey: 'sidebar.settings', icon: CogIcon, roles: [UserRole.ADMIN, UserRole.SUPER_ADMIN, UserRole.FOUNDATION, UserRole.PARENT, UserRole.EDUCATOR, UserRole.PRODUCT_SUPPLIER, UserRole.SERVICE_PROVIDER] },
   ];
 
@@ -239,8 +245,8 @@ const Sidebar: React.FC<SidebarProps> = ({ onLinkClick, isMobileView }) => {
               <p className="text-xs text-gray-600 mb-2.5">{t('sidebar.premiumPlanDesc')}</p>
               <button 
                 onClick={() => {
-                    alert('Manage Plan TBD');
-                    if (onLinkClick) onLinkClick(); // Close mobile sidebar if it's an action
+                    navigate('/settings');
+                    if (onLinkClick) onLinkClick();
                 }}
                 className="w-full bg-swiss-coral text-white text-sm px-4 py-2 rounded-button hover:bg-opacity-90 transition-colors shadow-soft">
                   {t('sidebar.managePlan')}

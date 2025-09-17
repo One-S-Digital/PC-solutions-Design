@@ -1,4 +1,5 @@
 
+
 // Implement PrivacyDataSettings.tsx
 // Placeholder - This will be implemented in subsequent steps.
 import React from 'react';
@@ -45,7 +46,7 @@ const PrivacyDataSettings: React.FC<PrivacyDataSettingsProps> = ({ settings, onC
                 onClick={() => onChange('hidePubliclyToggle', !settings.hidePubliclyToggle)}
                 className={`relative inline-flex items-center h-6 rounded-full w-11 focus:outline-none transition-colors duration-200 ease-in-out ${settings.hidePubliclyToggle ? 'bg-swiss-mint' : 'bg-gray-200'}`}
                 role="switch"
-                aria-checked={settings.hidePubliclyToggle}
+                aria-checked={!!settings.hidePubliclyToggle}
                 aria-label={t(hidePubliclyLabelKey)}
             >
                 <span className="sr-only">{t(hidePubliclyLabelKey)}</span>
@@ -63,7 +64,7 @@ const PrivacyDataSettings: React.FC<PrivacyDataSettingsProps> = ({ settings, onC
             variant="danger" 
             leftIcon={ShieldExclamationIcon}
             onClick={handleDataDeletionRequest}
-            disabled={settings.gdprDataDeletionRequestMade}
+            disabled={!!settings.gdprDataDeletionRequestMade}
           >
             {settings.gdprDataDeletionRequestMade ? t('settingsPrivacyData.deletionRequestSubmitted') : t('settingsPrivacyData.requestGDPRDeletion')}
           </Button>

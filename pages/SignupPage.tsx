@@ -1,20 +1,21 @@
 
-import React, { useState, useEffect, FormEvent } from 'react';
-import { useNavigate, Link } from 'react-router-dom'; // Import Link
+
+import React, { useState, FormEvent, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAppContext } from '../contexts/AppContext';
 import { SignupRole, SignupFormData, SwissCanton, SupportedLanguage } from '../types';
 import { APP_NAME, STANDARD_INPUT_FIELD, SWISS_CANTONS } from '../constants';
 import Button from '../components/ui/Button';
 import Card from '../components/ui/Card';
-import { BuildingOffice2Icon, UserIcon, CogIcon, UsersIcon, CheckCircleIcon, EyeIcon, EyeSlashIcon, ArrowLeftIcon } from '@heroicons/react/24/outline';
+import { BuildingOffice2Icon, UserIcon, CogIcon, UsersIcon, CheckCircleIcon, EyeIcon, EyeSlashIcon, ArrowLeftIcon, SquaresPlusIcon } from '@heroicons/react/24/outline';
 
 const SignupPage: React.FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { setCurrentUser } = useAppContext(); // Or a specific signup function
+  const { signup, currentUser } = useAppContext();
 
-  const [currentStep, setCurrentStep] = useState<1 | 2>(1);
+  const [currentStep, setCurrentStep] = useState<1 | 2 | 3>(1); // Step 3 for confirmation
   const [selectedRole, setSelectedRole] = useState<SignupRole | null>(null);
   const [formData, setFormData] = useState<SignupFormData>({
     organisationName: '',
@@ -35,6 +36,14 @@ const SignupPage: React.FC = () => {
   const [errors, setErrors] = useState<Partial<Record<keyof SignupFormData, string>>>({});
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Redirect if user is already logged in
+  useEffect(() => {
+    if (currentUser) {
+      navigate('/dashboard', { replace: true });
+    }
+  }, [currentUser, navigate]);
 
   const rolesConfig: { role: SignupRole; nameKey: string; icon: React.ElementType }[] = [
     { role: SignupRole.FOUNDATION, nameKey: 'signupPage.roles.foundation', icon: BuildingOffice2Icon },
@@ -45,22 +54,6 @@ const SignupPage: React.FC = () => {
 
   const handleRoleSelect = (role: SignupRole) => {
     setSelectedRole(role);
-    setFormData({ 
-      organisationName: '',
-      contactPerson: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-      phone: '',
-      canton: '',
-      languagesSpoken: [],
-      capacity: undefined,
-      category: '',
-      serviceType: '',
-      childAge: undefined,
-      childStartDate: '',
-      termsAccepted: false,
-    });
     setErrors({});
     setCurrentStep(2);
   };
@@ -83,10 +76,7 @@ const SignupPage: React.FC = () => {
       } else if (type === 'checkbox') {
         processedValue = checked;
       }
-      return {
-        ...prev,
-        [name]: processedValue,
-      };
+      return { ...prev, [name]: processedValue };
     });
   
     if (errors[name as keyof SignupFormData]) {
@@ -124,58 +114,32 @@ const SignupPage: React.FC = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!validateStep2()) return;
-
-    const visibleFields: Partial<SignupFormData> = { email: formData.email, password: formData.password };
-    if (selectedRole !== SignupRole.PARENT) visibleFields.organisationName = formData.organisationName;
-    visibleFields.contactPerson = formData.contactPerson;
-    if (selectedRole !== SignupRole.PARENT) visibleFields.phone = formData.phone;
-    if (selectedRole !== SignupRole.PARENT) visibleFields.canton = formData.canton;
-    if (selectedRole === SignupRole.FOUNDATION || selectedRole === SignupRole.SUPPLIER) visibleFields.languagesSpoken = formData.languagesSpoken;
-    if (selectedRole === SignupRole.FOUNDATION) visibleFields.capacity = formData.capacity;
-    if (selectedRole === SignupRole.SUPPLIER) visibleFields.category = formData.category;
-    if (selectedRole === SignupRole.SERVICE_PROVIDER) visibleFields.serviceType = formData.serviceType;
-    if (selectedRole === SignupRole.PARENT) {
-        visibleFields.childAge = formData.childAge;
-        visibleFields.childStartDate = formData.childStartDate;
+    if (!validateStep2() || !selectedRole) return;
+    setIsLoading(true);
+    const result = await signup(formData, selectedRole);
+    if(result.success) {
+      setCurrentStep(3);
+    } else {
+      setErrors({ email: result.message });
     }
-    visibleFields.termsAccepted = formData.termsAccepted;
-
-    console.log('Submitting to /api/signup?role=' + selectedRole, visibleFields);
-    alert(t('signupPage.submissionSuccess', { role: selectedRole }));
-    
-    switch (selectedRole) {
-        case SignupRole.FOUNDATION:
-            navigate('/dashboard');
-            break;
-        case SignupRole.SUPPLIER:
-        case SignupRole.SERVICE_PROVIDER:
-            navigate('/dashboard');
-            break;
-        case SignupRole.PARENT:
-            navigate(`/parent-lead-form?email=${encodeURIComponent(formData.email)}&phone=${encodeURIComponent(formData.phone || '')}`);
-            break;
-        default:
-            navigate('/');
-    }
+    setIsLoading(false);
   };
   
-  const renderField = (name: keyof SignupFormData, labelKey: string, type: string = 'text', required: boolean = true, placeholderKey?: string, options?: string[]) => (
+  const renderField = (name: keyof SignupFormData, labelKey: string, type: string = 'text', required: boolean = true, placeholderKey?: string, options?: readonly string[]) => (
     <div>
-      <label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-1">{t(labelKey)}{required && <span className="text-swiss-coral">*</span>}</label>
+      <label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-1">{t(labelKey)}{required ? <span className="text-swiss-coral">*</span> : ''}</label>
       {type === 'select' && options ? (
         <select id={name} name={name} value={formData[name as keyof SignupFormData] as string || ''} onChange={handleChange} className={`${STANDARD_INPUT_FIELD} ${errors[name as keyof SignupFormData] ? 'border-swiss-coral' : ''}`}>
           <option value="">{t('signupPage.placeholders.select')}</option>
           {options.map(opt => <option key={opt} value={opt}>{opt}</option>)}
         </select>
-      ) : type === 'textarea' ? (
-        <textarea id={name} name={name} value={formData[name as keyof SignupFormData] as string || ''} onChange={handleChange} rows={3} className={`${STANDARD_INPUT_FIELD} ${errors[name as keyof SignupFormData] ? 'border-swiss-coral' : ''}`} placeholder={placeholderKey ? t(placeholderKey) : ''} />
       ) : (
         <div className="relative">
           <input type={ (name === 'password' && !showPassword) || (name === 'confirmPassword' && !showConfirmPassword) ? 'password' : type}
             id={name} name={name} 
+            // FIX: Ensure value is always a string for the input
             value={String(formData[name as keyof SignupFormData] ?? '')}
             onChange={handleChange}
             className={`${STANDARD_INPUT_FIELD} ${errors[name as keyof SignupFormData] ? 'border-swiss-coral' : ''}`}
@@ -183,7 +147,7 @@ const SignupPage: React.FC = () => {
             {(name === 'password' || name === 'confirmPassword') && (
                  <button type="button" onClick={() => name === 'password' ? setShowPassword(!showPassword) : setShowConfirmPassword(!showConfirmPassword)}
                     className="absolute inset-y-0 right-0 px-3 flex items-center text-gray-500 hover:text-swiss-teal"
-                    aria-label={ (name === 'password' && showPassword) || (name === 'confirmPassword' && showConfirmPassword) ? t('hidePassword') : t('showPassword')}
+                    aria-label={ (name === 'password' && showPassword) || (name === 'confirmPassword' && showConfirmPassword) ? t('hidePassword') as string : t('showPassword') as string}
                  >
                     { (name === 'password' && showPassword) || (name === 'confirmPassword' && showConfirmPassword) ? <EyeSlashIcon className="h-5 w-5"/> : <EyeIcon className="h-5 w-5"/>}
                 </button>
@@ -197,84 +161,89 @@ const SignupPage: React.FC = () => {
   const progressText = currentStep === 1 ? t('signupPage.progressStep1') : t('signupPage.progressStep2');
   const formTitle = currentStep === 1 ? t('signupPage.selectRoleTitle') : t('signupPage.detailsTitle', { role: selectedRole ? t(rolesConfig.find(rc => rc.role === selectedRole)!.nameKey) : '' });
 
-
   return (
     <div className="min-h-screen bg-page-bg flex flex-col items-center justify-center p-4">
       <Card className="w-full max-w-2xl p-8 shadow-xl">
-        <div className="text-center mb-2">
-            <img src="/logo.png" alt={t('appName') + ' Logo'} className="w-12 h-12 mx-auto mb-2" />
-            <h1 className="text-2xl font-bold text-swiss-charcoal">{formTitle}</h1>
-            <p className="text-sm text-gray-500 mt-1">{progressText}</p>
-        </div>
-         <div className="w-full bg-gray-200 rounded-full h-2 mb-6">
-            <div className="bg-swiss-mint h-2 rounded-full transition-all duration-300 ease-in-out" style={{ width: currentStep === 1 ? '50%' : '100%' }}></div>
-        </div>
+        {currentStep === 3 ? (
+            <div className="text-center">
+                <CheckCircleIcon className="w-16 h-16 text-swiss-mint mx-auto mb-4"/>
+                <h1 className="text-2xl font-bold text-swiss-charcoal">{t('signupPage.submissionSuccessTitle')}</h1>
+                <p className="text-gray-600 mt-2 mb-6">{t('signupPage.submissionSuccessMessage')}</p>
+                <Button onClick={() => navigate('/dashboard')} variant="primary" size="lg">
+                    {t('signupPage.goToDashboardButton')}
+                </Button>
+            </div>
+        ) : (
+        <>
+            <div className="text-center mb-2">
+                <SquaresPlusIcon className="w-12 h-12 text-swiss-mint mx-auto mb-2" />
+                <h1 className="text-2xl font-bold text-swiss-charcoal">{formTitle}</h1>
+                <p className="text-sm text-gray-500 mt-1">{progressText}</p>
+            </div>
+            <div className="w-full bg-gray-200 rounded-full h-2 mb-6">
+                <div className="bg-swiss-mint h-2 rounded-full transition-all duration-300 ease-in-out" style={{ width: currentStep === 1 ? '50%' : '100%' }}></div>
+            </div>
 
-        {currentStep === 1 && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {rolesConfig.map(({ role, nameKey, icon: Icon }) => (
-              <button
-                key={role}
-                onClick={() => handleRoleSelect(role)}
-                aria-pressed={selectedRole === role}
-                className={`p-6 border-2 rounded-lg text-center transition-all duration-200 ease-in-out
-                            hover:shadow-lg hover:border-swiss-mint hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-swiss-mint
-                            ${selectedRole === role ? 'border-swiss-mint bg-swiss-mint/5 shadow-md' : 'border-gray-300 bg-white'}`}
-              >
-                <Icon className={`w-10 h-10 mx-auto mb-2 ${selectedRole === role ? 'text-swiss-mint' : 'text-gray-400'}`} />
-                <span className={`block font-semibold ${selectedRole === role ? 'text-swiss-mint' : 'text-swiss-charcoal'}`}>{t(nameKey)}</span>
-              </button>
-            ))}
-          </div>
-        )}
-
-        {currentStep === 2 && selectedRole && (
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {selectedRole !== SignupRole.PARENT && renderField('organisationName', 'signupPage.labels.organisationName', 'text', true, 'signupPage.placeholders.organisationName')}
-            {renderField('contactPerson', selectedRole === SignupRole.PARENT ? 'signupPage.labels.parentName' : 'signupPage.labels.contactPerson', 'text', true, selectedRole === SignupRole.PARENT ? 'signupPage.placeholders.parentName' : 'signupPage.placeholders.contactPerson')}
-            {renderField('email', 'signupPage.labels.email', 'email', true, 'signupPage.placeholders.email')}
-            {renderField('password', 'signupPage.labels.password', 'password', true, 'signupPage.placeholders.password')}
-            {renderField('confirmPassword', 'signupPage.labels.confirmPassword', 'password', true, 'signupPage.placeholders.confirmPassword')}
-            
-            {selectedRole !== SignupRole.PARENT && renderField('phone', 'signupPage.labels.phone', 'tel', true, 'signupPage.placeholders.phone')}
-            {selectedRole !== SignupRole.PARENT && renderField('canton', 'signupPage.labels.canton', 'select', true, undefined, [...SWISS_CANTONS])}
-
-            {(selectedRole === SignupRole.FOUNDATION || selectedRole === SignupRole.SUPPLIER) && renderField('languagesSpoken', 'signupPage.labels.languagesSpoken', 'text', false, 'signupPage.placeholders.languagesSpoken')}
-            {selectedRole === SignupRole.FOUNDATION && renderField('capacity', 'signupPage.labels.capacity', 'number', true)}
-            {selectedRole === SignupRole.SUPPLIER && renderField('category', 'signupPage.labels.category', 'text', true, 'signupPage.placeholders.category')}
-            {selectedRole === SignupRole.SERVICE_PROVIDER && renderField('serviceType', 'signupPage.labels.serviceType', 'text', true, 'signupPage.placeholders.serviceType')}
-            
-            {selectedRole === SignupRole.PARENT && (
-                <>
-                    {renderField('childAge', 'signupPage.labels.childAge', 'number', true)}
-                    {renderField('childStartDate', 'signupPage.labels.childStartDate', 'date', true)}
-                </>
+            {currentStep === 1 && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {rolesConfig.map(({ role, nameKey, icon: Icon }) => (
+                  <button key={role} onClick={() => handleRoleSelect(role)} aria-pressed={selectedRole === role}
+                    className="p-6 border-2 rounded-lg text-center transition-all duration-200 ease-in-out hover:shadow-lg hover:border-swiss-mint hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-swiss-mint border-gray-300 bg-white">
+                    <Icon className="w-10 h-10 mx-auto mb-2 text-gray-400" />
+                    <span className="block font-semibold text-swiss-charcoal">{t(nameKey)}</span>
+                  </button>
+                ))}
+              </div>
             )}
 
-            <div className="pt-2">
-              <label htmlFor="termsAccepted" className="flex items-center">
-                <input type="checkbox" id="termsAccepted" name="termsAccepted" checked={formData.termsAccepted} onChange={handleChange} className={`h-4 w-4 text-swiss-mint border-gray-300 rounded focus:ring-swiss-mint ${errors.termsAccepted ? 'border-swiss-coral' : ''}`} />
-                <span className="ml-2 text-sm text-gray-600">{t('signupPage.termsLabel')}{' '}<a href="#/terms" target="_blank" rel="noopener noreferrer" className="text-swiss-mint hover:underline">{t('signupPage.termsLink')}</a>.</span>
-              </label>
-              {errors.termsAccepted && <p className="text-xs text-swiss-coral mt-1">{errors.termsAccepted}</p>}
-            </div>
-            
-            <div className="flex flex-col sm:flex-row justify-between items-center gap-3 pt-4">
-                <Button type="button" variant="light" onClick={handleBackToRoleSelection} leftIcon={ArrowLeftIcon} className="w-full sm:w-auto">
-                    {t('buttons.goBack')}
-                </Button>
-                <Button type="submit" variant="primary" size="lg" className="w-full sm:w-auto bg-swiss-mint hover:bg-opacity-90">
-                 {t('signupPage.createAccountButton')}
-                </Button>
-            </div>
-          </form>
+            {currentStep === 2 && selectedRole && (
+              <form onSubmit={handleSubmit} className="space-y-4">
+                {selectedRole !== SignupRole.PARENT && renderField('organisationName', 'signupPage.labels.organisationName', 'text', true, 'signupPage.placeholders.organisationName')}
+                {renderField('contactPerson', selectedRole === SignupRole.PARENT ? 'signupPage.labels.parentName' : 'signupPage.labels.contactPerson', 'text', true, selectedRole === SignupRole.PARENT ? 'signupPage.placeholders.parentName' : 'signupPage.placeholders.contactPerson')}
+                {renderField('email', 'signupPage.labels.email', 'email', true, 'signupPage.placeholders.email')}
+                {renderField('password', 'signupPage.labels.password', 'password', true, 'signupPage.placeholders.password')}
+                {renderField('confirmPassword', 'signupPage.labels.confirmPassword', 'password', true, 'signupPage.placeholders.confirmPassword')}
+                
+                {selectedRole !== SignupRole.PARENT && renderField('phone', 'signupPage.labels.phone', 'tel', true, 'signupPage.placeholders.phone')}
+                {selectedRole !== SignupRole.PARENT && renderField('canton', 'signupPage.labels.canton', 'select', true, undefined, SWISS_CANTONS)}
+
+                {selectedRole === SignupRole.FOUNDATION && renderField('capacity', 'signupPage.labels.capacity', 'number', true)}
+                {selectedRole === SignupRole.SUPPLIER && renderField('category', 'signupPage.labels.category', 'text', true, 'signupPage.placeholders.category')}
+                {selectedRole === SignupRole.SERVICE_PROVIDER && renderField('serviceType', 'signupPage.labels.serviceType', 'text', true, 'signupPage.placeholders.serviceType')}
+                
+                {selectedRole === SignupRole.PARENT && (
+                    <>
+                        {renderField('childAge', 'signupPage.labels.childAge', 'number', true)}
+                        {renderField('childStartDate', 'signupPage.labels.childStartDate', 'date', true)}
+                    </>
+                )}
+
+                <div className="pt-2">
+                  <label htmlFor="termsAccepted" className="flex items-center">
+                    <input type="checkbox" id="termsAccepted" name="termsAccepted" checked={formData.termsAccepted} onChange={handleChange} className={`h-4 w-4 text-swiss-mint border-gray-300 rounded focus:ring-swiss-mint ${errors.termsAccepted ? 'border-swiss-coral' : ''}`} />
+                    <span className="ml-2 text-sm text-gray-600">{t('signupPage.termsLabel')}{' '}<a href="#/terms" target="_blank" rel="noopener noreferrer" className="text-swiss-mint hover:underline">{t('signupPage.termsLink')}</a>.</span>
+                  </label>
+                  {errors.termsAccepted && <p className="text-xs text-swiss-coral mt-1">{errors.termsAccepted}</p>}
+                </div>
+                
+                <div className="flex flex-col sm:flex-row justify-between items-center gap-3 pt-4">
+                    <Button type="button" variant="light" onClick={handleBackToRoleSelection} leftIcon={ArrowLeftIcon} className="w-full sm:w-auto">
+                        {t('buttons.goBack')}
+                    </Button>
+                    <Button type="submit" variant="primary" size="lg" className="w-full sm:w-auto bg-swiss-mint hover:bg-opacity-90" disabled={isLoading}>
+                    {isLoading ? 'Creating Account...' : t('signupPage.createAccountButton')}
+                    </Button>
+                </div>
+              </form>
+            )}
+             <p className="mt-6 text-center text-sm text-gray-600">
+              {t('loginPage.alreadyAccount')}{' '}
+              <Link to="/login" className="font-medium text-swiss-mint hover:underline">
+                {t('buttons.login')}
+              </Link>
+            </p>
+        </>
         )}
-        <p className="mt-6 text-center text-sm text-gray-600">
-          {t('loginPage.alreadyAccount')}{' '}
-          <Link to="/login" className="font-medium text-swiss-mint hover:underline">
-            {t('buttons.login')}
-          </Link>
-        </p>
       </Card>
     </div>
   );

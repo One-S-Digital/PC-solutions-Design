@@ -1,5 +1,5 @@
 {
-  "name": "pro-crèche-solutions",
+  "name": "pro-crèche-solutions---monorepo",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -9,17 +9,19 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "react-router-dom": "^7.6.2",
-    "react-i18next": "^15.5.3",
+    "react": "^19.1.1",
     "@heroicons/react": "^2.2.0",
-    "i18next": "^25.2.1",
+    "react-router-dom": "^7.9.1",
+    "react-i18next": "^15.7.3",
+    "i18next": "^25.5.2",
+    "packages": "^0.0.8",
+    "react-dom": "^19.1.1",
     "i18next-http-backend": "^3.0.2",
     "i18next-browser-languagedetector": "^8.2.0"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",
+    "@vitejs/plugin-react": "^5.0.0",
     "typescript": "~5.8.2",
     "vite": "^6.2.0"
   }

@@ -1,5 +1,6 @@
 
 
+
 import React from 'react';
 import { SettingsFormData, SupplierSettings, ProviderSettings, UserRole, PreferredContactMethod, AvgResponseType } from '../../../types';
 import { STANDARD_INPUT_FIELD } from '../../../constants';
@@ -61,7 +62,7 @@ const ContactBookingSettings: React.FC<ContactBookingSettingsProps> = ({ setting
           <select
             id="avgResponseType"
             name="avgResponseType"
-            value={settings.avgResponseType}
+            value={settings.avgResponseType || '< 24 h'}
             onChange={(e) => onChange('avgResponseType', e.target.value as AvgResponseType)}
             className={STANDARD_INPUT_FIELD}
             required
@@ -93,8 +94,8 @@ const ContactBookingSettings: React.FC<ContactBookingSettingsProps> = ({ setting
                 type="url"
                 id="directOrderLink"
                 name="directOrderLink"
-                value={supplierSettings.directOrderLink || ''}
-                onChange={(e) => onChange('directOrderLink' as keyof SettingsFormData, e.target.value)}
+                value={settings.directOrderLink || ''}
+                onChange={(e) => onChange('directOrderLink', e.target.value)}
                 className={STANDARD_INPUT_FIELD}
                 placeholder={t('settingsContactBooking.directOrderLinkPlaceholder')}
               />
@@ -114,8 +115,8 @@ const ContactBookingSettings: React.FC<ContactBookingSettingsProps> = ({ setting
                 type="url"
                 id="calComLink"
                 name="calComLink"
-                value={providerSettings.calComLink || ''}
-                onChange={(e) => onChange('calComLink' as keyof SettingsFormData, e.target.value)}
+                value={settings.calComLink || ''}
+                onChange={(e) => onChange('calComLink', e.target.value)}
                 className={STANDARD_INPUT_FIELD}
                 placeholder={t('settingsContactBooking.calComLinkPlaceholder')}
               />
@@ -127,14 +128,14 @@ const ContactBookingSettings: React.FC<ContactBookingSettingsProps> = ({ setting
               {/* <ToggleSwitch id="deliveryTypeToggleRemote" checked={providerSettings.deliveryTypeToggleRemote} onChange={(checked) => onChange('deliveryTypeToggleRemote', checked)} /> */}
                 <button
                     type="button"
-                    onClick={() => onChange('deliveryTypeToggleRemote' as keyof SettingsFormData, !providerSettings.deliveryTypeToggleRemote)}
-                    className={`relative inline-flex items-center h-6 rounded-full w-11 focus:outline-none transition-colors duration-200 ease-in-out ${providerSettings.deliveryTypeToggleRemote ? 'bg-swiss-mint' : 'bg-gray-200'}`}
+                    onClick={() => onChange('deliveryTypeToggleRemote', !settings.deliveryTypeToggleRemote)}
+                    className={`relative inline-flex items-center h-6 rounded-full w-11 focus:outline-none transition-colors duration-200 ease-in-out ${settings.deliveryTypeToggleRemote ? 'bg-swiss-mint' : 'bg-gray-200'}`}
                     role="switch"
-                    aria-checked={providerSettings.deliveryTypeToggleRemote}
+                    aria-checked={!!settings.deliveryTypeToggleRemote}
                      aria-label={t('settingsContactBooking.deliveryTypeToggleRemote')}
                 >
                     <span className="sr-only">{t('settingsContactBooking.deliveryTypeToggleRemote')}</span>
-                    <span className={`inline-block w-4 h-4 transform bg-white rounded-full transition-transform duration-200 ease-in-out ${providerSettings.deliveryTypeToggleRemote ? 'translate-x-6' : 'translate-x-1'}`}></span>
+                    <span className={`inline-block w-4 h-4 transform bg-white rounded-full transition-transform duration-200 ease-in-out ${settings.deliveryTypeToggleRemote ? 'translate-x-6' : 'translate-x-1'}`}></span>
                 </button>
             </div>
           </>

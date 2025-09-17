@@ -1,4 +1,5 @@
 
+
 import React from 'react';
 import { SettingsFormData, UserRole, SwissCanton, SupportedLanguage } from '../../../types';
 import { STANDARD_INPUT_FIELD, SWISS_CANTONS } from '../../../constants';
@@ -48,7 +49,7 @@ const CompanyProfileSettings: React.FC<CompanyProfileSettingsProps> = ({ setting
             type="text"
             id="companyName"
             name="companyName"
-            value={settings.companyName}
+            value={settings.companyName || ''}
             onChange={(e) => onChange('companyName', e.target.value)}
             className={STANDARD_INPUT_FIELD}
             required
@@ -79,7 +80,7 @@ const CompanyProfileSettings: React.FC<CompanyProfileSettingsProps> = ({ setting
             name="aboutText"
             rows={4}
             maxLength={500}
-            value={settings.aboutText}
+            value={settings.aboutText || ''}
             onChange={(e) => onChange('aboutText', e.target.value)}
             className={STANDARD_INPUT_FIELD}
             required
@@ -104,7 +105,7 @@ const CompanyProfileSettings: React.FC<CompanyProfileSettingsProps> = ({ setting
         <label className="form-label">{t('settingsCompanyProfile.regionsServed')} <span className="text-swiss-coral">*</span></label>
         <div className="form-input-container">
           <div className="p-2 border border-gray-300 rounded-md min-h-[40px] bg-white">
-            {settings.regionsServed?.map(canton => (
+            {(settings.regionsServed || []).map(canton => (
                 <span key={canton} className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-swiss-teal/20 text-swiss-teal mr-1 mb-1">
                     {canton}
                     <button type="button" onClick={() => handleMultiSelectChange('regionsServed', canton)} className="ml-1 text-swiss-teal hover:text-opacity-70">✕</button>
@@ -127,7 +128,7 @@ const CompanyProfileSettings: React.FC<CompanyProfileSettingsProps> = ({ setting
         <label className="form-label">{t('settingsCompanyProfile.languagesSpoken')} <span className="text-swiss-coral">*</span></label>
         <div className="form-input-container">
             <div className="p-2 border border-gray-300 rounded-md min-h-[40px] bg-white">
-                {(settings.languagesSpoken as SupportedLanguage[])?.map(lang => (
+                {((settings.languagesSpoken as SupportedLanguage[]) || []).map(lang => (
                     <span key={lang} className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-swiss-teal/20 text-swiss-teal mr-1 mb-1">
                         {translatedLanguageOptions.find(o => o.value === lang)?.label || lang}
                         <button type="button" onClick={() => handleMultiSelectChange('languagesSpoken', lang)} className="ml-1 text-swiss-teal hover:text-opacity-70">✕</button>

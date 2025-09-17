@@ -1,4 +1,5 @@
 
+
 // Implement NotificationPreferencesSettings.tsx
 // This is a placeholder for now, will be implemented in subsequent steps.
 import React from 'react';
@@ -38,7 +39,7 @@ const NotificationPreferencesSettings: React.FC<NotificationPreferencesSettingsP
                 onClick={() => onChange('newRequestEmailToggle', !settings.newRequestEmailToggle)}
                 className={`relative inline-flex items-center h-6 rounded-full w-11 focus:outline-none transition-colors duration-200 ease-in-out ${settings.newRequestEmailToggle ? 'bg-swiss-mint' : 'bg-gray-200'}`}
                 role="switch"
-                aria-checked={settings.newRequestEmailToggle}
+                aria-checked={!!settings.newRequestEmailToggle}
                 aria-label={t(newRequestLabelKey)}
             >
                 <span className="sr-only">{t(newRequestLabelKey)}</span>
@@ -73,7 +74,7 @@ const NotificationPreferencesSettings: React.FC<NotificationPreferencesSettingsP
                 onClick={() => onChange('promoRedemptionAlertsToggle', !settings.promoRedemptionAlertsToggle)}
                 className={`relative inline-flex items-center h-6 rounded-full w-11 focus:outline-none transition-colors duration-200 ease-in-out ${settings.promoRedemptionAlertsToggle ? 'bg-swiss-mint' : 'bg-gray-200'}`}
                 role="switch"
-                aria-checked={settings.promoRedemptionAlertsToggle}
+                aria-checked={!!settings.promoRedemptionAlertsToggle}
                 aria-label={t('settingsNotificationPreferences.promoRedemptionAlertsToggle')}
             >
                 <span className="sr-only">{t('settingsNotificationPreferences.promoRedemptionAlertsToggle')}</span>

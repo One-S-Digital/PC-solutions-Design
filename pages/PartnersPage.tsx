@@ -1,11 +1,15 @@
 
+
 import React from 'react';
-import { Partner } from '../types';
-import { MOCK_PARTNERS } from '../constants';
+// FIX: Update import paths for monorepo structure
+import { Partner } from 'packages/core/src/types';
+// FIX: Update import paths for monorepo structure
+import { MOCK_PARTNERS } from 'packages/core/src/constants';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
 import { BuildingStorefrontIcon, ArrowTopRightOnSquareIcon, ChatBubbleLeftEllipsisIcon } from '@heroicons/react/24/outline';
-import { SwissFlagIcon } from '../components/icons/CustomIcons';
+// FIX: Update import paths for monorepo structure
+import { SwissFlagIcon } from 'packages/ui/src/icons/CustomIcons';
 import { useTranslation } from 'react-i18next';
 
 const PartnerCard: React.FC<{ partner: Partner }> = ({ partner }) => {

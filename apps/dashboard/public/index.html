@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard</title>
+  <script async src="https://ga.jspm.io/npm:es-module-shims@1.10.0/dist/es-module-shims.js"></script>
+  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+  
+  <style>
+    :root {
+      --brand-primary-500: #3b82f6; --swiss-mint: #48CFAE; --swiss-sand: #F3D29E;
+      --swiss-coral: #FE6D73; --swiss-teal: #227C9D; --swiss-charcoal: #2B2B2B;
+      --gray-50: #f9fafb; --gray-100: #f3f4f6; --gray-200: #e5e7eb;
+      --gray-300: #d1d5db; --gray-400: #9ca3af; --gray-500: #6b7280;
+      --gray-600: #4b5563; --gray-800: #1f2937; --gray-900: #111827;
+      --accent: var(--swiss-teal); --accent-contrast: white; --danger: var(--swiss-coral);
+      --warn: var(--swiss-sand); --success: var(--swiss-mint); --info: var(--brand-primary-500);
+      --text-strong: var(--gray-900); --text-default: var(--gray-800); --text-muted: var(--gray-600);
+      --text-subtle: var(--gray-500); --surface-0: var(--gray-50); --surface-1: white;
+      --surface-2: var(--gray-100); --surface-3: var(--gray-200); --border: var(--gray-200);
+      --border-strong: var(--gray-300);
+      --font-sans: "Nunito", "Inter", system-ui, sans-serif; --radius-md: 0.75rem;
+      --shadow-soft: 0 1px 2px rgba(0,0,0,0.04), 0 2px 6px rgba(0,0,0,0.06);
+      --shadow-float: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.06);
+      --dur-150: 180ms; --ease-standard: cubic-bezier(.2,.7,.2,1);
+    }
+    :root.dark {
+      --text-strong: var(--gray-50); --text-default: var(--gray-100); --text-muted: var(--gray-400);
+      --text-subtle: var(--gray-500); --surface-0: #0c0f14; --surface-1: #11161c;
+      --surface-2: #141a21; --surface-3: #172029; --border: #1f2a35; --border-strong: #2a3847;
+    }
+    body { font-family: var(--font-sans); background-color: var(--surface-0); color: var(--text-default); transition: background-color 0.2s, color 0.2s; }
+    .card-accent { border-left: 4px solid var(--accent); }
+    .notch-tr { position: relative; }
+    .notch-tr::before {
+      content: ''; position: absolute; top: 0; right: 0;
+      border-top: 20px solid var(--surface-0); border-left: 20px solid transparent; width: 0;
+      transition: border-top-color var(--dur-150) var(--ease-standard);
+    }
+    .lift { transition: transform var(--dur-150) var(--ease-standard), box-shadow var(--dur-150) var(--ease-standard); }
+    .lift:hover { transform: translateY(-2px); box-shadow: var(--shadow-float); }
+  </style>
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            'accent': 'var(--accent)', 'danger': 'var(--danger)', 'warn': 'var(--warn)',
+            'success': 'var(--success)', 'info': 'var(--info)', 
+            'text-strong': 'var(--text-strong)', 'text-default': 'var(--text-default)', 
+            'text-muted': 'var(--text-muted)', 'text-subtle': 'var(--text-subtle)', 
+            'surface-0': 'var(--surface-0)', 'surface-1': 'var(--surface-1)',
+            'surface-2': 'var(--surface-2)', 'surface-3': 'var(--surface-3)', 
+            'border': 'var(--border)', 'border-strong': 'var(--border-strong)',
+            'accent-contrast': 'var(--accent-contrast)',
+          },
+          fontFamily: { sans: ['Nunito', 'Inter', 'sans-serif'] },
+          borderRadius: { 'md': 'var(--radius-md)', 'lg': '1rem', 'button': '0.5rem' },
+          boxShadow: { 'soft': 'var(--shadow-soft)', 'float': 'var(--shadow-float)' }
+        },
+      },
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@19.1.0",
+    "react-dom/client": "https://esm.sh/react-dom@19.1.0/client",
+    "react-router-dom": "https://esm.sh/react-router-dom@6.25.1",
+    "react-i18next": "https://esm.sh/react-i18next@15.0.0",
+    "@heroicons/react/": "https://esm.sh/@heroicons/react@2.1.5/",
+    "i18next": "https://esm.sh/i18next@23.12.2",
+    "i18next-http-backend": "https://esm.sh/i18next-http-backend@2.5.2",
+    "i18next-browser-languagedetector": "https://esm.sh/i18next-browser-languagedetector@8.0.0",
+    "packages/": "../../packages/"
+  }
+}
+</script>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="module" src="../src/index.tsx"></script>
+  <script>
+    function toggleTheme() {
+      const root = document.documentElement;
+      const isDark = root.classList.contains('dark');
+      if (isDark) {
+        root.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      } else {
+        root.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      }
+    }
+    function initTheme() {
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+        document.documentElement.classList.add('dark');
+      }
+    }
+    initTheme();
+  </script>
+</body>
+</html>

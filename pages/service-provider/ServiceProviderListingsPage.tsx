@@ -1,12 +1,14 @@
-
 import React, { useState, useMemo } from 'react';
 import Card from '../../components/ui/Card';
 import Button from '../../components/ui/Button';
 import { PlusCircleIcon, PencilSquareIcon, TrashIcon, EyeIcon, WrenchScrewdriverIcon, TagIcon } from '@heroicons/react/24/outline';
-import { MOCK_SERVICES, STANDARD_INPUT_FIELD, ICON_INPUT_FIELD } from '../../constants';
-import { Service, ServiceCategory, SERVICE_CATEGORIES } from '../../types';
+// FIX: Update import paths for monorepo structure
+import { MOCK_SERVICES, STANDARD_INPUT_FIELD, ICON_INPUT_FIELD } from 'packages/core/src/constants';
+// FIX: Update import paths for monorepo structure
+import { Service, ServiceCategory, SERVICE_CATEGORIES } from 'packages/core/src/types';
 import ServiceUploadModal from '../../components/service-provider/ServiceUploadModal';
 import { useAppContext } from '../../contexts/AppContext';
+import { useTranslation } from 'react-i18next';
 
 interface ServiceCardProps {
   service: Service;
@@ -14,28 +16,32 @@ interface ServiceCardProps {
   onDelete: (serviceId: string) => void;
 }
 
-const ProviderServiceCard: React.FC<ServiceCardProps> = ({ service, onEdit, onDelete }) => (
-  <Card className="flex flex-col group" hoverEffect>
-    <div className="relative overflow-hidden aspect-[16/10]">
-      <img src={service.imageUrl || `https://picsum.photos/seed/${service.id}/400/250`} alt={service.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-    </div>
-    <div className="p-5 flex flex-col flex-grow">
-      <h3 className="text-lg font-semibold text-swiss-charcoal mb-1 group-hover:text-swiss-teal transition-colors">{service.title}</h3>
-      <p className="text-xs text-gray-500 mb-2">
-        <TagIcon className="w-3.5 h-3.5 inline mr-1 opacity-70" /> Category: {service.category} | <WrenchScrewdriverIcon className="w-3.5 h-3.5 inline mr-1 opacity-70" /> Delivery: {service.deliveryType || 'N/A'}
-      </p>
-      <p className="text-sm text-gray-600 mb-3 flex-grow line-clamp-3">{service.description}</p>
-      {service.priceInfo && <p className="text-sm font-semibold text-swiss-mint mb-3">{service.priceInfo}</p>}
-      <div className="flex space-x-2 mt-auto">
-        <Button variant="outline" size="sm" leftIcon={PencilSquareIcon} onClick={() => onEdit(service)} className="flex-1">Edit</Button>
-        <Button variant="danger" size="sm" leftIcon={TrashIcon} onClick={() => onDelete(service.id)} className="flex-1">Delete</Button>
-      </div>
-    </div>
-  </Card>
-);
+const ProviderServiceCard: React.FC<ServiceCardProps> = ({ service, onEdit, onDelete }) => {
+    const { t } = useTranslation();
+    return (
+        <Card className="flex flex-col group" hoverEffect>
+            <div className="relative overflow-hidden aspect-[16/10]">
+            <img src={service.imageUrl || `https://picsum.photos/seed/${service.id}/400/250`} alt={service.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+            </div>
+            <div className="p-5 flex flex-col flex-grow">
+            <h3 className="text-lg font-semibold text-swiss-charcoal mb-1 group-hover:text-swiss-teal transition-colors">{service.title}</h3>
+            <p className="text-xs text-gray-500 mb-2">
+                <TagIcon className="w-3.5 h-3.5 inline mr-1 opacity-70" /> {t('serviceProviderListingsPage.card.category')}: {service.category} | <WrenchScrewdriverIcon className="w-3.5 h-3.5 inline mr-1 opacity-70" /> {t('serviceProviderListingsPage.card.delivery')}: {service.deliveryType || 'N/A'}
+            </p>
+            <p className="text-sm text-gray-600 mb-3 flex-grow line-clamp-3">{service.description}</p>
+            {service.priceInfo && <p className="text-sm font-semibold text-swiss-mint mb-3">{service.priceInfo}</p>}
+            <div className="flex space-x-2 mt-auto">
+                <Button variant="outline" size="sm" leftIcon={PencilSquareIcon} onClick={() => onEdit(service)} className="flex-1">{t('buttons.edit')}</Button>
+                <Button variant="danger" size="sm" leftIcon={TrashIcon} onClick={() => onDelete(service.id)} className="flex-1">{t('buttons.delete')}</Button>
+            </div>
+            </div>
+        </Card>
+    );
+};
 
 
 const ServiceProviderListingsPage: React.FC = () => {
+  const { t } = useTranslation();
   const { currentUser } = useAppContext();
   const [serviceListings, setServiceListings] = useState<Service[]>(
     // Filter MOCK_SERVICES to only those belonging to the current service provider for initial state
@@ -101,7 +107,7 @@ const ServiceProviderListingsPage: React.FC = () => {
   };
 
   const handleDeleteService = (serviceId: string) => {
-    if (window.confirm("Are you sure you want to delete this service listing?")) {
+    if (window.confirm(t('serviceProviderListingsPage.confirmDelete'))) {
       setServiceListings(prev => prev.filter(s => s.id !== serviceId));
     }
   };
@@ -116,9 +122,9 @@ const ServiceProviderListingsPage: React.FC = () => {
   return (
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row justify-between items-center">
-        <h1 className="text-3xl font-bold text-swiss-charcoal mb-4 md:mb-0">My Service Listings</h1>
+        <h1 className="text-3xl font-bold text-swiss-charcoal mb-4 md:mb-0">{t('serviceProviderListingsPage.title')}</h1>
         <Button variant="primary" leftIcon={PlusCircleIcon} onClick={() => handleOpenModal()}>
-          Add New Service
+          {t('serviceProviderListingsPage.addNewServiceButton')}
         </Button>
       </div>
 
@@ -126,7 +132,7 @@ const ServiceProviderListingsPage: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
           <input
             type="text"
-            placeholder="Search services by title or description..."
+            placeholder={t('serviceProviderListingsPage.searchPlaceholder')}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className={STANDARD_INPUT_FIELD}
@@ -144,9 +150,9 @@ const ServiceProviderListingsPage: React.FC = () => {
       {filteredServiceListings.length === 0 ? (
         <Card className="p-10 text-center">
              <WrenchScrewdriverIcon className="w-16 h-16 mx-auto text-gray-300 mb-4" />
-            <h2 className="text-xl font-semibold text-swiss-charcoal mb-2">No Services Found</h2>
+            <h2 className="text-xl font-semibold text-swiss-charcoal mb-2">{t('serviceProviderListingsPage.emptyState.title')}</h2>
             <p className="text-gray-500">
-                {serviceListings.length > 0 ? "No services match your current filters." : "You haven't added any services yet. Click 'Add New Service' to get started."}
+                {serviceListings.length > 0 ? t('serviceProviderListingsPage.emptyState.noMatch') : t('serviceProviderListingsPage.emptyState.noServicesYet')}
             </p>
         </Card>
       ) : (

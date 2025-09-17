@@ -1,16 +1,28 @@
+
+
 import React, { useState, useMemo, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { JobListing, CandidateProfile, UserRole } from '../types';
-import { MOCK_JOB_LISTINGS, MOCK_CANDIDATE_PROFILES, STANDARD_INPUT_FIELD, ICON_INPUT_FIELD } from '../constants';
+// FIX: Update import paths for monorepo structure
+import { JobListing, CandidateProfile, UserRole } from 'packages/core/src/types';
+// FIX: Update import paths for monorepo structure
+import { MOCK_JOB_LISTINGS, MOCK_CANDIDATE_PROFILES, STANDARD_INPUT_FIELD, ICON_INPUT_FIELD } from 'packages/core/src/constants';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
 import Tabs from '../components/ui/Tabs';
 import { BriefcaseIcon, UserGroupIcon, MapPinIcon, CalendarDaysIcon, EyeIcon, PencilIcon, TrashIcon, PlusCircleIcon, MagnifyingGlassIcon, FunnelIcon, StarIcon } from '@heroicons/react/24/outline';
-import { useAppContext } from '../contexts/AppContext';
+// FIX: Update import paths for monorepo structure
+import { useAppContext } from 'packages/contexts/src/AppContext';
 import { useTranslation } from 'react-i18next';
+import JobPostModal from '../components/recruitment/JobPostModal';
+import ViewApplicantsModal from '../components/recruitment/ViewApplicantsModal';
 
+interface FoundationJobListingCardProps {
+  job: JobListing;
+  onEdit: (job: JobListing) => void;
+  onViewApplicants: (job: JobListing) => void;
+}
 
-const JobListingCard: React.FC<{ job: JobListing }> = ({ job }) => {
+const FoundationJobListingCard: React.FC<FoundationJobListingCardProps> = ({ job, onEdit, onViewApplicants }) => {
   const { t } = useTranslation();
   return (
   <Card className="mb-4" hoverEffect>
@@ -32,8 +44,8 @@ const JobListingCard: React.FC<{ job: JobListing }> = ({ job }) => {
       </div>
     </div>
     <div className="bg-gray-50 px-5 py-3 flex justify-end space-x-2">
-      <Button variant="ghost" size="sm" leftIcon={EyeIcon} onClick={() => alert('View Job TBD')}>{t('buttons.view')}</Button>
-      <Button variant="ghost" size="sm" leftIcon={PencilIcon} className="text-blue-600 hover:text-blue-700" onClick={() => alert('Edit Job TBD')}>{t('buttons.edit')}</Button>
+      <Button variant="ghost" size="sm" leftIcon={EyeIcon} onClick={() => onViewApplicants(job)}>{t('recruitmentPage.buttons.viewApplicants')}</Button>
+      <Button variant="ghost" size="sm" leftIcon={PencilIcon} className="text-blue-600 hover:text-blue-700" onClick={() => onEdit(job)}>{t('buttons.edit')}</Button>
       <Button variant="ghost" size="sm" leftIcon={TrashIcon} className="text-red-600 hover:text-red-700" onClick={() => alert('Close Job TBD')}>{t('buttons.close')}</Button>
     </div>
   </Card>
@@ -97,6 +109,12 @@ const RecruitmentPage: React.FC = () => {
   const [searchTermCandidates, setSearchTermCandidates] = useState('');
   const [showFilters, setShowFilters] = useState(false);
   const [candidateProfiles, setCandidateProfiles] = useState<CandidateProfile[]>(MOCK_CANDIDATE_PROFILES);
+  const [jobListings, setJobListings] = useState<JobListing[]>(MOCK_JOB_LISTINGS);
+  const [isJobModalOpen, setIsJobModalOpen] = useState(false);
+  const [editingJob, setEditingJob] = useState<JobListing | null>(null);
+  const [isApplicantsModalOpen, setIsApplicantsModalOpen] = useState(false);
+  const [selectedJobForApplicants, setSelectedJobForApplicants] = useState<JobListing | null>(null);
+
 
   const canPostJob = currentUser?.role === UserRole.FOUNDATION || currentUser?.role === UserRole.ADMIN || currentUser?.role === UserRole.SUPER_ADMIN;
   const isAdminOrSuperAdmin = currentUser?.role === UserRole.ADMIN || currentUser?.role === UserRole.SUPER_ADMIN;
@@ -120,10 +138,10 @@ const RecruitmentPage: React.FC = () => {
   };
 
   const filteredJobs = useMemo(() =>
-    MOCK_JOB_LISTINGS.filter(job =>
+    jobListings.filter(job =>
       job.title.toLowerCase().includes(searchTermJobs.toLowerCase()) ||
       job.foundationName.toLowerCase().includes(searchTermJobs.toLowerCase())
-    ), [searchTermJobs]);
+    ), [searchTermJobs, jobListings]);
 
   const filteredCandidates = useMemo(() =>
     candidateProfiles.filter(candidate =>
@@ -136,19 +154,38 @@ const RecruitmentPage: React.FC = () => {
   };
   
   const handleEditCandidate = (candidate: CandidateProfile) => {
-    alert(`Editing candidate ${candidate.name} (ID: ${candidate.id}) - Functionality TBD. This would open a form/modal pre-filled with candidate data.`);
-    // For a full implementation, you might open a modal here:
-    // setEditingCandidate(candidate);
-    // setIsCandidateModalOpen(true);
+    alert(`Editing candidate ${candidate.name} (ID: ${candidate.id}) - Functionality TBD.`);
   };
 
   const handleAddNewCandidate = () => {
-    alert('Adding a new candidate - Functionality TBD. This would open a form/modal for new candidate entry.');
-    // For a full implementation:
-    // setEditingCandidate(null); // Ensure no existing data is pre-filled
-    // setIsCandidateModalOpen(true);
+    alert('Adding a new candidate - Functionality TBD.');
   };
 
+  const handleOpenJobModal = (job: JobListing | null) => {
+    setEditingJob(job);
+    setIsJobModalOpen(true);
+  }
+
+  const handleJobSubmit = (jobData: Omit<JobListing, 'id' | 'applicationsReceived' | 'status'>) => {
+    if(editingJob) {
+      setJobListings(prev => prev.map(j => j.id === editingJob.id ? {...editingJob, ...jobData} : j));
+    } else {
+      const newJob: JobListing = {
+        ...jobData,
+        id: `job_${Date.now()}`,
+        applicationsReceived: 0,
+        status: 'Open'
+      };
+      setJobListings(prev => [newJob, ...prev]);
+    }
+    // Also update the global mock for persistence in this demo
+    // In a real app, this would be an API call
+  }
+
+  const handleViewApplicants = (job: JobListing) => {
+    setSelectedJobForApplicants(job);
+    setIsApplicantsModalOpen(true);
+  }
 
   const JobOffersTab: React.ReactNode = (
     <div className="space-y-4">
@@ -168,7 +205,7 @@ const RecruitmentPage: React.FC = () => {
         <div className="flex space-x-2">
             <Button variant="outline" leftIcon={FunnelIcon} onClick={() => {setShowFilters(!showFilters); alert('Filter UI TBD');}}>{t('recruitmentPage.buttons.filters')}</Button>
             {canPostJob && (
-                <Button variant="primary" leftIcon={PlusCircleIcon} className="bg-swiss-mint hover:bg-opacity-90 fixed bottom-6 right-6 lg:static z-10 shadow-lg lg:shadow-none" onClick={() => alert('Post New Job TBD')}>{t('recruitmentPage.buttons.postNewJob')}</Button>
+                <Button variant="primary" leftIcon={PlusCircleIcon} className="bg-swiss-mint hover:bg-opacity-90" onClick={() => handleOpenJobModal(null)}>{t('recruitmentPage.buttons.postNewJob')}</Button>
             )}
         </div>
       </div>
@@ -185,7 +222,7 @@ const RecruitmentPage: React.FC = () => {
       )}
       <p className="text-sm text-gray-600">{t('recruitmentPage.jobOffers.activeJobsCount', { count: filteredJobs.filter(j => j.status === 'Open').length })}</p>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-6">
-        {filteredJobs.map(job => <JobListingCard key={job.id} job={job} />)}
+        {filteredJobs.map(job => <FoundationJobListingCard key={job.id} job={job} onEdit={handleOpenJobModal} onViewApplicants={handleViewApplicants} />)}
       </div>
       {filteredJobs.length === 0 && <p className="text-center text-gray-500 py-8">{t('recruitmentPage.jobOffers.emptyState')}</p>}
     </div>
@@ -209,7 +246,7 @@ const RecruitmentPage: React.FC = () => {
         <div className="flex space-x-2">
           <Button variant="outline" leftIcon={FunnelIcon} onClick={() => {setShowFilters(!showFilters); alert('Filter UI TBD');}}>{t('recruitmentPage.buttons.filters')}</Button>
           {isAdminOrSuperAdmin && (
-             <Button variant="primary" leftIcon={PlusCircleIcon} onClick={handleAddNewCandidate} className="bg-swiss-mint hover:bg-opacity-90">Add Candidate</Button>
+             <Button variant="primary" leftIcon={PlusCircleIcon} onClick={handleAddNewCandidate} className="bg-swiss-mint hover:bg-opacity-90">{t('recruitmentPage.buttons.addCandidate')}</Button>
           )}
         </div>
       </div>
@@ -246,6 +283,19 @@ const RecruitmentPage: React.FC = () => {
         activeTab={activeTabIndex}
         onTabChange={handleTabChange}
       />
+      <JobPostModal 
+        isOpen={isJobModalOpen}
+        onClose={() => setIsJobModalOpen(false)}
+        onSubmit={handleJobSubmit}
+        existingJob={editingJob}
+      />
+      {selectedJobForApplicants && (
+        <ViewApplicantsModal
+            isOpen={isApplicantsModalOpen}
+            onClose={() => setIsApplicantsModalOpen(false)}
+            job={selectedJobForApplicants}
+        />
+      )}
     </div>
   );
 };

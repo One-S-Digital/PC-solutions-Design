@@ -1,13 +1,18 @@
 
 import React, { useState } from 'react';
-import { ParentLead, FoundationLeadResponseStatus, LeadMainStatus, FoundationResponse, UserRole } from '../../types';
+// FIX: Update import paths for monorepo structure
+import { ParentLead, FoundationLeadResponseStatus, LeadMainStatus, FoundationResponse, UserRole } from 'packages/core/src/types';
 import Card from '../ui/Card';
 import Button from '../ui/Button';
-import { MOCK_FOUNDATION_ORG_KINDERWELT } from '../../constants'; // For foundation name
+// FIX: Update import paths for monorepo structure
+import { MOCK_FOUNDATION_ORG_KINDERWELT } from 'packages/core/src/constants'; // For foundation name
 import { CheckCircleIcon, XCircleIcon, QuestionMarkCircleIcon, ChatBubbleLeftEllipsisIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline';
-import { useAppContext } from '../../contexts/AppContext';
-import { useMessaging } from '../../contexts/MessagingContext';
+// FIX: Update import paths for monorepo structure
+import { useAppContext } from 'packages/contexts/src/AppContext';
+// FIX: Update import paths for monorepo structure
+import { useMessaging } from 'packages/contexts/src/MessagingContext';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 interface LeadCardProps {
   lead: ParentLead;
@@ -16,6 +21,7 @@ interface LeadCardProps {
 }
 
 const LeadCard: React.FC<LeadCardProps> = ({ lead, foundationOrgId, onUpdateLead }) => {
+  const { t } = useTranslation();
   const [showResponseInput, setShowResponseInput] = useState(false);
   const [responseText, setResponseText] = useState('');
   const { currentUser } = useAppContext(); // Assuming foundation name comes from currentUser or org lookup
@@ -53,7 +59,7 @@ const LeadCard: React.FC<LeadCardProps> = ({ lead, foundationOrgId, onUpdateLead
 
   const handleMessageParent = () => {
     if (!lead.parentId || !lead.contactName) {
-        alert("Parent information is missing for this lead.");
+        alert(t('leadCard.alert.missingParentInfo'));
         return;
     }
     const conversationId = startOrGetConversation(lead.parentId, lead.contactName, UserRole.PARENT);
@@ -62,35 +68,40 @@ const LeadCard: React.FC<LeadCardProps> = ({ lead, foundationOrgId, onUpdateLead
 
   const getMyResponseStatus = () => myResponse?.status || FoundationLeadResponseStatus.NOT_RESPONDED;
 
-  const statusPillColors: Record<FoundationLeadResponseStatus, string> = {
-    [FoundationLeadResponseStatus.NOT_RESPONDED]: 'bg-gray-200 text-gray-700',
-    [FoundationLeadResponseStatus.INTERESTED]: 'bg-green-100 text-green-700',
-    [FoundationLeadResponseStatus.NOT_INTERESTED]: 'bg-red-100 text-red-700',
-    [FoundationLeadResponseStatus.NEEDS_MORE_INFO]: 'bg-yellow-100 text-yellow-700',
-    [FoundationLeadResponseStatus.ENROLLED]: 'bg-purple-100 text-purple-700',
+  const getStatusInfo = (status: FoundationLeadResponseStatus) => {
+    switch(status) {
+        case FoundationLeadResponseStatus.NOT_RESPONDED: return { className: 'bg-gray-200 text-gray-700', label: t('leadCard.status.notResponded') };
+        case FoundationLeadResponseStatus.INTERESTED: return { className: 'bg-green-100 text-green-700', label: t('leadCard.status.interested') };
+        case FoundationLeadResponseStatus.NOT_INTERESTED: return { className: 'bg-red-100 text-red-700', label: t('leadCard.status.notInterested') };
+        case FoundationLeadResponseStatus.NEEDS_MORE_INFO: return { className: 'bg-yellow-100 text-yellow-700', label: t('leadCard.status.needsMoreInfo') };
+        case FoundationLeadResponseStatus.ENROLLED: return { className: 'bg-purple-100 text-purple-700', label: t('leadCard.status.enrolled') };
+        default: return { className: 'bg-gray-200 text-gray-700', label: status };
+    }
   };
+
+  const currentStatusInfo = getStatusInfo(getMyResponseStatus());
 
   return (
     <Card className="flex flex-col p-5 space-y-3">
       <div>
         <div className="flex justify-between items-center">
             <h3 className="text-lg font-semibold text-swiss-charcoal">
-            Lead from {lead.contactName}
+              {t('leadCard.title', { name: lead.contactName })}
             </h3>
-            <span className={`px-2 py-0.5 text-xs font-medium rounded-full ${statusPillColors[getMyResponseStatus()]}`}>
-                {getMyResponseStatus().replace(/([A-Z])/g, ' $1').trim()}
+            <span className={`px-2 py-0.5 text-xs font-medium rounded-full ${currentStatusInfo.className}`}>
+                {currentStatusInfo.label}
             </span>
         </div>
         <p className="text-sm text-gray-500">
-          For: {lead.canton} {lead.municipality && `- ${lead.municipality}`}
+          {t('leadCard.forLocation', { canton: lead.canton, municipality: lead.municipality ? `- ${lead.municipality}` : '' })}
         </p>
       </div>
       
       <div className="text-sm text-gray-700 space-y-1">
-        <p><strong>Child's Age:</strong> {lead.childAge}</p>
-        <p><strong>Desired Start:</strong> {new Date(lead.desiredStartDate).toLocaleDateString()}</p>
-        <p><strong>Submitted:</strong> {new Date(lead.submissionDate).toLocaleDateString()}</p>
-        {lead.specialNeeds && <p><strong>Notes:</strong> <span className="italic">{lead.specialNeeds}</span></p>}
+        <p><strong>{t('leadCard.childAge')}:</strong> {lead.childAge}</p>
+        <p><strong>{t('leadCard.desiredStart')}:</strong> {new Date(lead.desiredStartDate).toLocaleDateString()}</p>
+        <p><strong>{t('leadCard.submittedOn')}:</strong> {new Date(lead.submissionDate).toLocaleDateString()}</p>
+        {lead.specialNeeds && <p><strong>{t('leadCard.notes')}:</strong> <span className="italic">{lead.specialNeeds}</span></p>}
       </div>
 
       {/* Initial Action Buttons (if not yet responded or needs more info) */}
@@ -105,19 +116,19 @@ const LeadCard: React.FC<LeadCardProps> = ({ lead, foundationOrgId, onUpdateLead
                 variant="primary" 
                 size="sm" 
                 leftIcon={CheckCircleIcon}
-                onClick={() => handleResponse(FoundationLeadResponseStatus.INTERESTED, 'We are interested! Please use this link to book a visit: [Your Calendly Link]')}
+                onClick={() => handleResponse(FoundationLeadResponseStatus.INTERESTED, t('leadCard.defaultMessages.interested'))}
                 disabled={getMyResponseStatus() === FoundationLeadResponseStatus.INTERESTED}
             >
-              Interested
+              {t('leadCard.buttons.interested')}
             </Button>
             <Button 
                 variant="danger" 
                 size="sm" 
                 leftIcon={XCircleIcon}
-                onClick={() => handleResponse(FoundationLeadResponseStatus.NOT_INTERESTED, 'Unfortunately, we do not have availability at this time.')}
+                onClick={() => handleResponse(FoundationLeadResponseStatus.NOT_INTERESTED, t('leadCard.defaultMessages.notInterested'))}
                 disabled={getMyResponseStatus() === FoundationLeadResponseStatus.NOT_INTERESTED}
             >
-              Not Interested
+              {t('leadCard.buttons.notInterested')}
             </Button>
             <Button 
                 variant="outline" 
@@ -126,13 +137,13 @@ const LeadCard: React.FC<LeadCardProps> = ({ lead, foundationOrgId, onUpdateLead
                 onClick={() => setShowResponseInput(true)}
                 disabled={getMyResponseStatus() === FoundationLeadResponseStatus.NEEDS_MORE_INFO}
             >
-              Need Info
+              {t('leadCard.buttons.needInfo')}
             </Button>
           </div>
           {showResponseInput && (
             <div className="mt-2 p-3 bg-gray-50 rounded-md">
               <label htmlFor={`response-text-${lead.id}`} className="block text-sm font-medium text-gray-700 mb-1">
-                Question for {lead.contactName}:
+                {t('leadCard.questionFor', { name: lead.contactName })}:
               </label>
               <textarea
                 id={`response-text-${lead.id}`}
@@ -140,10 +151,10 @@ const LeadCard: React.FC<LeadCardProps> = ({ lead, foundationOrgId, onUpdateLead
                 onChange={(e) => setResponseText(e.target.value)}
                 rows={2}
                 className="input-field w-full text-sm" // Assuming input-field is globally styled or use STANDARD_INPUT_FIELD
-                placeholder="e.g., What are your preferred days of the week?"
+                placeholder={t('leadCard.questionPlaceholder')}
               />
               <div className="mt-2 flex justify-end space-x-2">
-                <Button variant="ghost" size="sm" onClick={() => setShowResponseInput(false)}>Cancel</Button>
+                <Button variant="ghost" size="sm" onClick={() => setShowResponseInput(false)}>{t('buttons.cancel')}</Button>
                 <Button 
                     variant="secondary" 
                     size="sm" 
@@ -151,7 +162,7 @@ const LeadCard: React.FC<LeadCardProps> = ({ lead, foundationOrgId, onUpdateLead
                     disabled={!responseText.trim()}
                     leftIcon={PaperAirplaneIcon}
                 >
-                    Send Question
+                    {t('leadCard.buttons.sendQuestion')}
                 </Button>
               </div>
             </div>
@@ -163,8 +174,8 @@ const LeadCard: React.FC<LeadCardProps> = ({ lead, foundationOrgId, onUpdateLead
       {myResponse && (
         <div className="mt-3 pt-3 border-t border-gray-200">
             <div className="p-3 bg-gray-50 rounded-md text-sm mb-3">
-                <p className="font-medium">Your response: <span className={`${statusPillColors[myResponse.status]} px-1.5 py-0.5 rounded`}>{myResponse.status.replace(/([A-Z])/g, ' $1').trim()}</span></p>
-                {myResponse.messageToParent && <p className="italic mt-1">Message sent: "{myResponse.messageToParent}"</p>}
+                <p className="font-medium">{t('leadCard.yourResponse')}: <span className={`${currentStatusInfo.className} px-1.5 py-0.5 rounded`}>{currentStatusInfo.label}</span></p>
+                {myResponse.messageToParent && <p className="italic mt-1">{t('leadCard.messageSent')}: "{myResponse.messageToParent}"</p>}
             </div>
              <div className="flex flex-wrap gap-2 justify-end">
                 <Button 
@@ -173,17 +184,17 @@ const LeadCard: React.FC<LeadCardProps> = ({ lead, foundationOrgId, onUpdateLead
                     leftIcon={ChatBubbleLeftEllipsisIcon}
                     onClick={handleMessageParent}
                 >
-                    Message Parent
+                    {t('leadCard.buttons.messageParent')}
                 </Button>
                 {myResponse.status === FoundationLeadResponseStatus.INTERESTED && (
                     <Button 
                         variant="primary" 
                         size="sm" 
-                        leftIcon={CheckCircleIcon} // Corrected icon
+                        leftIcon={CheckCircleIcon}
                         className="bg-purple-600 hover:bg-purple-700"
-                        onClick={() => handleResponse(FoundationLeadResponseStatus.ENROLLED, "Parent has confirmed enrollment. Welcome!")}
+                        onClick={() => handleResponse(FoundationLeadResponseStatus.ENROLLED, t('leadCard.defaultMessages.enrolled'))}
                     >
-                      Mark as Enrolled
+                      {t('leadCard.buttons.markEnrolled')}
                     </Button>
                 )}
             </div>

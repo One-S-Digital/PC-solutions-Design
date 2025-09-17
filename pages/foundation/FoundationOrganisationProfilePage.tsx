@@ -1,14 +1,16 @@
-
 import React from 'react';
 import Card from '../../components/ui/Card';
 import OrganizationProfileForm from '../../components/settings/OrganizationProfileForm'; // Main form
 import Button from '../../components/ui/Button';
-import { STANDARD_INPUT_FIELD } from '../../constants';
+// FIX: Update import paths for monorepo structure
+import { STANDARD_INPUT_FIELD } from 'packages/core/src/constants';
 import { BuildingOfficeIcon, PhotoIcon, GlobeAltIcon, CalendarDaysIcon, UserPlusIcon, LinkIcon } from '@heroicons/react/24/outline';
+import { useTranslation } from 'react-i18next';
 
 // This page can extend or wrap the OrganizationProfileForm from settings,
 // or be a more public-facing version. For now, let's assume it's an extended settings page.
 const FoundationOrganisationProfilePage: React.FC = () => {
+  const { t } = useTranslation();
   // Mock state for additional fields not in OrganizationProfileForm
   const [additionalProfile, setAdditionalProfile] = React.useState({
     pedagogyStatement: "Our pedagogy focuses on nurturing curiosity and fostering holistic development through play-based learning and inquiry-driven exploration. We believe in creating a supportive and stimulating environment where each child can thrive at their own pace. We integrate elements of Montessori and Reggio Emilia approaches to encourage independence, creativity, and a love for lifelong learning. Outdoor play and connection with nature are also integral parts of our daily curriculum.",
@@ -30,7 +32,7 @@ const FoundationOrganisationProfilePage: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Saving additional profile info:", additionalProfile);
-    alert("Additional profile information saved!");
+    alert(t('foundationOrganisationProfilePage.alert.infoSaved'));
   };
 
 
@@ -38,7 +40,7 @@ const FoundationOrganisationProfilePage: React.FC = () => {
     <div className="space-y-6">
       <h1 className="text-3xl font-bold text-swiss-charcoal flex items-center">
         <BuildingOfficeIcon className="w-8 h-8 mr-3 text-swiss-mint" />
-        Organisation Profile
+        {t('foundationOrganisationProfilePage.title')}
       </h1>
       
       {/* Re-use the existing form for core details like capacity, pedagogy, languages */}
@@ -49,59 +51,59 @@ const FoundationOrganisationProfilePage: React.FC = () => {
          <form onSubmit={handleSubmit} className="space-y-6">
             <h2 className="text-xl font-semibold text-swiss-charcoal mb-4 flex items-center">
                 <PhotoIcon className="w-6 h-6 mr-2 text-swiss-teal" />
-                Branding & Public Information
+                {t('foundationOrganisationProfilePage.sections.branding.title')}
             </h2>
             <div className="space-y-4">
                 <div>
-                    <label htmlFor="orgLogoUpload" className="block text-sm font-medium text-gray-700 mb-1">Organization Logo</label>
+                    <label htmlFor="orgLogoUpload" className="block text-sm font-medium text-gray-700 mb-1">{t('foundationOrganisationProfilePage.sections.branding.logoLabel')}</label>
                     <input type="file" id="orgLogoUpload" className={`${STANDARD_INPUT_FIELD} p-0 file:mr-4 file:py-2 file:px-4 file:rounded-l-button file:border-0 file:text-sm file:font-semibold file:bg-swiss-teal/10 file:text-swiss-teal hover:file:bg-swiss-teal/20`} />
                 </div>
                 <div>
-                    <label htmlFor="orgCoverImageUpload" className="block text-sm font-medium text-gray-700 mb-1">Cover Image</label>
+                    <label htmlFor="orgCoverImageUpload" className="block text-sm font-medium text-gray-700 mb-1">{t('foundationOrganisationProfilePage.sections.branding.coverImageLabel')}</label>
                     <input type="file" id="orgCoverImageUpload" className={`${STANDARD_INPUT_FIELD} p-0 file:mr-4 file:py-2 file:px-4 file:rounded-l-button file:border-0 file:text-sm file:font-semibold file:bg-swiss-teal/10 file:text-swiss-teal hover:file:bg-swiss-teal/20`} />
                 </div>
                 <div>
-                    <label htmlFor="pedagogyStatement" className="block text-sm font-medium text-gray-700 mb-1">Pedagogy Statement</label>
-                    <textarea name="pedagogyStatement" id="pedagogyStatement" value={additionalProfile.pedagogyStatement} onChange={handleChange} rows={4} className={STANDARD_INPUT_FIELD} placeholder="Describe your daycare's pedagogical approach."/>
+                    <label htmlFor="pedagogyStatement" className="block text-sm font-medium text-gray-700 mb-1">{t('foundationOrganisationProfilePage.sections.branding.pedagogyStatementLabel')}</label>
+                    <textarea name="pedagogyStatement" id="pedagogyStatement" value={additionalProfile.pedagogyStatement} onChange={handleChange} rows={4} className={STANDARD_INPUT_FIELD} placeholder={t('foundationOrganisationProfilePage.sections.branding.pedagogyStatementPlaceholder')}/>
                 </div>
             </div>
 
             <h2 className="text-xl font-semibold text-swiss-charcoal mb-4 mt-6 flex items-center">
                 <CalendarDaysIcon className="w-6 h-6 mr-2 text-swiss-teal" />
-                Operations & Contact
+                {t('foundationOrganisationProfilePage.sections.operations.title')}
             </h2>
             <div className="space-y-4">
                 <div>
-                    <label htmlFor="orgOpeningHours" className="block text-sm font-medium text-gray-700 mb-1">Opening Hours</label>
-                    <input type="text" name="openingHours" id="orgOpeningHours" value={additionalProfile.openingHours} onChange={handleChange} className={STANDARD_INPUT_FIELD} placeholder="e.g., Mon-Fri: 07:00 - 19:00"/>
+                    <label htmlFor="orgOpeningHours" className="block text-sm font-medium text-gray-700 mb-1">{t('foundationOrganisationProfilePage.sections.operations.openingHoursLabel')}</label>
+                    <input type="text" name="openingHours" id="orgOpeningHours" value={additionalProfile.openingHours} onChange={handleChange} className={STANDARD_INPUT_FIELD} placeholder={t('foundationOrganisationProfilePage.sections.operations.openingHoursPlaceholder')}/>
                 </div>
                 <div>
-                    <label htmlFor="contactInfo" className="block text-sm font-medium text-gray-700 mb-1">Public Contact Info (Phone/Email)</label>
-                    <input type="text" name="contactInfo" id="contactInfo" className={STANDARD_INPUT_FIELD} placeholder="e.g., 021 123 45 67 / info@example.ch"/>
+                    <label htmlFor="contactInfo" className="block text-sm font-medium text-gray-700 mb-1">{t('foundationOrganisationProfilePage.sections.operations.contactInfoLabel')}</label>
+                    <input type="text" name="contactInfo" id="contactInfo" className={STANDARD_INPUT_FIELD} placeholder={t('foundationOrganisationProfilePage.sections.operations.contactInfoPlaceholder')}/>
                 </div>
             </div>
             
             <h2 className="text-xl font-semibold text-swiss-charcoal mb-4 mt-6 flex items-center">
                 <LinkIcon className="w-6 h-6 mr-2 text-swiss-teal" />
-                Online Presence & Leads
+                {t('foundationOrganisationProfilePage.sections.online.title')}
             </h2>
              <div className="space-y-4">
                 <div>
-                    <label htmlFor="calComLink" className="block text-sm font-medium text-gray-700 mb-1">Booking Link (Cal.com)</label>
-                    <input type="url" name="calComLink" id="calComLink" value={additionalProfile.calComLink} onChange={handleChange} className={STANDARD_INPUT_FIELD} placeholder="https://cal.com/your-daycare"/>
+                    <label htmlFor="calComLink" className="block text-sm font-medium text-gray-700 mb-1">{t('foundationOrganisationProfilePage.sections.online.bookingLinkLabel')}</label>
+                    <input type="url" name="calComLink" id="calComLink" value={additionalProfile.calComLink} onChange={handleChange} className={STANDARD_INPUT_FIELD} placeholder={t('foundationOrganisationProfilePage.sections.online.bookingLinkPlaceholder')}/>
                 </div>
                 <div>
-                    <label htmlFor="socialMediaLink" className="block text-sm font-medium text-gray-700 mb-1">Social Media Link (e.g., Facebook)</label>
-                    <input type="url" name="socialMediaLink" id="socialMediaLink" value={additionalProfile.socialMediaLink} onChange={handleChange} className={STANDARD_INPUT_FIELD} placeholder="https://facebook.com/your-daycare"/>
+                    <label htmlFor="socialMediaLink" className="block text-sm font-medium text-gray-700 mb-1">{t('foundationOrganisationProfilePage.sections.online.socialMediaLinkLabel')}</label>
+                    <input type="url" name="socialMediaLink" id="socialMediaLink" value={additionalProfile.socialMediaLink} onChange={handleChange} className={STANDARD_INPUT_FIELD} placeholder={t('foundationOrganisationProfilePage.sections.online.socialMediaLinkPlaceholder')}/>
                 </div>
                  <div className="flex items-center">
                     <input type="checkbox" name="acceptingLeads" id="acceptingLeads" checked={additionalProfile.acceptingLeads} onChange={handleChange} className="h-4 w-4 text-swiss-mint border-gray-300 rounded focus:ring-swiss-mint" />
-                    <label htmlFor="acceptingLeads" className="ml-2 block text-sm font-medium text-gray-700">Accepting Parent Leads via Platform</label>
+                    <label htmlFor="acceptingLeads" className="ml-2 block text-sm font-medium text-gray-700">{t('foundationOrganisationProfilePage.sections.online.acceptingLeadsLabel')}</label>
                 </div>
             </div>
             
             <div className="pt-2">
-                <Button type="submit" variant="primary">Save Additional Info</Button>
+                <Button type="submit" variant="primary">{t('foundationOrganisationProfilePage.saveButton')}</Button>
             </div>
         </form>
       </Card>

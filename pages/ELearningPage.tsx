@@ -1,11 +1,17 @@
+
+
 import React, { useState, useMemo } from 'react';
-import { Course, UserRole, UploadableContentType, Course as CourseType, ELearningContentType } from '../types';
-import { MOCK_COURSES, STANDARD_INPUT_FIELD, ICON_INPUT_FIELD } from '../constants';
+// FIX: Update import paths for monorepo structure
+import { Course, UserRole, UploadableContentType, Course as CourseType, ELearningContentType } from 'packages/core/src/types';
+// FIX: Update import paths for monorepo structure
+import { MOCK_COURSES, STANDARD_INPUT_FIELD, ICON_INPUT_FIELD } from 'packages/core/src/constants';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
 import { AcademicCapIcon, VideoCameraIcon, DocumentTextIcon, EyeIcon, PlayIcon, ArrowDownTrayIcon, PlusCircleIcon, LinkIcon, MagnifyingGlassIcon, ArrowTopRightOnSquareIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
-import { useAppContext } from '../contexts/AppContext';
+// FIX: Update import paths for monorepo structure
+import { useAppContext } from 'packages/contexts/src/AppContext';
 import ContentUploadModal from '../components/admin/ContentUploadModal';
+import { useTranslation } from 'react-i18next';
 
 interface CourseMaterialCardProps {
   item: Course;
@@ -15,14 +21,16 @@ interface CourseMaterialCardProps {
 }
 
 const CourseMaterialCard: React.FC<CourseMaterialCardProps> = ({ item, onEdit, onDelete, isAdmin }) => {
+  const { t } = useTranslation();
   const typeSpecifics = {
-    [ELearningContentType.COURSE]: { icon: AcademicCapIcon, actionText: 'View Course', actionIcon: EyeIcon, color: 'text-swiss-mint' },
-    [ELearningContentType.VIDEO]: { icon: VideoCameraIcon, actionText: 'Watch Video', actionIcon: PlayIcon, color: 'text-swiss-teal' },
-    [ELearningContentType.PDF]: { icon: DocumentTextIcon, actionText: 'Download PDF', actionIcon: ArrowDownTrayIcon, color: 'text-swiss-coral' },
-    [ELearningContentType.LINK]: { icon: LinkIcon, actionText: 'Open Link', actionIcon: ArrowTopRightOnSquareIcon, color: 'text-purple-600' },
+    [ELearningContentType.COURSE]: { icon: AcademicCapIcon, actionText: t('eLearningPage.actions.viewCourse'), actionIcon: EyeIcon, color: 'text-swiss-mint' },
+    [ELearningContentType.VIDEO]: { icon: VideoCameraIcon, actionText: t('eLearningPage.actions.watchVideo'), actionIcon: PlayIcon, color: 'text-swiss-teal' },
+    [ELearningContentType.PDF]: { icon: DocumentTextIcon, actionText: t('eLearningPage.actions.downloadPdf'), actionIcon: ArrowDownTrayIcon, color: 'text-swiss-coral' },
+    [ELearningContentType.LINK]: { icon: LinkIcon, actionText: t('eLearningPage.actions.openLink'), actionIcon: ArrowTopRightOnSquareIcon, color: 'text-purple-600' },
   };
   
-  const currentItemTypeKey = Object.values(ELearningContentType).find(v => v.toLowerCase() === item.type.toLowerCase()) || ELearningContentType.COURSE;
+  // FIX: Cast enum value to string before using string method
+  const currentItemTypeKey = Object.values(ELearningContentType).find(v => (v as string).toLowerCase() === item.type.toLowerCase()) || ELearningContentType.COURSE;
   const currentType = typeSpecifics[currentItemTypeKey];
 
   const IconElement = currentType.icon; 
@@ -34,7 +42,7 @@ const CourseMaterialCard: React.FC<CourseMaterialCardProps> = ({ item, onEdit, o
     } else if (item.fileUrl && (item.type === ELearningContentType.PDF || item.type === ELearningContentType.VIDEO)) {
          window.open(item.fileUrl, '_blank'); 
     } else {
-        alert(`Viewing ${item.title}`); 
+        alert(`${t('eLearningPage.viewingAlert')} ${item.title}`); 
     }
   };
 
@@ -47,10 +55,10 @@ const CourseMaterialCard: React.FC<CourseMaterialCardProps> = ({ item, onEdit, o
           <h3 className={`text-lg font-semibold ${currentType.color}`}>{item.title}</h3>
         </div>
         <p className="text-sm text-gray-600 mb-1 flex-grow line-clamp-3">{item.description}</p>
-        {item.type === ELearningContentType.COURSE && item.lessons && <p className="text-xs text-gray-500">{item.lessons} Lessons</p>}
-        {(item.type === ELearningContentType.VIDEO || item.type === ELearningContentType.COURSE) && item.duration && <p className="text-xs text-gray-500">Duration: {item.duration}</p>}
-        {item.language && <p className="text-xs text-gray-500">Language: {item.language}</p>}
-        <p className="text-xs text-gray-500 mt-1">Updated: {new Date(item.updatedDate).toLocaleDateString()}</p>
+        {item.type === ELearningContentType.COURSE && item.lessons && <p className="text-xs text-gray-500">{t('eLearningPage.lessonsCount', { count: item.lessons })}</p>}
+        {(item.type === ELearningContentType.VIDEO || item.type === ELearningContentType.COURSE) && item.duration && <p className="text-xs text-gray-500">{t('eLearningPage.durationLabel')}: {item.duration}</p>}
+        {item.language && <p className="text-xs text-gray-500">{t('eLearningPage.languageLabel')}: {item.language}</p>}
+        <p className="text-xs text-gray-500 mt-1">{t('eLearningPage.updatedLabel')}: {new Date(item.updatedDate).toLocaleDateString()}</p>
          {item.tags && item.tags.length > 0 && (
             <div className="mt-2 flex flex-wrap gap-1">
                 {item.tags.slice(0, 3).map(tag => (
@@ -71,8 +79,8 @@ const CourseMaterialCard: React.FC<CourseMaterialCardProps> = ({ item, onEdit, o
         </Button>
         {isAdmin && (
           <div className="flex space-x-2">
-            <Button variant="ghost" size="xs" leftIcon={PencilIcon} onClick={() => onEdit(item)} className="flex-1 text-blue-600 hover:text-blue-700">Edit</Button>
-            <Button variant="ghost" size="xs" leftIcon={TrashIcon} onClick={() => onDelete(item.id)} className="flex-1 text-red-600 hover:text-red-700">Delete</Button>
+            <Button variant="ghost" size="xs" leftIcon={PencilIcon} onClick={() => onEdit(item)} className="flex-1 text-blue-600 hover:text-blue-700">{t('buttons.edit')}</Button>
+            <Button variant="ghost" size="xs" leftIcon={TrashIcon} onClick={() => onDelete(item.id)} className="flex-1 text-red-600 hover:text-red-700">{t('buttons.delete')}</Button>
           </div>
         )}
       </div>
@@ -81,6 +89,7 @@ const CourseMaterialCard: React.FC<CourseMaterialCardProps> = ({ item, onEdit, o
 };
 
 const ELearningPage: React.FC = () => {
+  const { t } = useTranslation();
   const { currentUser } = useAppContext();
   const [eLearningItems, setELearningItems] = useState<Course[]>(MOCK_COURSES);
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
@@ -105,6 +114,7 @@ const ELearningPage: React.FC = () => {
   const courseItems = useMemo(() => globallyFilteredItems.filter(item => item.type === ELearningContentType.COURSE), [globallyFilteredItems]);
   const videoItems = useMemo(() => globallyFilteredItems.filter(item => item.type === ELearningContentType.VIDEO), [globallyFilteredItems]);
   const pdfItems = useMemo(() => globallyFilteredItems.filter(item => item.type === ELearningContentType.PDF), [globallyFilteredItems]);
+  const linkItems = useMemo(() => globallyFilteredItems.filter(item => item.type === ELearningContentType.LINK), [globallyFilteredItems]);
 
 
   const handleOpenUploadModal = (itemToEdit: Course | null = null) => {
@@ -137,7 +147,7 @@ const ELearningPage: React.FC = () => {
   };
 
   const handleDeleteItem = (id: string) => {
-    if (window.confirm('Are you sure you want to delete this e-learning item?')) {
+    if (window.confirm(t('eLearningPage.confirmDelete'))) {
         setELearningItems(prevItems => prevItems.filter(item => item.id !== id));
     }
   };
@@ -149,7 +159,7 @@ const ELearningPage: React.FC = () => {
         {title}
       </h2>
       {items.length === 0 ? (
-        <p className="text-center text-gray-500 py-8">No {itemTypeName.toLowerCase()} found matching your criteria.</p>
+        <p className="text-center text-gray-500 py-8">{t('eLearningPage.noItemsFound', { itemType: itemTypeName.toLowerCase() })}</p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {items.map(item => (
@@ -169,10 +179,10 @@ const ELearningPage: React.FC = () => {
   return (
     <div className="space-y-8"> {/* Increased spacing between major page elements */}
       <div className="flex flex-col md:flex-row justify-between items-center">
-        <h1 className="text-3xl font-bold text-swiss-charcoal mb-4 md:mb-0">E-Learning Library</h1>
+        <h1 className="text-3xl font-bold text-swiss-charcoal mb-4 md:mb-0">{t('eLearningPage.title')}</h1>
         {isAdminOrSuperAdmin && (
           <Button variant="primary" leftIcon={PlusCircleIcon} onClick={() => handleOpenUploadModal()}>
-            Add New Content
+            {t('eLearningPage.addNewContentButton')}
           </Button>
         )}
       </div>
@@ -181,18 +191,18 @@ const ELearningPage: React.FC = () => {
         <div className="flex flex-col md:flex-row gap-4">
             <div className="relative flex-grow">
                 <MagnifyingGlassIcon className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
-                <label htmlFor="eLearningSearch" className="sr-only">Search E-Learning</label>
+                <label htmlFor="eLearningSearch" className="sr-only">{t('eLearningPage.searchPlaceholder')}</label>
                 <input
                 id="eLearningSearch"
                 type="text"
-                placeholder="Search courses, videos, topics..."
+                placeholder={t('eLearningPage.searchPlaceholder')}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className={`${ICON_INPUT_FIELD} w-full`}
                 />
             </div>
             <div>
-                <label htmlFor="eLearningCategory" className="block text-xs font-medium text-gray-500 mb-1">Category</label>
+                <label htmlFor="eLearningCategory" className="block text-xs font-medium text-gray-500 mb-1">{t('eLearningPage.categoryLabel')}</label>
                 <select
                     id="eLearningCategory"
                     value={filterCategory}
@@ -205,13 +215,14 @@ const ELearningPage: React.FC = () => {
         </div>
       </Card>
       
-      {globallyFilteredItems.length === 0 && courseItems.length === 0 && videoItems.length === 0 && pdfItems.length === 0 && (
-          <p className="text-center text-gray-500 py-8 text-lg">No e-learning content found matching your criteria.</p>
+      {globallyFilteredItems.length === 0 && (
+          <p className="text-center text-gray-500 py-8 text-lg">{t('eLearningPage.noContentFound')}</p>
       )}
 
-      {renderSection("Courses", courseItems, "courses", AcademicCapIcon)}
-      {renderSection("Videos", videoItems, "videos", VideoCameraIcon)}
-      {renderSection("PDFs", pdfItems, "PDFs", DocumentTextIcon)}
+      {renderSection(t('eLearningPage.coursesTitle'), courseItems, t('eLearningPage.itemType.courses'), AcademicCapIcon)}
+      {renderSection(t('eLearningPage.videosTitle'), videoItems, t('eLearningPage.itemType.videos'), VideoCameraIcon)}
+      {renderSection(t('eLearningPage.pdfsTitle'), pdfItems, t('eLearningPage.itemType.pdfs'), DocumentTextIcon)}
+      {renderSection(t('eLearningPage.externalLinksTitle'), linkItems, t('eLearningPage.itemType.links'), LinkIcon)}
       
 
       {isAdminOrSuperAdmin && (

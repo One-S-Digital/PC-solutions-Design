@@ -1,12 +1,17 @@
 
 import React, { useState, useEffect } from 'react';
-import { useAppContext } from '../../contexts/AppContext';
-import { MOCK_ORGANIZATIONS, MOCK_FOUNDATION_ORG_KINDERWELT, STANDARD_INPUT_FIELD } from '../../constants'; // Use MOCK_ORGANIZATIONS for lookup, Import STANDARD_INPUT_FIELD
-import { Organization } from '../../types';
+// FIX: Update import paths for monorepo structure
+import { useAppContext } from 'packages/contexts/src/AppContext';
+// FIX: Update import paths for monorepo structure
+import { MOCK_ORGANIZATIONS, MOCK_FOUNDATION_ORG_KINDERWELT, STANDARD_INPUT_FIELD } from 'packages/core/src/constants'; // Use MOCK_ORGANIZATIONS for lookup, Import STANDARD_INPUT_FIELD
+// FIX: Update import paths for monorepo structure
+import { Organization } from 'packages/core/src/types';
 import Button from '../ui/Button';
 import Card from '../ui/Card';
+import { useTranslation } from 'react-i18next';
 
 const OrganizationProfileForm: React.FC = () => {
+  const { t } = useTranslation();
   const { currentUser } = useAppContext();
   const [profile, setProfile] = useState<Partial<Organization>>({
     capacity: undefined,
@@ -54,24 +59,24 @@ const OrganizationProfileForm: React.FC = () => {
   };
 
   if (!currentUser || currentUser.role !== 'Foundation (Daycare)') {
-    return <p>This section is for Daycare Foundations only.</p>;
+    return <p>{t('organizationProfileForm.accessDenied')}</p>;
   }
 
   return (
     <Card className="p-6">
-      <h2 className="text-xl font-semibold text-swiss-charcoal mb-1">Organization Profile</h2>
-      <p className="text-sm text-gray-500 mb-6">Manage your daycare's public information.</p>
+      <h2 className="text-xl font-semibold text-swiss-charcoal mb-1">{t('organizationProfileForm.title')}</h2>
+      <p className="text-sm text-gray-500 mb-6">{t('organizationProfileForm.subtitle')}</p>
       
       {isSaved && (
         <div className="mb-4 p-3 bg-green-100 text-green-700 rounded-md text-sm">
-          Profile saved successfully!
+          {t('organizationProfileForm.saveSuccess')}
         </div>
       )}
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
           <label htmlFor="capacity" className="block text-sm font-medium text-gray-700 mb-1">
-            Total Capacity (Number of Children)
+            {t('organizationProfileForm.labels.capacity')}
           </label>
           <input
             type="number"
@@ -86,7 +91,7 @@ const OrganizationProfileForm: React.FC = () => {
 
         <div>
           <label htmlFor="pedagogy" className="block text-sm font-medium text-gray-700 mb-1">
-            Pedagogical Approaches
+            {t('organizationProfileForm.labels.pedagogy')}
           </label>
           <input
             type="text"
@@ -95,14 +100,14 @@ const OrganizationProfileForm: React.FC = () => {
             value={(profile.pedagogy || []).join(', ')}
             onChange={handleChange}
             className={STANDARD_INPUT_FIELD}
-            placeholder="e.g., Montessori, Play-based, Forest School"
+            placeholder={t('organizationProfileForm.placeholders.pedagogy')}
           />
-          <p className="text-xs text-gray-500 mt-1">Separate approaches with a comma.</p>
+          <p className="text-xs text-gray-500 mt-1">{t('organizationProfileForm.helpText.commaSeparated')}</p>
         </div>
 
         <div>
           <label htmlFor="languagesSpoken" className="block text-sm font-medium text-gray-700 mb-1">
-            Languages Spoken
+            {t('organizationProfileForm.labels.languages')}
           </label>
           <input
             type="text"
@@ -111,16 +116,16 @@ const OrganizationProfileForm: React.FC = () => {
             value={(profile.languagesSpoken || []).join(', ')}
             onChange={handleChange}
             className={STANDARD_INPUT_FIELD}
-            placeholder="e.g., French, English, German"
+            placeholder={t('organizationProfileForm.placeholders.languages')}
           />
-          <p className="text-xs text-gray-500 mt-1">Separate languages with a comma.</p>
+          <p className="text-xs text-gray-500 mt-1">{t('organizationProfileForm.helpText.commaSeparated')}</p>
         </div>
         
         {/* Add more fields as needed: Opening Hours, specific age groups etc. */}
 
         <div className="pt-2">
           <Button type="submit" variant="primary">
-            Save Profile
+            {t('organizationProfileForm.saveButton')}
           </Button>
         </div>
       </form>

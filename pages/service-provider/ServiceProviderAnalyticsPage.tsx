@@ -3,7 +3,8 @@ import React from 'react';
 import Card from '../../components/ui/Card';
 import Button from '../../components/ui/Button';
 import { ArrowDownTrayIcon, ChartBarIcon, ChartPieIcon, PresentationChartLineIcon, TableCellsIcon } from '@heroicons/react/24/outline';
-import { STANDARD_INPUT_FIELD } from '../../constants';
+// FIX: Update import paths for monorepo structure
+import { STANDARD_INPUT_FIELD } from 'packages/core/src/constants';
 import { useTranslation } from 'react-i18next';
 
 const ServiceProviderAnalyticsPage: React.FC = () => {

@@ -1,0 +1,80 @@
+{
+  "appName": "Pro Crèche Solutions",
+  "buttons": {
+    "login": "Connexion",
+    "signOut": "Déconnexion",
+    "close": "Fermer",
+    "saveChanges": "Enregistrer",
+    "cancel": "Annuler"
+  },
+  "navbar": {
+    "searchPlaceholder": "Rechercher...",
+    "signOut": "Déconnexion"
+  },
+  "sidebar": {
+    "dashboard": "Tableau de Bord",
+    "users": "Utilisateurs",
+    "content": "Contenu",
+    "systemMonitoring": "Monitoring Système",
+    "platformSettings": "Paramètres Plateforme",
+    "settings": "Mes Paramètres"
+  },
+  "userRoles": {
+    "Super Admin": "Super Admin",
+    "Admin": "Admin"
+  },
+  "dashboardPage": {
+    "welcome": "Bienvenue, {{name}} !",
+    "overviewSubtitle": "Voici votre aperçu de la plateforme {{appName}}."
+  },
+  "adminContentDashboard": {
+    "contentModeration": {
+      "title": "File de Modération",
+      "empty": "La file de modération est vide.",
+      "approve": "Approuver",
+      "reject": "Rejeter"
+    }
+  },
+  "adminSystemMonitoringPage": {
+    "title": "Monitoring Système",
+    "systemHealth": {
+      "title": "Santé du Système",
+      "cpuload": "Charge CPU",
+      "memoryusage": "Utilisation Mémoire",
+      "databaselatency": "Latence BD",
+      "status": { "normal": "Normal", "warning": "Avertissement", "critical": "Critique" }
+    },
+    "apiResponseTimes": { "title": "Temps de Réponse API (ms)" },
+    "securityAlerts": {
+      "title": "Alertes de Sécurité",
+      "table": { "event": "Événement", "risk": "Niveau de Risque", "ip": "IP Source" },
+      "risk": { "low": "Bas", "medium": "Moyen", "high": "Élevé" }
+    },
+    "logConsole": {
+      "title": "Console de Logs",
+      "filters": { "all": "Tous", "error": "Erreur", "warn": "Avert.", "info": "Info" }
+    },
+    "mockChart": "Données de Graphe Fictives"
+  },
+  "usersPage": {
+    "allUsersTitle": "Tous les Utilisateurs",
+    "searchPlaceholder": "Rechercher des utilisateurs...",
+    "table": { "nameOrg": "Nom" }
+  },
+  "adminPlatformSettings": {
+    "title": "Paramètres de la Plateforme",
+    "general": {
+      "title": "Paramètres Généraux",
+      "nameLabel": "Nom de la plateforme",
+      "descriptionLabel": "Description (Métadonnées)"
+    },
+    "branding": {
+      "title": "Branding",
+      "logoLabel": "Logo de la plateforme",
+      "faviconLabel": "Favicon de la plateforme"
+    }
+  },
+  "settingsPage": {
+    "title": "Paramètres"
+  }
+}

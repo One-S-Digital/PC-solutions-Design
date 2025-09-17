@@ -1,13 +1,18 @@
+
+
 import React, { useState, useMemo, useEffect } from 'react';
-import { Organization, Service, OrderRequest, UserRole, Product } from '../types';
-import { MOCK_PRODUCTS, MOCK_SERVICES, MOCK_ORGANIZATIONS, STANDARD_INPUT_FIELD, ICON_INPUT_FIELD } from '../constants'; 
+// FIX: Update import paths for monorepo structure
+import { Organization, Service, OrderRequest, UserRole, Product } from 'packages/core/src/types';
+// FIX: Update import paths for monorepo structure
+import { MOCK_PRODUCTS, MOCK_SERVICES, MOCK_ORGANIZATIONS, STANDARD_INPUT_FIELD, ICON_INPUT_FIELD } from 'packages/core/src/constants'; 
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
 import Tabs from '../components/ui/Tabs';
 import { BuildingStorefrontIcon, WrenchScrewdriverIcon, TagIcon, FunnelIcon, MagnifyingGlassIcon, ListBulletIcon, Squares2X2Icon, InformationCircleIcon, ChevronDownIcon, EyeIcon, StarIcon, ArrowsUpDownIcon } from '@heroicons/react/24/outline';
 // OrderRequestModal removed for direct cart integration
 import SupplierCard from '../components/marketplace/SupplierCard'; 
-import { useAppContext } from '../contexts/AppContext'; 
+// FIX: Update import paths for monorepo structure
+import { useAppContext } from 'packages/contexts/src/AppContext'; 
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
@@ -42,49 +47,44 @@ const ServiceCard: React.FC<{ service: Service, onViewProvider: (providerId: str
   );
 };
 
+const getActiveTabFromPath = (path: string) => {
+  if (path.includes('/services')) return 1;
+  return 0; // Default to products
+};
+
 const MarketplacePage: React.FC = () => {
   const { t } = useTranslation();
   const { currentUser } = useAppContext();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [activeTabIndex, setActiveTabIndex] = useState(0);
-  const [activeTabLabel, setActiveTabLabel] = useState(t('marketplacePage.tabs.productSuppliers'));
-
+  const [activeTabIndex, setActiveTabIndex] = useState(() => getActiveTabFromPath(location.pathname));
   const [searchTerm, setSearchTerm] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('All');
   const [regionFilter, setRegionFilter] = useState('All'); 
   const [tagFilter, setTagFilter] = useState('All');
   const [sortOption, setSortOption] = useState('name_asc');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
-
-  // Removed OrderRequestModal states as it's not used for suppliers
-
+  
+  // Effect to sync tab with URL changes (e.g., browser back/forward)
   useEffect(() => {
-    const path = location.pathname;
-    let newActiveIndex = 0;
-    let newActiveLabelKey = 'marketplacePage.tabs.productSuppliers';
-
-    if (path.includes('/services')) {
-      newActiveIndex = 1;
-      newActiveLabelKey = 'marketplacePage.tabs.serviceProviders';
-    } else if (path.includes('/products') || path === '/marketplace') {
-      newActiveIndex = 0;
-      newActiveLabelKey = 'marketplacePage.tabs.productSuppliers';
-    }
-    
-    const translatedLabel = t(newActiveLabelKey);
-    if (activeTabIndex !== newActiveIndex || activeTabLabel !== translatedLabel) {
-      setActiveTabIndex(newActiveIndex);
-      setActiveTabLabel(translatedLabel);
+    const newIndex = getActiveTabFromPath(location.pathname);
+    if (newIndex !== activeTabIndex) {
+      setActiveTabIndex(newIndex);
+      // Reset filters when tab changes to avoid confusion
       setSearchTerm('');
       setCategoryFilter('All');
       setRegionFilter('All');
       setTagFilter('All');
       setSortOption('name_asc');
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.pathname, t]); 
+  }, [location.pathname, activeTabIndex]); // FIX: Added activeTabIndex to dependencies
+
+  const activeTabLabel = useMemo(() => {
+    return activeTabIndex === 0 
+      ? t('marketplacePage.tabs.productSuppliers') 
+      : t('marketplacePage.tabs.serviceProviders');
+  }, [activeTabIndex, t]);
 
   const productSuppliers = useMemo(() => MOCK_ORGANIZATIONS.filter(org => org.type === 'supplier'), []);
   const serviceProviders = useMemo(() => MOCK_ORGANIZATIONS.filter(org => org.type === 'service_provider'), []);
@@ -108,8 +108,8 @@ const MarketplacePage: React.FC = () => {
   const serviceProviderCategories = useMemo(() => ['All', ...new Set(MOCK_SERVICES.map(s => s.category))], []);
   const allRegions = useMemo(() => ['All', ...new Set(MOCK_ORGANIZATIONS.map(org => org.region).sort())], []);
 
-  const currentCategories = activeTabLabel === t('marketplacePage.tabs.productSuppliers') ? supplierProductCategories : serviceProviderCategories;
-  const currentTags = activeTabLabel === t('marketplacePage.tabs.productSuppliers') ? supplierTags : [];
+  const currentCategories = activeTabIndex === 0 ? supplierProductCategories : serviceProviderCategories;
+  const currentTags = activeTabIndex === 0 ? supplierTags : [];
 
   const filteredSuppliers = useMemo(() => {
     return productSuppliers
@@ -185,10 +185,10 @@ const MarketplacePage: React.FC = () => {
             <h1 className="text-3xl font-bold text-swiss-charcoal">
                 {activeTabLabel}
             </h1>
-            {activeTabLabel === t('marketplacePage.tabs.productSuppliers') && 
+            {activeTabIndex === 0 && 
                 <p className="text-gray-500 mt-1">{t('marketplacePage.subtitles.productSuppliers')}</p>
             }
-            {activeTabLabel === t('marketplacePage.tabs.serviceProviders') &&
+            {activeTabIndex === 1 &&
                  <p className="text-gray-500 mt-1">{t('marketplacePage.subtitles.serviceProviders')}</p>
             }
         </div>
@@ -224,7 +224,8 @@ const MarketplacePage: React.FC = () => {
                 onChange={(e) => {setCategoryFilter(e.target.value);}}
                 className={STANDARD_INPUT_FIELD}
             >
-                {currentCategories.map(cat => <option key={cat} value={cat}>{cat}</option>)}
+                {/* FIX: Add explicit type for mapped variable */}
+                {currentCategories.map((cat: string) => <option key={cat} value={cat}>{cat}</option>)}
             </select>
           </div>
           <div>
@@ -235,10 +236,11 @@ const MarketplacePage: React.FC = () => {
                 onChange={(e) => setRegionFilter(e.target.value)}
                 className={STANDARD_INPUT_FIELD}
             >
-                {allRegions.map(reg => <option key={reg} value={reg}>{reg}</option>)}
+                {/* FIX: Add explicit type for mapped variable */}
+                {allRegions.map((reg: string) => <option key={reg} value={reg}>{reg}</option>)}
             </select>
           </div>
-          {activeTabLabel === t('marketplacePage.tabs.productSuppliers') && (
+          {activeTabIndex === 0 && (
             <>
               <div>
                 <label htmlFor="tagFilterMarketplace" className="block text-xs font-medium text-gray-500 mb-1">{t('marketplacePage.labels.supplierTags')}</label>
@@ -302,7 +304,6 @@ const MarketplacePage: React.FC = () => {
         onTabChange={handleTabChange}
       />
 
-      {/* OrderRequestModal is removed from here for product suppliers. Service Request Modal will be in PartnerDetailPage. */}
     </div>
   );
 };

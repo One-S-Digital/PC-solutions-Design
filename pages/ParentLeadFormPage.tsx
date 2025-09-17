@@ -1,12 +1,16 @@
 
+
 import React, { useState, useEffect } from 'react';
-import { useAppContext } from '../contexts/AppContext';
+// FIX: Update import paths for monorepo structure
+import { useAppContext } from 'packages/contexts/src/AppContext';
 import Button from '../components/ui/Button';
 import Card from '../components/ui/Card';
-import { APP_NAME, STANDARD_INPUT_FIELD, SWISS_CANTONS } from '../constants'; 
+// FIX: Update import paths for monorepo structure
+import { APP_NAME, STANDARD_INPUT_FIELD } from 'packages/core/src/constants'; 
 import { PuzzlePieceIcon } from '@heroicons/react/24/outline';
 import { useNavigate, Link } from 'react-router-dom'; // Import Link
-import { UserRole } from '../types'; 
+// FIX: Update import paths for monorepo structure and import SWISS_CANTONS from types
+import { UserRole, SWISS_CANTONS } from 'packages/core/src/types'; 
 import { useTranslation } from 'react-i18next';
 
 const ParentLeadFormPage: React.FC = () => {

@@ -1,4 +1,5 @@
 
+
 // Implement PromoCodeManagerSettings.tsx
 // Placeholder - This will be implemented in subsequent steps.
 import React, { useState } from 'react';
@@ -21,19 +22,19 @@ const PromoCodeManagerSettings: React.FC<PromoCodeManagerSettingsProps> = ({ set
   const [editingPromo, setEditingPromo] = useState<PromoCode | null>(null);
 
   const handleAddOrUpdatePromo = (promo: PromoCode) => {
-    const existingIndex = settings.promoCodes.findIndex(p => p.id === promo.id);
+    const existingIndex = (settings.promoCodes || []).findIndex(p => p.id === promo.id);
     let updatedPromos;
     if (existingIndex > -1) {
-      updatedPromos = settings.promoCodes.map((p, index) => index === existingIndex ? promo : p);
+      updatedPromos = (settings.promoCodes || []).map((p, index) => index === existingIndex ? promo : p);
     } else {
-      updatedPromos = [...settings.promoCodes, { ...promo, id: `promo-${Date.now()}` }];
+      updatedPromos = [...(settings.promoCodes || []), { ...promo, id: `promo-${Date.now()}` }];
     }
     onChange('promoCodes', updatedPromos);
   };
 
   const handleDeletePromo = (promoId: string) => {
     if (window.confirm(t('settingsPromoCodeManager.confirmDelete'))) {
-      const updatedPromos = settings.promoCodes.filter(p => p.id !== promoId);
+      const updatedPromos = (settings.promoCodes || []).filter(p => p.id !== promoId);
       onChange('promoCodes', updatedPromos);
     }
   };
@@ -55,7 +56,7 @@ const PromoCodeManagerSettings: React.FC<PromoCodeManagerSettingsProps> = ({ set
         </Button>
       </div>
       
-      {settings.promoCodes.length === 0 ? (
+      {(settings.promoCodes || []).length === 0 ? (
         <p className="text-gray-500 text-center py-4">{t('settingsPromoCodeManager.noCodesYet')}</p>
       ) : (
         <div className="overflow-x-auto bg-white rounded-lg shadow border border-gray-200">
@@ -70,7 +71,7 @@ const PromoCodeManagerSettings: React.FC<PromoCodeManagerSettingsProps> = ({ set
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {settings.promoCodes.map(promo => (
+              {(settings.promoCodes || []).map(promo => (
                 <tr key={promo.id}>
                   <td className="px-4 py-3 whitespace-nowrap text-sm font-medium text-swiss-charcoal">{promo.code}</td>
                   <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600">

@@ -1,4 +1,3 @@
-
 {
   "appName": "Pro Crèche Solutions",
   "loading": "Lädt...",
@@ -86,7 +85,10 @@
     "settings": "Einstellungen",
     "managePlan": "Abonnement verwalten",
     "premiumPlan": "Premium-Abonnement",
-    "premiumPlanDesc": "Zugriff auf alle Funktionen"
+    "premiumPlanDesc": "Zugriff auf alle Funktionen",
+    "fileGallery": "Dateigalerie",
+    "systemMonitoring": "Systemüberwachung",
+    "platformSettings": "Plattform-Einstellungen"
   },
   "dashboardPage": {
     "welcome": "Willkommen zurück, {{name}}!",
@@ -131,9 +133,12 @@
   },
   "signupPage": {
     "selectRoleTitle": "Wählen Sie Ihre Rolle",
-    "detailsTitle": "Anmeldedetails für {{role}}",
+    "detailsTitle": "Anmeldung als {{role}}",
     "progressStep1": "Schritt 1 von 2: Wählen Sie Ihre Rolle",
     "progressStep2": "Schritt 2 von 2: Kontodetails",
+    "submissionSuccessTitle": "Registrierung Erfolgreich!",
+    "submissionSuccessMessage": "Ihr Konto wurde erstellt. Sie werden nun zu Ihrem Dashboard weitergeleitet.",
+    "goToDashboardButton": "Zum Dashboard",
     "roles": {
       "foundation": "Stiftung (Kita)",
       "supplier": "Produktlieferant",
@@ -248,7 +253,23 @@
     "confirmDeleteUser": "Sind Sie sicher, dass Sie diesen Benutzer löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
     "userProfileUpdated": "Das Profil von {{name}} wurde aktualisiert.",
     "addNewUserTBD": "Funktionalität \"Neuen Benutzer hinzufügen\" in Kürze. Dies öffnet ein Formular/Modal.",
-    "filtersTBD": "Filter in Kürze"
+    "filtersTBD": "Filter in Kürze",
+    "bulkActions": {
+      "title": "Massenaktionen",
+      "select": "Aktion auswählen",
+      "activate": "Auswahl aktivieren",
+      "suspend": "Auswahl sperren",
+      "delete": "Auswahl löschen",
+      "apply": "Anwenden",
+      "confirm": {
+        "title": "Massenaktion bestätigen",
+        "message_one": "Sind Sie sicher, dass Sie {{count}} Benutzer {{action}} möchten?",
+        "message_other": "Sind Sie sicher, dass Sie {{count}} Benutzer {{action}} möchten?",
+        "activate": "aktivieren",
+        "suspend": "sperren",
+        "delete": "löschen"
+      }
+    }
   },
   "hrProceduresPage": {
     "title": "HR-Verfahrensbibliothek",
@@ -369,6 +390,7 @@
   "settingsPage": {
     "title": "Einstellungen",
     "loading": "Einstellungen werden geladen...",
+    "accountSecurity": "Konto & Sicherheit",
     "companyProfile": "Unternehmensprofil",
     "contactBooking": "Kontakt & Buchung",
     "notificationPreferences": "Benachrichtigungseinstellungen",
@@ -617,7 +639,9 @@
     "buttons": {
       "filters": "Filter",
       "postNewJob": "Stelle ausschreiben",
-      "applyFilters": "Filter anwenden"
+      "applyFilters": "Filter anwenden",
+      "viewApplicants": "Bewerber ansehen",
+      "addCandidate": "Kandidat hinzufügen"
     },
     "jobOffers": {
       "searchPlaceholder": "Stellentitel oder Stiftung suchen...",
@@ -642,13 +666,33 @@
     "candidateCard": {
       "viewProfile": "Profil ansehen"
     },
-    "confirmRemoveCandidate": "Sind Sie sicher, dass Sie den Kandidaten {{name}} entfernen möchten?"
+    "confirmRemoveCandidate": "Sind Sie sicher, dass Sie den Kandidaten {{name}} entfernen möchten?",
+    "jobPostModal": {
+      "addTitle": "Neue Stelle veröffentlichen",
+      "editTitle": "Stellenangebot bearbeiten",
+      "jobTitle": "Stellentitel",
+      "location": "Ort (Stadt, Kanton)",
+      "contractType": "Vertragsart",
+      "startDate": "Startdatum",
+      "description": "Stellenbeschreibung",
+      "requirements": "Anforderungen",
+      "requirementPlaceholder": "Anforderung",
+      "addRequirement": "Anforderung hinzufügen",
+      "postJob": "Stelle veröffentlichen"
+    },
+    "viewApplicantsModal": {
+      "title": "Bewerber für: {{jobTitle}}",
+      "noApplicants": "Es gibt noch keine Bewerber für diese Stelle.",
+      "appliedOn": "Beworben am {{date}}"
+    }
   },
   "notifications": {
     "successTitle": "Erfolg",
-    "settingsUpdated": "Einstellungen erfolgreich aktualisiert."
+    "errorTitle": "Fehler",
+    "settingsUpdated": "Einstellungen erfolgreich aktualisiert.",
+    "newMessageFrom": "Neue Nachricht von {{sender}}"
   },
-  "partnerDetailPage": {
+   "partnerDetailPage": {
     "loadingPartnerDetails": "Partnerdetails werden geladen...",
     "invalidPartnerIdMessage": "Wenn dies weiterhin besteht, ist die Partner-ID möglicherweise ungültig.",
     "contactInfoTitle": "Kontaktinformationen",
@@ -722,6 +766,29 @@
         "minutesAgo": "vor {{count}} Min.",
         "hoursAgo": "vor {{count}} Std.",
         "yesterday": "Gestern"
+    },
+    "widgets": {
+        "sales": {
+            "title": "Verkaufsübersicht",
+            "totalOrders": "Gesamtbestellungen",
+            "revenueMonth": "Umsatz (Dieser Monat)",
+            "topSelling": "Meistverkauftes Produkt",
+            "fulfillmentRate": "Erfüllungsrate",
+            "button": "Vollständige Analysen anzeigen"
+        },
+        "products": {
+            "title": "Produktverwaltung",
+            "active": "Aktive Produkte",
+            "pending": "Ausstehende Genehmigung",
+            "lowStock": "Warnungen bei niedrigem Lagerbestand",
+            "button": "Alle Produkte verwalten"
+        },
+        "orders": {
+            "title": "Bestellverwaltung",
+            "pending": "Ausstehende Bestellungen",
+            "toFulfill": "Zu erfüllende Bestellungen",
+            "button": "Zur Bestellseite gehen"
+        }
     }
   },
   "foundationAnalyticsPage": {
@@ -734,5 +801,356 @@
     "trainingStatus": "Schulungsstatus",
     "enrollmentTrend": "Anmeldetrend",
     "monthlyEnrollment": "Monatlicher Anmeldetrend"
+  },
+  "serviceProviderDashboard": {
+    "title": "Dienstleister-Dashboard",
+    "welcomeMessage": "Willkommen, {{name}}! Hier ist Ihre Dienstleistungsübersicht.",
+    "widgets": {
+        "overview": {
+            "title": "Dienstleistungsübersicht",
+            "activeRequests": "Aktive Anfragen",
+            "completedServices": "Abgeschlossene Dienstleistungen",
+            "upcoming": "Anstehende Termine",
+            "customerRating": "Kundenbewertung",
+            "button": "Vollständige Analysen anzeigen"
+        },
+        "management": {
+            "title": "Dienstleistungsverwaltung",
+            "listings": "Dienstleistungsangebote",
+            "pending": "Ausstehende Genehmigungen",
+            "categories": "Ihre Kategorien",
+            "button": "Alle Dienstleistungen verwalten"
+        },
+        "appointments": {
+            "title": "Anstehende Termine",
+            "with": "mit {{foundation}}",
+            "button": "Vollständigen Kalender anzeigen"
+        }
+    }
+  },
+  "educatorDashboard": {
+    "title": "Erzieher- / Job-Sucher-Dashboard",
+    "welcome": "Willkommen, {{name}}! Ihr Karriere-Hub.",
+    "profileCompletion": {
+        "title": "Profil-Vervollständigung",
+        "subtitle": "Ein starkes Profil zieht mehr Stiftungen an.",
+        "button": "Profil aktualisieren"
+    },
+    "applicationStatus": {
+        "title": "Bewerbungsstatus",
+        "submitted": "Eingereicht",
+        "viewed": "Von Stiftungen angesehen",
+        "interviews": "Vorstellungsgespräche",
+        "offers": "Angebote erhalten",
+        "button": "Alle Bewerbungen verwalten"
+    },
+    "skills": {
+        "title": "Kompetenzbewertung",
+        "subtitle": "Machen Sie Bewertungen, um Ihre Fähigkeiten zu überprüfen.",
+        "button": "Eine Bewertung machen"
+    },
+    "recommendations": {
+        "title": "Jobempfehlungen für Sie",
+        "match": "Übereinstimmung"
+    }
+  },
+  "parentDashboard": {
+    "title": "Eltern-Dashboard",
+    "welcomeMessage": "Willkommen, {{name}}! Verwalten Sie hier Ihre Kinderbetreuungssuche.",
+    "enquiry": {
+        "title": "Anfragenverwaltung",
+        "sent": "Gesendete Anfragen",
+        "responses": "Erhaltene Antworten",
+        "pending": "Ausstehende Antworten",
+        "button": "Meine Anfragen anzeigen"
+    },
+    "quickActions": {
+        "title": "Schnellaktionen",
+        "findDaycare": "Eine Kita finden",
+        "viewEnquiries": "Meine Anfragen anzeigen",
+        "updateProfile": "Profil aktualisieren",
+        "browseServices": "Dienstleistungen durchsuchen"
+    },
+    "childProfile": {
+        "title": "Kinderprofil",
+        "name": "Name",
+        "age": "Alter",
+        "location": "Bevorzugter Ort",
+        "languages": "Sprachen",
+        "specialNeeds": "Besondere Bedürfnisse",
+        "button": "Kinderdetails bearbeiten"
+    },
+    "favorites": {
+        "title": "Ihre Lieblingskitas",
+        "subtitle": "Behalten Sie den Überblick über Kitas, die Sie interessieren.",
+        "button": "Favoriten anzeigen"
+    }
+  },
+   "educatorProfilePage": {
+    "editProfile": "Profil bearbeiten",
+    "bio": {
+        "title": "Kurzbiografie"
+    },
+    "experience": {
+        "title": "Berufserfahrung"
+    },
+    "education": {
+        "title": "Ausbildung",
+        "graduated": "Abgeschlossen"
+    },
+    "certifications": {
+        "title": "Zertifizierungen",
+        "issued": "Ausgestellt am",
+        "expires": "Gültig bis"
+    },
+    "skills": {
+        "title": "Fähigkeiten & Spezialgebiete"
+    },
+    "availability": {
+        "title": "Verfügbarkeit & Präferenzen",
+        "days": "Bevorzugte Tage",
+        "times": "Bevorzugte Zeiten",
+        "contract": "Vertragsart",
+        "ageGroups": "Bevorzugte Altersgruppen"
+    },
+    "documents": {
+        "title": "Lebenslauf & Dokumente"
+    }
+  },
+  "educatorJobBoardPage": {
+    "searchPlaceholder": "Suche nach Stichwort (Titel, Kita, Fähigkeit)...",
+    "postedOn": "Gepostet: {{date}} (Als Startdatum simuliert)",
+    "noJobsFound": "Momentan entsprechen keine Stellenangebote Ihren Kriterien.",
+    "confirmModal": {
+      "title": "Bewerbung bestätigen",
+      "message": "Sind Sie sicher, dass Sie sich für die Stelle bewerben möchten:"
+    }
+  },
+  "educatorApplicationsPage": {
+    "title": "Meine Bewerbungen",
+    "status": {
+      "new": "Neu",
+      "viewed": "Gesehen",
+      "interview": "Gespräch",
+      "offer": "Angebot",
+      "declined": "Abgelehnt"
+    },
+    "table": {
+      "jobTitle": "Stellentitel",
+      "creche": "Kita",
+      "status": "Status",
+      "lastUpdated": "Letzte Aktualisierung",
+      "actions": "Aktionen"
+    },
+    "viewingDetailsFor": "Details anzeigen für",
+    "emptyState": "Sie haben sich noch auf keine Stellen beworben.",
+    "footerNote": "Dies ist eine Zusammenfassung Ihrer Bewerbungen. Sie werden über Statusänderungen benachrichtigt."
+  },
+  "eLearningPage": {
+    "title": "E-Learning-Bibliothek",
+    "addNewContentButton": "Inhalt hinzufügen",
+    "searchPlaceholder": "Kurse, Videos, Themen suchen...",
+    "categoryLabel": "Kategorie",
+    "noContentFound": "Kein E-Learning-Inhalt gefunden, der Ihren Kriterien entspricht.",
+    "coursesTitle": "Kurse",
+    "videosTitle": "Videos",
+    "pdfsTitle": "PDFs",
+    "externalLinksTitle": "Externe Links",
+    "itemType": {
+        "courses": "Kurse",
+        "videos": "Videos",
+        "pdfs": "PDFs",
+        "links": "Links"
+    },
+    "noItemsFound": "Keine {{itemType}} gefunden, die Ihren Kriterien entsprechen.",
+    "confirmDelete": "Sind Sie sicher, dass Sie diesen E-Learning-Artikel löschen möchten?",
+    "actions": {
+        "viewCourse": "Kurs ansehen",
+        "watchVideo": "Video ansehen",
+        "downloadPdf": "PDF herunterladen",
+        "openLink": "Link öffnen"
+    },
+    "viewingAlert": "Anzeige von",
+    "lessonsCount_one": "{{count}} Lektion",
+    "lessonsCount_other": "{{count}} Lektionen",
+    "durationLabel": "Dauer",
+    "languageLabel": "Sprache",
+    "updatedLabel": "Aktualisiert"
+  },
+  "documentPreviewModal": {
+    "title": "Dokumentvorschau",
+    "metadata": {
+      "status": "Status",
+      "category": "Kategorie",
+      "language": "Sprache",
+      "version": "Version",
+      "lastUpdated": "Zuletzt aktualisiert"
+    },
+    "previewArea": "Dokumentvorschau-Bereich - in einer echten App wäre dies ein eingebetteter Viewer.",
+    "downloadButton": "Vollständiges Dokument herunterladen"
+  },
+  "notificationsPage": {
+    "title": "Benachrichtigungen",
+    "clearAll": "Alle löschen",
+    "emptyState": {
+      "title": "Alles auf dem neuesten Stand!",
+      "message": "Sie haben keine neuen Benachrichtigungen."
+    }
+  },
+  "fileGallery": {
+    "title": "Meine Dateigalerie",
+    "uploadButton": "Neue Datei hochladen",
+    "emptyState": {
+      "title": "Ihre Galerie ist leer.",
+      "message": "Laden Sie Dokumente wie Ihren Lebenslauf, Diplome und Zertifikate hoch, um zu beginnen."
+    },
+    "actions": {
+      "preview": "Vorschau",
+      "download": "Herunterladen",
+      "rename": "Umbenennen",
+      "delete": "Löschen"
+    },
+    "confirmDelete": "Sind Sie sicher, dass Sie diese Datei löschen möchten?"
+  },
+  "fileUploadModal": {
+    "title": "Dateien hochladen",
+    "uploadFile": "Eine Datei hochladen",
+    "dragAndDrop": "oder Drag & Drop",
+    "fileTypes": "PDF, DOCX, PNG, JPG bis zu 10MB",
+    "filesToUpload": "Hochzuladende Dateien:",
+    "uploading": "Lädt hoch...",
+    "uploadButton_one": "{{count}} Datei hochladen",
+    "uploadButton_other": "{{count}} Dateien hochladen"
+  },
+  "renameFileModal": {
+    "title": "Datei umbenennen",
+    "label": "Dateiname"
+  },
+  "messagesPage": {
+    "newGroupButton": "Neue Gruppe",
+    "searchPlaceholder": "Unterhaltungen suchen...",
+    "filters": {
+      "all": "Alle",
+      "unread": "Ungelesen"
+    },
+    "noConversationsFound": "Keine Unterhaltungen gefunden.",
+    "noConversationSelectedTitle": "Wählen Sie eine Unterhaltung",
+    "noConversationSelectedSubtitle": "Wählen Sie eine Unterhaltung aus der Liste, um zu chatten.",
+    "noConversationsYet": "Sie haben noch keine Unterhaltungen.",
+    "unknownUser": "Unbekannter Benutzer",
+    "youPrefix": "Sie: ",
+    "noMessagesYet": "Noch keine Nachrichten.",
+    "conversationFallbackTitle": "Unterhaltung",
+    "selectConversationToView": "Wählen Sie eine Unterhaltung aus, um Nachrichten anzuzeigen.",
+    "typeMessagePlaceholder": "Nachricht schreiben...",
+    "attachFile": "Datei anhängen",
+    "addEmoji": "Emoji hinzufügen"
+  },
+  "createGroupChatModal": {
+    "title": "Neuen Gruppenchat erstellen",
+    "groupNameLabel": "Gruppenname (optional)",
+    "groupNamePlaceholder": "z.B. Team-Meeting, Projektplanung",
+    "selectParticipantsLabel": "Teilnehmer auswählen",
+    "createButton": "Gruppe erstellen",
+    "error": {
+      "minParticipants": "Bitte wählen Sie mindestens 2 Teilnehmer aus, um eine Gruppe zu erstellen."
+    }
+  },
+  "pricingPage": {
+    "title": "Finden Sie den perfekten Plan für Sie",
+    "subtitle": "Flexible Preise für jede Rolle im Kinderbetreuungs-Ökosystem.",
+    "billingToggle": {
+      "monthly": "Monatlich",
+      "annually": "Jährlich",
+      "save": "Sparen Sie 20%"
+    },
+    "choosePlan": "Diesen Plan wählen",
+    "popular": "Am beliebtesten",
+    "plans": {
+      "foundation": "Für Stiftungen (Kitas)",
+      "supplier": "Für Produktlieferanten"
+    },
+    "billedAnnually": "Jährlich abgerechnet zu CHF {{amount}}"
+  },
+  "adminContentDashboard": {
+    "contentModeration": {
+      "title": "Inhaltsmoderations-Warteschlange",
+      "empty": "Die Moderations-Warteschlange ist leer.",
+      "approve": "Genehmigen",
+      "reject": "Ablehnen"
+    }
+  },
+  "adminSystemMonitoringPage": {
+    "title": "Systemüberwachung",
+    "systemHealth": {
+      "title": "Systemzustand",
+      "cpuload": "CPU-Auslastung",
+      "memoryusage": "Speichernutzung",
+      "databaselatency": "DB-Latenz",
+      "status": {
+        "normal": "Normal",
+        "warning": "Warnung",
+        "critical": "Kritisch"
+      }
+    },
+    "apiResponseTimes": {
+      "title": "API-Antwortzeiten (ms)"
+    },
+    "securityAlerts": {
+      "title": "Sicherheitswarnungen",
+      "table": {
+        "event": "Ereignis",
+        "risk": "Risikostufe",
+        "ip": "Quell-IP"
+      },
+      "risk": {
+        "low": "Niedrig",
+        "medium": "Mittel",
+        "high": "Hoch"
+      }
+    },
+    "logConsole": {
+      "title": "Log-Konsole",
+      "filters": {
+        "all": "Alle",
+        "error": "Fehler",
+        "warn": "Warn.",
+        "info": "Info"
+      }
+    },
+    "mockChart": "Simulierte Diagrammdaten"
+  },
+  "adminPlatformSettings": {
+    "title": "Plattform-Einstellungen",
+    "general": {
+      "title": "Allgemein",
+      "nameLabel": "Plattformname",
+      "descriptionLabel": "Metadaten-Beschreibung"
+    },
+    "branding": {
+      "title": "Branding",
+      "logoLabel": "Plattform-Logo (PNG, SVG)",
+      "faviconLabel": "Plattform-Favicon (.ico)"
+    }
+  },
+  "settingsAccountSecurity": {
+    "title": "Konto & Sicherheit",
+    "personalInfo": {
+      "title": "Persönliche Informationen",
+      "nameLabel": "Vollständiger Name",
+      "emailLabel": "E-Mail-Adresse",
+      "updateInfoButton": "Informationen aktualisieren"
+    },
+    "changePassword": {
+      "title": "Passwort ändern",
+      "currentPasswordLabel": "Aktuelles Passwort",
+      "newPasswordLabel": "Neues Passwort",
+      "confirmNewPasswordLabel": "Neues Passwort bestätigen",
+      "updatePasswordButton": "Passwort aktualisieren"
+    },
+    "notifications": {
+      "passwordChanged": "Passwort erfolgreich geändert!",
+      "infoUpdated": "Persönliche Informationen aktualisiert!"
+    }
   }
 }

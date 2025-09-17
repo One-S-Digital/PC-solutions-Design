@@ -1,7 +1,9 @@
 
+
 import React from 'react';
 import { useAppContext } from '../contexts/AppContext';
-import { ParentLead, UserRole, FoundationLeadResponseStatus, LeadMainStatus } from '../types';
+// FIX: Update import paths for monorepo structure
+import { ParentLead, UserRole, FoundationLeadResponseStatus, LeadMainStatus } from 'packages/core/src/types';
 import Card from '../components/ui/Card';
 import LeadCard from '../components/foundation/LeadCard'; // Correct relative path
 import { InboxArrowDownIcon, InboxIcon } from '@heroicons/react/24/outline';

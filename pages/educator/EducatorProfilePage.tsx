@@ -1,154 +1,164 @@
 
+
 import React, { useState } from 'react';
 import Card from '../../components/ui/Card';
 import Button from '../../components/ui/Button';
-import { STANDARD_INPUT_FIELD } from '../../constants';
-import { UserCircleIcon, IdentificationIcon, ArrowUpTrayIcon, CalendarDaysIcon, GlobeAltIcon, EnvelopeIcon, PhoneIcon, BriefcaseIcon, AcademicCapIcon, LanguageIcon } from '@heroicons/react/24/outline';
+// FIX: Update import paths for monorepo structure
+import { STANDARD_INPUT_FIELD, MOCK_CANDIDATE_PROFILES } from 'packages/core/src/constants';
+import { 
+    UserCircleIcon, IdentificationIcon, ArrowUpTrayIcon, CalendarDaysIcon, 
+    BriefcaseIcon, AcademicCapIcon, PaperClipIcon, StarIcon, PencilSquareIcon, XMarkIcon 
+} from '@heroicons/react/24/outline';
+import { useTranslation } from 'react-i18next';
+// FIX: Update import paths for monorepo structure
+import { CandidateProfile, WorkExperienceItem, EducationItem, DocumentItem, CertificationItem } from 'packages/core/src/types';
+
+// Use the first mock candidate as the data for this page
+const mockCandidateData = MOCK_CANDIDATE_PROFILES[0];
+
+const SectionCard: React.FC<{ titleKey: string; icon: React.ElementType; children: React.ReactNode; onEdit?: () => void; isEditing?: boolean }> = ({ titleKey, icon: Icon, children, onEdit, isEditing }) => {
+    const { t } = useTranslation();
+    return (
+      <Card className="p-6">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-semibold text-swiss-charcoal flex items-center">
+            <Icon className="w-6 h-6 mr-3 text-swiss-teal" />
+            {t(titleKey)}
+          </h2>
+          {onEdit && (
+            <Button variant="ghost" size="sm" onClick={onEdit} leftIcon={isEditing ? XMarkIcon : PencilSquareIcon}>
+              {isEditing ? t('buttons.cancel') : t('buttons.edit')}
+            </Button>
+          )}
+        </div>
+        {children}
+      </Card>
+    );
+};
 
 const EducatorProfilePage: React.FC = () => {
-  const [profileData, setProfileData] = useState({
-    fullName: 'Tom Fischer',
-    avatarUrl: 'https://picsum.photos/seed/tomfischer/200/200',
-    headline: 'Bilingual Early-Childhood Educator',
-    about: 'Passionate and experienced educator with a focus on creating engaging learning environments. Strong skills in curriculum development and parent communication.',
-    regionsCantons: 'Bern, Zurich',
-    desiredRole: 'Educator', // Educator / Assistant / Admin
-    availability: 'Immediate', // Immediate / Date
-    availabilityDate: '',
-    languages: 'German, English, French',
-    cvFile: null as File | null,
-    certificatesFiles: [] as File[],
-  });
+  const { t } = useTranslation();
+  const [profile, setProfile] = useState<CandidateProfile>(mockCandidateData);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editSection, setEditSection] = useState<string | null>(null);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setProfileData(prev => ({ ...prev, [name]: value }));
+  const handleSave = () => {
+    console.log("Saving profile data:", profile);
+    alert("Profile changes saved!");
+    setIsEditing(false);
   };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, files } = e.target;
-    if (files && files[0]) {
-      if (name === 'cvFile') {
-        setProfileData(prev => ({ ...prev, cvFile: files[0] }));
-      } else if (name === 'certificatesFiles') {
-        setProfileData(prev => ({ ...prev, certificatesFiles: Array.from(files) }));
-      }
-    }
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Saving educator profile:", profileData);
-    // Logic to upload files would go here
-    alert("Profile saved! It's now visible in the Candidate Pool for foundations.");
-  };
-
+  
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl font-bold text-swiss-charcoal flex items-center">
-        <IdentificationIcon className="w-8 h-8 mr-3 text-swiss-mint" />
-        My Profile (Setup in 5 min)
-      </h1>
-      <form onSubmit={handleSubmit}>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Left Column: Avatar & Basic Info */}
-          <div className="lg:col-span-1 space-y-6">
+      <div className="flex flex-col sm:flex-row justify-between items-center">
+        <h1 className="text-3xl font-bold text-swiss-charcoal flex items-center mb-4 sm:mb-0">
+          <IdentificationIcon className="w-8 h-8 mr-3 text-swiss-mint" />
+          {t('sidebar.myProfile')}
+        </h1>
+        <div className="flex space-x-2">
+            {isEditing && <Button variant="light" onClick={() => setIsEditing(false)}>{t('buttons.cancel')}</Button>}
+            <Button variant="primary" leftIcon={isEditing ? undefined : PencilSquareIcon} onClick={() => isEditing ? handleSave() : setIsEditing(true)}>
+                {isEditing ? t('buttons.saveChanges') : t('educatorProfilePage.editProfile')}
+            </Button>
+        </div>
+      </div>
+      
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-1 space-y-6">
             <Card className="p-6 text-center">
               <img 
-                src={profileData.avatarUrl || `https://ui-avatars.com/api/?name=${profileData.fullName.replace(' ', '+')}&background=48CFAE&color=fff&size=128`} 
+                src={profile.avatarUrl} 
                 alt="Profile" 
-                className="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-swiss-mint/30 bg-gray-200"
+                className="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-white shadow-lg bg-gray-200"
               />
-              <input type="file" id="avatarUpload" className="text-xs text-center mx-auto block w-full max-w-xs file:mr-2 file:py-1 file:px-2 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-swiss-teal/10 file:text-swiss-teal hover:file:bg-swiss-teal/20" />
-              <p className="text-xs text-gray-500 mt-1">Optional Avatar</p>
+              {isEditing && <input type="file" className="text-xs text-center mx-auto block w-full max-w-xs file:mr-2 file:py-1 file:px-2 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-swiss-teal/10 file:text-swiss-teal hover:file:bg-swiss-teal/20" />}
+              <h2 className="text-2xl font-bold text-swiss-charcoal mt-4">{profile.name}</h2>
+              <p className="text-md text-swiss-teal">{profile.currentRoleOrTitle}</p>
+              <p className="text-sm text-gray-500">{profile.location}</p>
             </Card>
-            <Card className="p-6">
-                 <h2 className="text-lg font-semibold text-swiss-charcoal mb-3">Contact & Availability</h2>
-                 <div className="space-y-3">
-                    <div>
-                        <label htmlFor="desiredRole" className="block text-sm font-medium text-gray-700 mb-1">Desired Role</label>
-                        <select id="desiredRole" name="desiredRole" value={profileData.desiredRole} onChange={handleChange} className={STANDARD_INPUT_FIELD}>
-                            <option>Educator</option>
-                            <option>Assistant</option>
-                            <option>Admin</option>
-                        </select>
-                    </div>
-                     <div>
-                        <label htmlFor="availability" className="block text-sm font-medium text-gray-700 mb-1">Availability</label>
-                        <select id="availability" name="availability" value={profileData.availability} onChange={handleChange} className={STANDARD_INPUT_FIELD}>
-                            <option value="Immediate">Immediate</option>
-                            <option value="Date">Specific Date</option>
-                        </select>
-                    </div>
-                    {profileData.availability === 'Date' && (
-                        <div>
-                            <label htmlFor="availabilityDate" className="block text-sm font-medium text-gray-700 mb-1">Available From Date</label>
-                            <input type="date" id="availabilityDate" name="availabilityDate" value={profileData.availabilityDate} onChange={handleChange} className={STANDARD_INPUT_FIELD} />
-                        </div>
-                    )}
-                     <div>
-                        <label htmlFor="languages" className="block text-sm font-medium text-gray-700 mb-1">Languages (EN/FR/DE checkboxes)</label>
-                        {/* Replace with actual checkboxes or multi-select component */}
-                        <input type="text" id="languages" name="languages" value={profileData.languages} onChange={handleChange} className={STANDARD_INPUT_FIELD} placeholder="e.g., English, German" />
-                        <p className="text-xs text-gray-500 mt-1">Separate with commas. (Mock: Checkboxes ideally)</p>
-                    </div>
-                 </div>
-            </Card>
-          </div>
 
-          {/* Right Column: Detailed Info */}
-          <div className="lg:col-span-2 space-y-6">
-            <Card className="p-6">
-              <h2 className="text-lg font-semibold text-swiss-charcoal mb-4">Personal Information</h2>
-              <div className="space-y-4">
-                <div>
-                  <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-                  <input type="text" id="fullName" name="fullName" value={profileData.fullName} onChange={handleChange} className={STANDARD_INPUT_FIELD} required />
+            <SectionCard titleKey="educatorProfilePage.skills.title" icon={StarIcon}>
+                <div className="flex flex-wrap gap-2">
+                {profile.skills.map(skill => (
+                    <span key={skill} className="bg-swiss-mint/10 text-swiss-mint text-xs font-medium px-2.5 py-1 rounded-full">
+                    {skill}
+                    </span>
+                ))}
                 </div>
-                <div>
-                  <label htmlFor="headline" className="block text-sm font-medium text-gray-700 mb-1">Headline</label>
-                  <input type="text" id="headline" name="headline" value={profileData.headline} onChange={handleChange} className={STANDARD_INPUT_FIELD} placeholder='e.g., "Bilingual Early-Childhood Educator"' />
-                </div>
-                <div>
-                  <label htmlFor="about" className="block text-sm font-medium text-gray-700 mb-1">About (Short Bio - max 150 chars)</label>
-                  <textarea id="about" name="about" value={profileData.about} onChange={handleChange} rows={3} maxLength={150} className={STANDARD_INPUT_FIELD}></textarea>
-                  <p className="text-xs text-gray-500 text-right mt-1">{profileData.about.length}/150</p>
-                </div>
-                 <div>
-                  <label htmlFor="regionsCantons" className="block text-sm font-medium text-gray-700 mb-1">Regions / Cantons (Multi-select)</label>
-                  {/* Replace with actual multi-select component */}
-                  <input type="text" id="regionsCantons" name="regionsCantons" value={profileData.regionsCantons} onChange={handleChange} className={STANDARD_INPUT_FIELD} placeholder="e.g., Bern, Zurich" />
-                   <p className="text-xs text-gray-500 mt-1">Separate with commas. (Mock: Multi-select ideally)</p>
-                </div>
-              </div>
-            </Card>
-            
-            <Card className="p-6">
-                <h2 className="text-lg font-semibold text-swiss-charcoal mb-4">Documents</h2>
+            </SectionCard>
+             <SectionCard titleKey="educatorProfilePage.availability.title" icon={CalendarDaysIcon}>
+                 <div className="space-y-2 text-sm text-gray-700">
+                    <p><strong>{t('educatorProfilePage.availability.days')}:</strong> {profile.availabilityPreferences.days.join(', ')}</p>
+                    <p><strong>{t('educatorProfilePage.availability.times')}:</strong> {profile.availabilityPreferences.times}</p>
+                    <p><strong>{t('educatorProfilePage.availability.contract')}:</strong> {profile.availabilityPreferences.contractType}</p>
+                    <p><strong>{t('educatorProfilePage.availability.ageGroups')}:</strong> {profile.availabilityPreferences.preferredAgeGroups.join(', ')}</p>
+                 </div>
+            </SectionCard>
+             <SectionCard titleKey="educatorProfilePage.documents.title" icon={PaperClipIcon}>
+                <ul className="space-y-2">
+                {profile.documents.map((doc) => (
+                    <li key={doc.id}>
+                    <a href={doc.url} target="_blank" rel="noopener noreferrer" 
+                        className="flex items-center text-swiss-mint hover:underline hover:text-swiss-teal p-2 -m-2 rounded-md hover:bg-gray-50 transition-colors">
+                        <PaperClipIcon className="w-4 h-4 mr-2 flex-shrink-0" />
+                        <span className="truncate">{doc.name} ({doc.type})</span>
+                    </a>
+                    </li>
+                ))}
+                </ul>
+            </SectionCard>
+        </div>
+
+        <div className="lg:col-span-2 space-y-6">
+            <SectionCard titleKey="educatorProfilePage.bio.title" icon={UserCircleIcon}>
+                {isEditing ? (
+                    <textarea value={profile.shortBio} onChange={e => setProfile({...profile, shortBio: e.target.value})} rows={4} className={STANDARD_INPUT_FIELD}/>
+                ) : (
+                    <p className="text-gray-700 whitespace-pre-line">{profile.shortBio}</p>
+                )}
+            </SectionCard>
+            <SectionCard titleKey="educatorProfilePage.experience.title" icon={BriefcaseIcon}>
                 <div className="space-y-4">
-                    <div>
-                        <label htmlFor="cvFile" className="block text-sm font-medium text-gray-700 mb-1">Upload CV (PDF)</label>
-                        <input type="file" id="cvFile" name="cvFile" accept=".pdf" onChange={handleFileChange} className={`${STANDARD_INPUT_FIELD} p-0 file:mr-4 file:py-2 file:px-4 file:rounded-l-button file:border-0 file:text-sm file:font-semibold file:bg-swiss-teal/10 file:text-swiss-teal hover:file:bg-swiss-teal/20`} />
-                        {profileData.cvFile && <p className="text-xs text-gray-500 mt-1">Selected: {profileData.cvFile.name}</p>}
+                {profile.workExperience.map((exp) => (
+                    <div key={exp.id} className="relative p-3 bg-gray-50 rounded-md">
+                    <h3 className="font-semibold text-swiss-charcoal">{exp.jobTitle}</h3>
+                    <p className="text-sm text-swiss-teal">{exp.institutionName}</p>
+                    <p className="text-xs text-gray-500">{exp.startDate} – {exp.endDate}</p>
+                    <ul className="list-disc list-inside text-sm text-gray-600 mt-1 space-y-0.5">
+                        {exp.descriptionPoints.map((point, i) => <li key={i}>{point}</li>)}
+                    </ul>
                     </div>
-                    <div>
-                        <label htmlFor="certificatesFiles" className="block text-sm font-medium text-gray-700 mb-1">Certificates (PDF/JPG, max 5 files)</label>
-                        <input type="file" id="certificatesFiles" name="certificatesFiles" accept=".pdf,.jpg,.jpeg" multiple onChange={handleFileChange} className={`${STANDARD_INPUT_FIELD} p-0 file:mr-4 file:py-2 file:px-4 file:rounded-l-button file:border-0 file:text-sm file:font-semibold file:bg-swiss-teal/10 file:text-swiss-teal hover:file:bg-swiss-teal/20`} />
-                        {profileData.certificatesFiles.length > 0 && (
-                            <ul className="mt-1 list-disc list-inside text-xs text-gray-500">
-                                {profileData.certificatesFiles.map(f => <li key={f.name}>{f.name}</li>)}
-                            </ul>
-                        )}
-                         <p className="text-xs text-gray-500 mt-1">E.g., First-aid, childcare diplomas.</p>
-                    </div>
+                ))}
                 </div>
-            </Card>
-          </div>
+            </SectionCard>
+            <SectionCard titleKey="educatorProfilePage.education.title" icon={AcademicCapIcon}>
+                <div className="space-y-4">
+                {profile.education.map((edu) => (
+                    <div key={edu.id} className="p-3 bg-gray-50 rounded-md">
+                    <h3 className="font-semibold text-swiss-charcoal">{edu.degree}</h3>
+                    <p className="text-sm text-swiss-teal">{edu.institutionName}</p>
+                    <p className="text-xs text-gray-500">{t('educatorProfilePage.education.graduated')}: {edu.graduationYear}</p>
+                    </div>
+                ))}
+                </div>
+            </SectionCard>
+             {profile.certifications && profile.certifications.length > 0 && (
+                <SectionCard titleKey="educatorProfilePage.certifications.title" icon={StarIcon}>
+                    <div className="space-y-3">
+                        {profile.certifications.map((cert) => (
+                            <div key={cert.id} className="p-3 bg-gray-50 rounded-md">
+                                <h3 className="font-semibold text-swiss-charcoal">{cert.name}</h3>
+                                <p className="text-sm text-swiss-teal">{cert.issuingOrganization}</p>
+                                <p className="text-xs text-gray-500">
+                                    {t('educatorProfilePage.certifications.issued')}: {cert.issueDate} {cert.expiryDate && ` - ${t('educatorProfilePage.certifications.expires')}: ${cert.expiryDate}`}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+                </SectionCard>
+            )}
         </div>
-        <div className="mt-8 flex justify-end">
-          <Button type="submit" variant="primary" size="lg">Save Profile</Button>
-        </div>
-      </form>
+      </div>
     </div>
   );
 };

@@ -1,4 +1,5 @@
 
+
 // Implement DefaultsSettings.tsx
 // Placeholder - This will be implemented in subsequent steps.
 import React from 'react';
@@ -25,8 +26,6 @@ const DefaultsSettings: React.FC<DefaultsSettingsProps> = ({ settings, onChange,
   const { t } = useTranslation();
   const isSupplier = userRole === UserRole.PRODUCT_SUPPLIER;
   const isProvider = userRole === UserRole.SERVICE_PROVIDER;
-  const supplierSettings = settings as SupplierSettings;
-  const providerSettings = settings as ProviderSettings;
 
   return (
     <SettingsSectionWrapper title={t('settingsPage.defaults')} icon={AdjustmentsHorizontalIcon}>
@@ -40,7 +39,7 @@ const DefaultsSettings: React.FC<DefaultsSettingsProps> = ({ settings, onChange,
                 onClick={() => onChange('autoRespondToggle', !settings.autoRespondToggle)}
                 className={`relative inline-flex items-center h-6 rounded-full w-11 focus:outline-none transition-colors duration-200 ease-in-out ${settings.autoRespondToggle ? 'bg-swiss-mint' : 'bg-gray-200'}`}
                 role="switch"
-                aria-checked={settings.autoRespondToggle}
+                aria-checked={!!settings.autoRespondToggle}
                 aria-label={t('settingsDefaults.autoRespondToggle')}
             >
                 <span className="sr-only">{t('settingsDefaults.autoRespondToggle')}</span>
@@ -58,8 +57,8 @@ const DefaultsSettings: React.FC<DefaultsSettingsProps> = ({ settings, onChange,
                 type="number"
                 id="defaultMOQ"
                 name="defaultMOQ"
-                value={supplierSettings.defaultMOQ || ''}
-                onChange={(e) => onChange('defaultMOQ' as keyof SettingsFormData, e.target.value ? parseInt(e.target.value) : undefined)}
+                value={settings.defaultMOQ || ''}
+                onChange={(e) => onChange('defaultMOQ', e.target.value ? parseInt(e.target.value) : undefined)}
                 className={`${STANDARD_INPUT_FIELD} w-32`}
                 placeholder={t('settingsDefaults.defaultMOQPlaceholder')}
               />
@@ -71,8 +70,8 @@ const DefaultsSettings: React.FC<DefaultsSettingsProps> = ({ settings, onChange,
                 type="number"
                 id="autoAcceptOrderQtyLimit"
                 name="autoAcceptOrderQtyLimit"
-                value={supplierSettings.autoAcceptOrderQtyLimit || ''}
-                onChange={(e) => onChange('autoAcceptOrderQtyLimit' as keyof SettingsFormData, e.target.value ? parseInt(e.target.value) : undefined)}
+                value={settings.autoAcceptOrderQtyLimit || ''}
+                onChange={(e) => onChange('autoAcceptOrderQtyLimit', e.target.value ? parseInt(e.target.value) : undefined)}
                 className={`${STANDARD_INPUT_FIELD} w-32`}
                 placeholder={t('settingsDefaults.autoAcceptOrderQtyLimitPlaceholder')}
               />
@@ -91,8 +90,8 @@ const DefaultsSettings: React.FC<DefaultsSettingsProps> = ({ settings, onChange,
                     <button
                         key={opt.value}
                         type="button"
-                        onClick={() => onChange('defaultConsultationLength' as keyof SettingsFormData, opt.value as ConsultationLength)}
-                        className={`px-4 py-2 text-sm font-medium rounded-button border transition-colors duration-150 ${providerSettings.defaultConsultationLength === opt.value ? 'bg-swiss-mint text-white border-swiss-mint' : 'bg-white text-gray-700 border-gray-300 hover:border-swiss-teal'}`}
+                        onClick={() => onChange('defaultConsultationLength', opt.value as ConsultationLength)}
+                        className={`px-4 py-2 text-sm font-medium rounded-button border transition-colors duration-150 ${settings.defaultConsultationLength === opt.value ? 'bg-swiss-mint text-white border-swiss-mint' : 'bg-white text-gray-700 border-gray-300 hover:border-swiss-teal'}`}
                     >
                         {t(opt.labelKey)}
                     </button>

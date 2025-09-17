@@ -1,10 +1,12 @@
+
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppContext } from '../contexts/AppContext';
 import { ChartBarIcon, UsersIcon, ShoppingCartIcon, BriefcaseIcon, CogIcon as SettingsIcon } from '@heroicons/react/24/outline';
 import Card from '../components/ui/Card';
 import { useTranslation } from 'react-i18next'; // Import useTranslation
-import { APP_NAME } from '../constants'; // Import APP_NAME
+// FIX: Update import paths for monorepo structure
+import { APP_NAME } from 'packages/core/src/constants'; // Import APP_NAME
 
 const DashboardPage: React.FC = () => {
   const { t } = useTranslation();

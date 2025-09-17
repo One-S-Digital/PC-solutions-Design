@@ -1,0 +1,80 @@
+{
+  "appName": "Pro Crèche Solutions",
+  "buttons": {
+    "login": "Login",
+    "signOut": "Sign Out",
+    "close": "Close",
+    "saveChanges": "Save Changes",
+    "cancel": "Cancel"
+  },
+  "navbar": {
+    "searchPlaceholder": "Search dashboard...",
+    "signOut": "Sign Out"
+  },
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "users": "Users",
+    "content": "Content",
+    "systemMonitoring": "System Monitoring",
+    "platformSettings": "Platform Settings",
+    "settings": "My Settings"
+  },
+  "userRoles": {
+    "Super Admin": "Super Admin",
+    "Admin": "Admin"
+  },
+  "dashboardPage": {
+    "welcome": "Welcome back, {{name}}!",
+    "overviewSubtitle": "Here's your overview of the {{appName}} platform."
+  },
+  "adminContentDashboard": {
+    "contentModeration": {
+      "title": "Content Moderation Queue",
+      "empty": "The moderation queue is empty.",
+      "approve": "Approve",
+      "reject": "Reject"
+    }
+  },
+  "adminSystemMonitoringPage": {
+    "title": "System Monitoring",
+    "systemHealth": {
+      "title": "System Health",
+      "cpuload": "CPU Load",
+      "memoryusage": "Memory Usage",
+      "databaselatency": "Database Latency",
+      "status": { "normal": "Normal", "warning": "Warning", "critical": "Critical" }
+    },
+    "apiResponseTimes": { "title": "API Response Times (ms)" },
+    "securityAlerts": {
+      "title": "Security Alerts",
+      "table": { "event": "Event", "risk": "Risk Level", "ip": "Source IP" },
+      "risk": { "low": "Low", "medium": "Medium", "high": "High" }
+    },
+    "logConsole": {
+      "title": "Log Console",
+      "filters": { "all": "All", "error": "Error", "warn": "Warn", "info": "Info" }
+    },
+    "mockChart": "Mock Chart Data"
+  },
+  "usersPage": {
+    "allUsersTitle": "All Users",
+    "searchPlaceholder": "Search users...",
+    "table": { "nameOrg": "Name" }
+  },
+  "adminPlatformSettings": {
+    "title": "Platform Settings",
+    "general": {
+      "title": "General Settings",
+      "nameLabel": "Platform Name",
+      "descriptionLabel": "Metadata Description"
+    },
+    "branding": {
+      "title": "Branding",
+      "logoLabel": "Platform Logo",
+      "faviconLabel": "Platform Favicon"
+    }
+  },
+  "settingsPage": {
+    "title": "Settings"
+  }
+}

@@ -1,10 +1,13 @@
 
+
 import React, { useState, useEffect } from 'react';
-import { Service, ServiceRequest } from '../../types';
+// FIX: Update import paths for monorepo structure
+import { Service, ServiceRequest } from 'packages/core/src/types';
 import Button from '../ui/Button';
 import Card from '../ui/Card'; 
 import { XMarkIcon, CalendarDaysIcon } from '@heroicons/react/24/outline';
-import { STANDARD_INPUT_FIELD } from '../../constants';
+// FIX: Update import paths for monorepo structure
+import { STANDARD_INPUT_FIELD } from 'packages/core/src/constants';
 
 interface ServiceRequestModalProps {
   service: Service | null;

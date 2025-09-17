@@ -2,75 +2,56 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Card from '../../components/ui/Card';
-import { InboxArrowDownIcon, ShoppingCartIcon, BriefcaseIcon, AcademicCapIcon, CalendarDaysIcon, ListBulletIcon, UsersIcon } from '@heroicons/react/24/outline';
+import Button from '../../components/ui/Button';
+import { 
+  UsersIcon, 
+  InboxArrowDownIcon, 
+  CalendarDaysIcon, 
+  UserPlusIcon, 
+  DocumentTextIcon, 
+  BanknotesIcon, 
+  BriefcaseIcon, 
+  ShoppingBagIcon, 
+  UserGroupIcon, 
+  PresentationChartLineIcon, 
+  ChatBubbleLeftEllipsisIcon,
+  SunIcon
+} from '@heroicons/react/24/outline';
 import { useAppContext } from '../../contexts/AppContext';
 import { useTranslation } from 'react-i18next';
-
-interface DashboardTileProps {
-  titleKey: string;
-  metric: string;
-  actionTextKey: string;
-  onActionClick: () => void;
-  icon: React.ElementType;
-  color: string; // Expects full color name like 'swiss-mint'
-  hoverTextKey?: string;
-}
-
-const DashboardTile: React.FC<DashboardTileProps> = ({ titleKey, metric, actionTextKey, onActionClick, icon: Icon, color, hoverTextKey }) => {
-  const { t } = useTranslation();
-  return (
-    <Card className="p-0 overflow-hidden group" hoverEffect>
-      <div className="p-5">
-        <div className="flex justify-between items-start">
-          <div className={`p-2.5 inline-flex rounded-lg bg-${color}/10`}> {/* Use opacity modifier */}
-            <Icon className={`h-6 w-6 text-${color}`} /> {/* Use direct color */}
-          </div>
-          {hoverTextKey && (
-            <div className="relative">
-              <UsersIcon className="h-5 w-5 text-gray-400 cursor-pointer peer" /> {/* Using UsersIcon for hover info consistency */}
-              <div className="absolute hidden peer-hover:block bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-700 rounded-md shadow-lg whitespace-nowrap">
-                {t(hoverTextKey)}
-              </div>
-            </div>
-          )}
-        </div>
-        <h3 className="text-3xl font-semibold text-swiss-charcoal mt-3">{metric}</h3>
-        <p className="text-sm text-gray-500">{t(titleKey)}</p>
-      </div>
-      <button
-        onClick={onActionClick}
-        className={`block w-full px-5 py-2.5 text-xs text-center font-medium bg-${color}/[0.07] text-${color} hover:bg-${color}/[0.15] transition-colors duration-150`} // Use opacity modifier for button background
-        aria-label={t('dashboardPage.viewDetailsFor', { name: t(titleKey) })}
-      >
-        {t(actionTextKey)} &rarr;
-      </button>
-    </Card>
-  );
-};
 
 const FoundationDashboardPage: React.FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { currentUser } = useAppContext();
 
-  const tiles = [
-    { titleKey: 'foundationDashboard.tiles.openLeads', metric: '7', actionTextKey: 'foundationDashboard.tiles.viewParentLeadsNew', onActionClick: () => navigate('/foundation/leads?status=New'), icon: InboxArrowDownIcon, color: 'swiss-mint' },
-    { titleKey: 'foundationDashboard.tiles.pendingOrders', metric: '3', actionTextKey: 'foundationDashboard.tiles.viewOrdersPending', onActionClick: () => navigate('/foundation/orders-appointments?tab=orders&status=Pending'), icon: ShoppingCartIcon, color: 'swiss-sand' },
-    { titleKey: 'foundationDashboard.tiles.openPositions', metric: '2', actionTextKey: 'foundationDashboard.tiles.viewRecruitmentListings', onActionClick: () => navigate('/recruitment'), icon: BriefcaseIcon, color: 'swiss-teal' },
-    { titleKey: 'foundationDashboard.tiles.trainingProgress', metric: '85%', actionTextKey: 'foundationDashboard.tiles.viewOverdueStaff', onActionClick: () => navigate('/e-learning?filter=overdue'), icon: AcademicCapIcon, color: 'swiss-coral', hoverTextKey: 'foundationDashboard.tiles.trainingProgressHover' },
+  // Mock data based on UI Spec
+  const quickStats = [
+    { labelKey: 'foundationDashboard.quickStats.enrolled', value: '45 / 50', trend: '+2', icon: UsersIcon, color: 'text-swiss-mint' },
+    { labelKey: 'foundationDashboard.quickStats.availableSpots', value: '5', icon: UserPlusIcon, color: 'text-swiss-sand' },
+    { labelKey: 'foundationDashboard.quickStats.pendingApps', value: '3', icon: InboxArrowDownIcon, color: 'text-swiss-coral' },
+    { labelKey: 'foundationDashboard.quickStats.upcomingAppointments', value: '2', icon: CalendarDaysIcon, color: 'text-swiss-teal' },
   ];
 
-  const todaysSchedule = [
-    { time: '09:00', eventKey: 'foundationDashboard.schedule.supplierDelivery', type: 'delivery' },
-    { time: '10:30', eventKey: 'foundationDashboard.schedule.serviceAppointment', type: 'service' },
-    { time: '14:00', eventKey: 'foundationDashboard.schedule.staffTraining', type: 'training' },
+  const recentActivity = [
+    { id: 1, icon: InboxArrowDownIcon, textKey: 'foundationDashboard.activity.parentInquiry', details: 'S. Dubois for a 2-year-old', time: '15m ago', color: 'text-swiss-mint' },
+    { id: 2, icon: BriefcaseIcon, textKey: 'foundationDashboard.activity.jobApplication', details: 'J. Miller for Lead Educator', time: '1h ago', color: 'text-swiss-teal' },
+    { id: 3, icon: BanknotesIcon, textKey: 'foundationDashboard.activity.orderConfirmation', details: '#ORD123 from EcoToys', time: '3h ago', color: 'text-swiss-sand' },
+    { id: 4, icon: DocumentTextIcon, textKey: 'foundationDashboard.activity.serviceUpdate', details: 'ProClean confirmed cleaning for Friday', time: '5h ago', color: 'text-swiss-coral' },
+    { id: 5, icon: ChatBubbleLeftEllipsisIcon, textKey: 'foundationDashboard.activity.newMessage', details: 'From candidate T. Fischer', time: 'Yesterday', color: 'text-gray-500' },
   ];
-
-  const activityFeed = [
-    { id: 'act_f1', textKey: 'foundationDashboard.activity.newLead', params: { name: 'S. Dubois' }, timeKey: 'messagesPage.time.minutesAgo', timeParams: { count: 20 } },
-    { id: 'act_f2', textKey: 'foundationDashboard.activity.orderAccepted', params: { orderId: '#P0124', productName: 'Wooden Blocks', supplierName: 'EcoToys' }, timeKey: 'messagesPage.time.hoursAgo', timeParams: { count: 1 } },
-    { id: 'act_f3', textKey: 'foundationDashboard.activity.candidateApplied', params: { candidateName: 'J. Miller', jobTitle: 'Lead Educator' }, timeKey: 'messagesPage.time.hoursAgo', timeParams: { count: 2 } },
-    { id: 'act_f4', textKey: 'foundationDashboard.activity.policyUploaded', params: { policyName: 'Child Safety Protocols v2.1', uploaderName: 'Admin' }, timeKey: 'messagesPage.time.yesterday', timeParams: {} },
+  
+  const quickActions = [
+    { labelKey: 'foundationDashboard.quickActions.postJob', onClick: () => navigate('/recruitment'), icon: BriefcaseIcon },
+    { labelKey: 'foundationDashboard.quickActions.browseMarketplace', onClick: () => navigate('/marketplace'), icon: ShoppingBagIcon },
+    { labelKey: 'foundationDashboard.quickActions.viewParentLeads', onClick: () => navigate('/foundation/leads'), icon: UserGroupIcon },
+    { labelKey: 'foundationDashboard.quickActions.viewAnalytics', onClick: () => navigate('/foundation/analytics'), icon: PresentationChartLineIcon },
+  ];
+  
+  const calendarEvents = [
+    { time: '10:00', title: 'Visit with Dubois Family' },
+    { time: '14:00', title: 'Interview: J. Miller' },
+    { time: '16:30', title: 'ProClean Service' },
   ];
 
   return (
@@ -82,70 +63,87 @@ const FoundationDashboardPage: React.FC = () => {
         <p className="text-gray-500 mt-1">{t('foundationDashboard.welcomeMessage', { name: currentUser?.name?.split(' ')[0] })}</p>
       </div>
 
-      <section>
-        <h2 className="text-xl font-semibold text-swiss-charcoal mb-4">{t('supplierDashboard.snapshotTitle')}</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {tiles.map(tile => (
-            <DashboardTile
-              key={tile.titleKey}
-              titleKey={tile.titleKey}
-              metric={tile.metric}
-              actionTextKey={tile.actionTextKey}
-              onActionClick={tile.onActionClick}
-              icon={tile.icon}
-              color={tile.color} // Pass the full color name
-              hoverTextKey={tile.hoverTextKey}
-            />
-          ))}
-        </div>
-      </section>
-
-      <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-1">
-           <Card className="p-6 h-full"> {/* Added h-full for consistent height */}
-            <h2 className="text-xl font-semibold text-swiss-charcoal mb-4 flex items-center">
-                <CalendarDaysIcon className="w-6 h-6 mr-2 text-swiss-teal"/>
-                {t('foundationDashboard.todaysScheduleTitle')}
-            </h2>
-            <ul className="space-y-3">
-              {todaysSchedule.map(item => (
-                <li key={item.time + item.eventKey} className="flex items-center text-sm">
-                  <span className={`w-2 h-2 rounded-full mr-2.5 ${item.type === 'delivery' ? 'bg-swiss-sand' : item.type === 'service' ? 'bg-swiss-mint' : 'bg-swiss-coral'}`}></span>
-                  <span className="font-medium text-gray-500 mr-2">{item.time}</span>
-                  <span className="text-gray-700">{t(item.eventKey)}</span>
-                </li>
-              ))}
-            </ul>
-            {todaysSchedule.length === 0 && <p className="text-center text-gray-500 py-4">{t('foundationDashboard.noScheduleItems')}</p>}
-          </Card>
-        </div>
-
-        <div className="lg:col-span-2">
-          <Card className="p-6 h-full"> {/* Added h-full */}
-            <h2 className="text-xl font-semibold text-swiss-charcoal mb-4 flex items-center">
-                <ListBulletIcon className="w-6 h-6 mr-2 text-swiss-mint"/>
-                {t('supplierDashboard.activityFeedTitle')}
-            </h2>
-            <ul className="space-y-3">
-              {activityFeed.map(activity => (
-                <li key={activity.id} className="flex items-start text-sm">
-                  <div className={`w-1.5 h-1.5 rounded-full mr-2.5 mt-1.5 flex-shrink-0 ${
-                      activity.textKey.includes('lead') ? 'bg-swiss-mint' :
-                      activity.textKey.includes('Order') || activity.textKey.includes('EcoToys') ? 'bg-swiss-sand' :
-                      activity.textKey.includes('Candidate') ? 'bg-swiss-teal' :
-                      activity.textKey.includes('Policy') ? 'bg-swiss-coral' : 'bg-gray-400'
-                  }`}></div>
-                  <div>
-                    <p className="text-gray-700">{t(activity.textKey, activity.params)}</p>
-                    <p className="text-xs text-gray-400">{t(activity.timeKey, activity.timeParams)}</p>
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        {/* Left Column (Quick Stats) - 3/12 on large screens */}
+        <div className="lg:col-span-3 space-y-6">
+          <Card className="p-5">
+            <h2 className="text-lg font-semibold text-swiss-charcoal mb-3">{t('foundationDashboard.quickStats.title')}</h2>
+            <div className="space-y-4">
+              {quickStats.map(stat => (
+                <div key={stat.labelKey} className="flex items-center">
+                  <div className={`p-2 rounded-lg bg-gray-100 mr-3 ${stat.color}`}>
+                    <stat.icon className="w-5 h-5"/>
                   </div>
+                  <div>
+                    <p className="text-sm text-gray-500">{t(stat.labelKey)}</p>
+                    <p className="text-lg font-bold text-swiss-charcoal">{stat.value}</p>
+                  </div>
+                  {stat.trend && <span className="ml-auto text-xs font-medium text-green-600 bg-green-100 px-2 py-0.5 rounded-full">{stat.trend}</span>}
+                </div>
+              ))}
+            </div>
+          </Card>
+           <Card className="p-5">
+              <div className="flex justify-between items-center mb-3">
+                <h2 className="text-lg font-semibold text-swiss-charcoal">{t('foundationDashboard.todayAtGlance')}</h2>
+                <div className="flex items-center text-sm text-yellow-600 font-semibold">
+                  <SunIcon className="w-5 h-5 mr-1"/>
+                  <span>18°C</span>
+                </div>
+              </div>
+              <ul className="space-y-2">
+                {calendarEvents.map(event => (
+                  <li key={event.title} className="flex items-center text-sm">
+                    <span className="w-12 text-gray-500 font-medium">{event.time}</span>
+                    <span className="flex-1 text-gray-700">{event.title}</span>
+                  </li>
+                ))}
+              </ul>
+            </Card>
+        </div>
+
+        {/* Center Column (Recent Activity) - 6/12 on large screens */}
+        <div className="lg:col-span-6">
+          <Card className="p-5 h-full">
+            <h2 className="text-lg font-semibold text-swiss-charcoal mb-4">{t('foundationDashboard.activity.title')}</h2>
+            <ul className="space-y-3">
+              {recentActivity.map(activity => (
+                <li key={activity.id} className="flex items-start p-3 -m-3 rounded-lg hover:bg-gray-50 transition-colors">
+                  <div className={`p-2 rounded-full bg-gray-100 mr-3 ${activity.color}`}>
+                    <activity.icon className="w-5 h-5" />
+                  </div>
+                  <div className="flex-grow">
+                    <p className="text-sm text-gray-800">
+                      <span className="font-semibold">{t(activity.textKey)}:</span> {activity.details}
+                    </p>
+                    <p className="text-xs text-gray-400">{activity.time}</p>
+                  </div>
+                  <Button variant="ghost" size="xs">{t('buttons.view')}</Button>
                 </li>
               ))}
             </ul>
-            {activityFeed.length === 0 && <p className="text-center text-gray-500 py-4">{t('supplierDashboard.noRecentActivity')}</p>}
           </Card>
         </div>
-      </section>
+
+        {/* Right Column (Quick Actions) - 3/12 on large screens */}
+        <div className="lg:col-span-3 space-y-6">
+          <Card className="p-5">
+            <h2 className="text-lg font-semibold text-swiss-charcoal mb-3">{t('foundationDashboard.quickActions.title')}</h2>
+            <div className="space-y-2.5">
+              {quickActions.map(action => (
+                <Button key={action.labelKey} variant="light" leftIcon={action.icon} onClick={action.onClick} className="w-full !justify-start">
+                  {t(action.labelKey)}
+                </Button>
+              ))}
+            </div>
+          </Card>
+          <Card className="p-5 bg-swiss-teal text-white">
+            <h2 className="text-lg font-semibold mb-2">{t('foundationDashboard.quickMessage.title')}</h2>
+            <textarea placeholder={t('foundationDashboard.quickMessage.placeholder')} rows={3} className="w-full p-2 rounded-md text-sm text-swiss-charcoal placeholder-gray-500 border-gray-300 focus:ring-swiss-mint focus:border-swiss-mint"></textarea>
+            <Button variant="secondary" size="sm" className="w-full mt-2 !bg-white !text-swiss-teal">{t('buttons.sendMessage')}</Button>
+          </Card>
+        </div>
+      </div>
     </div>
   );
 };

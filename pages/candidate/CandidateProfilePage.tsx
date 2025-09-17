@@ -1,7 +1,9 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { CandidateProfile, WorkExperienceItem, EducationItem, DocumentItem, UserRole } from '../../types';
-import { MOCK_CANDIDATE_PROFILES } from '../../constants';
+// FIX: Update import paths for monorepo structure
+import { CandidateProfile, WorkExperienceItem, EducationItem, DocumentItem, UserRole } from 'packages/core/src/types';
+// FIX: Update import paths for monorepo structure
+import { MOCK_CANDIDATE_PROFILES } from 'packages/core/src/constants';
 import Card from '../../components/ui/Card';
 import Button from '../../components/ui/Button';
 import { ArrowLeftIcon, MapPinIcon, BriefcaseIcon, AcademicCapIcon, CalendarDaysIcon, PaperClipIcon, EnvelopeIcon, PlusCircleIcon, StarIcon, UserCircleIcon, PhoneIcon, HeartIcon } from '@heroicons/react/24/outline';
